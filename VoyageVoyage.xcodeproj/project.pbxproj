@@ -1,0 +1,650 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6405C4A122ACDA2700D97428 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6405C4A022ACDA2700D97428 /* Extension.swift */; };
+		6410BD9E22CBBE60003E102A /* MoneyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6410BD9D22CBBE60003E102A /* MoneyTableViewController.swift */; };
+		6410BDA222D36F1F003E102A /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6410BDA122D36F1F003E102A /* ExchangeViewController.swift */; };
+		6413F43C229EB756000D0C64 /* MakeATradViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6413F43B229EB756000D0C64 /* MakeATradViewController.swift */; };
+		6414A74822A14584006774D6 /* VoyageVoyageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6414A74722A14584006774D6 /* VoyageVoyageTests.swift */; };
+		6414A75022A14603006774D6 /* Weather.json in Resources */ = {isa = PBXBuildFile; fileRef = 6414A74F22A14602006774D6 /* Weather.json */; };
+		6414A75222A14652006774D6 /* FakeResponceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6414A75122A14652006774D6 /* FakeResponceData.swift */; };
+		6417312922BA6C4E00916753 /* ExcangeRateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6417312822BA6C4E00916753 /* ExcangeRateManager.swift */; };
+		6422C5B222DF5A4800426B11 /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6422C5B122DF5A4800426B11 /* API.plist */; };
+		645856DC229BDDD8006D526D /* WeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645856DB229BDDD8006D526D /* WeatherManager.swift */; };
+		645856E1229BE311006D526D /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645856E0229BE311006D526D /* Protocols.swift */; };
+		645856E4229BE3B8006D526D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645856E3229BE3B8006D526D /* LocationManager.swift */; };
+		649D745422C3A83700A3E526 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649D745322C3A83700A3E526 /* Networking.swift */; };
+		64E0BA8B229731D5005F4536 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E0BA8A229731D5005F4536 /* AppDelegate.swift */; };
+		64E0BA8D229731D5005F4536 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E0BA8C229731D5005F4536 /* WeatherViewController.swift */; };
+		64E0BA90229731D5005F4536 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64E0BA8E229731D5005F4536 /* Main.storyboard */; };
+		64E0BA92229731D6005F4536 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64E0BA91229731D6005F4536 /* Assets.xcassets */; };
+		64E0BA95229731D6005F4536 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 64E0BA93229731D6005F4536 /* LaunchScreen.storyboard */; };
+		64E0E6B822DCC9DE00FDA848 /* WeatherJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E0E6B722DCC9DE00FDA848 /* WeatherJSON.swift */; };
+		64E0E6BA22DCCA3100FDA848 /* MoneyRateJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E0E6B922DCCA3100FDA848 /* MoneyRateJSON.swift */; };
+		64E0E6BE22DCCA8800FDA848 /* Money.json in Resources */ = {isa = PBXBuildFile; fileRef = 64E0E6BD22DCCA8800FDA848 /* Money.json */; };
+		64E0E6C022DCCAD900FDA848 /* Forcast.json in Resources */ = {isa = PBXBuildFile; fileRef = 64E0E6BF22DCCAD900FDA848 /* Forcast.json */; };
+		64E0E6C222DCCB8500FDA848 /* ForcastJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E0E6C122DCCB8500FDA848 /* ForcastJSON.swift */; };
+		64FE285C229EBF87000A20AE /* TranslationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64FE285B229EBF87000A20AE /* TranslationManager.swift */; };
+		B91821C6505A3A56081E3356 /* Pods_VoyageVoyage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BA342E4552B7A664E207791 /* Pods_VoyageVoyage.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6414A74A22A14584006774D6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 64E0BA7F229731D5005F4536 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 64E0BA86229731D5005F4536;
+			remoteInfo = VoyageVoyage;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0BA342E4552B7A664E207791 /* Pods_VoyageVoyage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VoyageVoyage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1ECB7451147DCFBF28C63533 /* Pods-VoyageVoyage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoyageVoyage.release.xcconfig"; path = "Target Support Files/Pods-VoyageVoyage/Pods-VoyageVoyage.release.xcconfig"; sourceTree = "<group>"; };
+		6405C4A022ACDA2700D97428 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		6410BD9D22CBBE60003E102A /* MoneyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTableViewController.swift; sourceTree = "<group>"; };
+		6410BDA122D36F1F003E102A /* ExchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExchangeViewController.swift; path = ../View/ExchangeViewController.swift; sourceTree = "<group>"; };
+		6413F43B229EB756000D0C64 /* MakeATradViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeATradViewController.swift; sourceTree = "<group>"; };
+		6414A74522A14584006774D6 /* VoyageVoyageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoyageVoyageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6414A74722A14584006774D6 /* VoyageVoyageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoyageVoyageTests.swift; sourceTree = "<group>"; };
+		6414A74922A14584006774D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6414A74F22A14602006774D6 /* Weather.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Weather.json; sourceTree = "<group>"; };
+		6414A75122A14652006774D6 /* FakeResponceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeResponceData.swift; sourceTree = "<group>"; };
+		6417312822BA6C4E00916753 /* ExcangeRateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExcangeRateManager.swift; sourceTree = "<group>"; };
+		6422C5B122DF5A4800426B11 /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = API.plist; path = VoyageVoyage/GitIgnore/API.plist; sourceTree = "<group>"; };
+		645856DB229BDDD8006D526D /* WeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherManager.swift; sourceTree = "<group>"; };
+		645856E0229BE311006D526D /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		645856E3229BE3B8006D526D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		649D745322C3A83700A3E526 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		64E0BA87229731D5005F4536 /* VoyageVoyage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoyageVoyage.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		64E0BA8A229731D5005F4536 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		64E0BA8C229731D5005F4536 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
+		64E0BA8F229731D5005F4536 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		64E0BA91229731D6005F4536 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		64E0BA94229731D6005F4536 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		64E0BA96229731D6005F4536 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		64E0E6B722DCC9DE00FDA848 /* WeatherJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherJSON.swift; sourceTree = "<group>"; };
+		64E0E6B922DCCA3100FDA848 /* MoneyRateJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyRateJSON.swift; sourceTree = "<group>"; };
+		64E0E6BD22DCCA8800FDA848 /* Money.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Money.json; sourceTree = "<group>"; };
+		64E0E6BF22DCCAD900FDA848 /* Forcast.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Forcast.json; sourceTree = "<group>"; };
+		64E0E6C122DCCB8500FDA848 /* ForcastJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForcastJSON.swift; sourceTree = "<group>"; };
+		64FE285B229EBF87000A20AE /* TranslationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TranslationManager.swift; path = VoyageVoyage/Model/TranslationManager.swift; sourceTree = SOURCE_ROOT; };
+		7DB69E9CE1FA1581574B9D39 /* Pods-VoyageVoyage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoyageVoyage.debug.xcconfig"; path = "Target Support Files/Pods-VoyageVoyage/Pods-VoyageVoyage.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6414A74222A14584006774D6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		64E0BA84229731D5005F4536 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B91821C6505A3A56081E3356 /* Pods_VoyageVoyage.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3757B64E78FDDE09A98B4E47 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0BA342E4552B7A664E207791 /* Pods_VoyageVoyage.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		574FBCC7747735BA804FD5B1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7DB69E9CE1FA1581574B9D39 /* Pods-VoyageVoyage.debug.xcconfig */,
+				1ECB7451147DCFBF28C63533 /* Pods-VoyageVoyage.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		6405C4A222ACDA2C00D97428 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				6405C4A022ACDA2700D97428 /* Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		6414A74622A14584006774D6 /* VoyageVoyageTests */ = {
+			isa = PBXGroup;
+			children = (
+				6414A74722A14584006774D6 /* VoyageVoyageTests.swift */,
+				6414A74922A14584006774D6 /* Info.plist */,
+				6414A74F22A14602006774D6 /* Weather.json */,
+				64E0E6BF22DCCAD900FDA848 /* Forcast.json */,
+				64E0E6BD22DCCA8800FDA848 /* Money.json */,
+				6414A75122A14652006774D6 /* FakeResponceData.swift */,
+			);
+			path = VoyageVoyageTests;
+			sourceTree = "<group>";
+		};
+		645856DD229BE10C006D526D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				649D745322C3A83700A3E526 /* Networking.swift */,
+				645856E3229BE3B8006D526D /* LocationManager.swift */,
+				645856DB229BDDD8006D526D /* WeatherManager.swift */,
+				64E0E6B722DCC9DE00FDA848 /* WeatherJSON.swift */,
+				64E0E6C122DCCB8500FDA848 /* ForcastJSON.swift */,
+				6417312822BA6C4E00916753 /* ExcangeRateManager.swift */,
+				64E0E6B922DCCA3100FDA848 /* MoneyRateJSON.swift */,
+				64FE285B229EBF87000A20AE /* TranslationManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		645856DE229BE117006D526D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				64E0BA8E229731D5005F4536 /* Main.storyboard */,
+				64E0BA93229731D6005F4536 /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		645856DF229BE120006D526D /* Controler */ = {
+			isa = PBXGroup;
+			children = (
+				64E0BA8C229731D5005F4536 /* WeatherViewController.swift */,
+				6410BDA122D36F1F003E102A /* ExchangeViewController.swift */,
+				6410BD9D22CBBE60003E102A /* MoneyTableViewController.swift */,
+				6413F43B229EB756000D0C64 /* MakeATradViewController.swift */,
+			);
+			path = Controler;
+			sourceTree = "<group>";
+		};
+		645856E2229BE318006D526D /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				645856E0229BE311006D526D /* Protocols.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		64E0BA7E229731D5005F4536 = {
+			isa = PBXGroup;
+			children = (
+				6422C5B122DF5A4800426B11 /* API.plist */,
+				64E0BA89229731D5005F4536 /* VoyageVoyage */,
+				6414A74622A14584006774D6 /* VoyageVoyageTests */,
+				64E0BA88229731D5005F4536 /* Products */,
+				574FBCC7747735BA804FD5B1 /* Pods */,
+				3757B64E78FDDE09A98B4E47 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		64E0BA88229731D5005F4536 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				64E0BA87229731D5005F4536 /* VoyageVoyage.app */,
+				6414A74522A14584006774D6 /* VoyageVoyageTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		64E0BA89229731D5005F4536 /* VoyageVoyage */ = {
+			isa = PBXGroup;
+			children = (
+				6405C4A222ACDA2C00D97428 /* Extensions */,
+				645856E2229BE318006D526D /* Protocols */,
+				645856DE229BE117006D526D /* View */,
+				645856DF229BE120006D526D /* Controler */,
+				645856DD229BE10C006D526D /* Model */,
+				64E0BA8A229731D5005F4536 /* AppDelegate.swift */,
+				64E0BA96229731D6005F4536 /* Info.plist */,
+				64E0BA91229731D6005F4536 /* Assets.xcassets */,
+			);
+			path = VoyageVoyage;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6414A74422A14584006774D6 /* VoyageVoyageTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6414A74E22A14584006774D6 /* Build configuration list for PBXNativeTarget "VoyageVoyageTests" */;
+			buildPhases = (
+				6414A74122A14584006774D6 /* Sources */,
+				6414A74222A14584006774D6 /* Frameworks */,
+				6414A74322A14584006774D6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6414A74B22A14584006774D6 /* PBXTargetDependency */,
+			);
+			name = VoyageVoyageTests;
+			productName = VoyageVoyageTests;
+			productReference = 6414A74522A14584006774D6 /* VoyageVoyageTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		64E0BA86229731D5005F4536 /* VoyageVoyage */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 64E0BA99229731D6005F4536 /* Build configuration list for PBXNativeTarget "VoyageVoyage" */;
+			buildPhases = (
+				FFA044F8ACAF3533C0336B70 /* [CP] Check Pods Manifest.lock */,
+				64E0BA83229731D5005F4536 /* Sources */,
+				64E0BA84229731D5005F4536 /* Frameworks */,
+				64E0BA85229731D5005F4536 /* Resources */,
+				125C18A468FEEDA98ECC64D9 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VoyageVoyage;
+			productName = VoyageVoyage;
+			productReference = 64E0BA87229731D5005F4536 /* VoyageVoyage.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		64E0BA7F229731D5005F4536 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = Cr3AD;
+				TargetAttributes = {
+					6414A74422A14584006774D6 = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = 64E0BA86229731D5005F4536;
+					};
+					64E0BA86229731D5005F4536 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 64E0BA82229731D5005F4536 /* Build configuration list for PBXProject "VoyageVoyage" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 64E0BA7E229731D5005F4536;
+			productRefGroup = 64E0BA88229731D5005F4536 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				64E0BA86229731D5005F4536 /* VoyageVoyage */,
+				6414A74422A14584006774D6 /* VoyageVoyageTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6414A74322A14584006774D6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6414A75022A14603006774D6 /* Weather.json in Resources */,
+				64E0E6C022DCCAD900FDA848 /* Forcast.json in Resources */,
+				64E0E6BE22DCCA8800FDA848 /* Money.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		64E0BA85229731D5005F4536 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64E0BA95229731D6005F4536 /* LaunchScreen.storyboard in Resources */,
+				6422C5B222DF5A4800426B11 /* API.plist in Resources */,
+				64E0BA92229731D6005F4536 /* Assets.xcassets in Resources */,
+				64E0BA90229731D5005F4536 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		125C18A468FEEDA98ECC64D9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VoyageVoyage/Pods-VoyageVoyage-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VoyageVoyage/Pods-VoyageVoyage-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VoyageVoyage/Pods-VoyageVoyage-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FFA044F8ACAF3533C0336B70 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VoyageVoyage-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6414A74122A14584006774D6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6414A74822A14584006774D6 /* VoyageVoyageTests.swift in Sources */,
+				6414A75222A14652006774D6 /* FakeResponceData.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		64E0BA83229731D5005F4536 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				645856DC229BDDD8006D526D /* WeatherManager.swift in Sources */,
+				64E0BA8D229731D5005F4536 /* WeatherViewController.swift in Sources */,
+				6405C4A122ACDA2700D97428 /* Extension.swift in Sources */,
+				645856E4229BE3B8006D526D /* LocationManager.swift in Sources */,
+				6413F43C229EB756000D0C64 /* MakeATradViewController.swift in Sources */,
+				64E0BA8B229731D5005F4536 /* AppDelegate.swift in Sources */,
+				64E0E6BA22DCCA3100FDA848 /* MoneyRateJSON.swift in Sources */,
+				64E0E6C222DCCB8500FDA848 /* ForcastJSON.swift in Sources */,
+				6410BDA222D36F1F003E102A /* ExchangeViewController.swift in Sources */,
+				6410BD9E22CBBE60003E102A /* MoneyTableViewController.swift in Sources */,
+				645856E1229BE311006D526D /* Protocols.swift in Sources */,
+				64E0E6B822DCC9DE00FDA848 /* WeatherJSON.swift in Sources */,
+				64FE285C229EBF87000A20AE /* TranslationManager.swift in Sources */,
+				6417312922BA6C4E00916753 /* ExcangeRateManager.swift in Sources */,
+				649D745422C3A83700A3E526 /* Networking.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6414A74B22A14584006774D6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 64E0BA86229731D5005F4536 /* VoyageVoyage */;
+			targetProxy = 6414A74A22A14584006774D6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		64E0BA8E229731D5005F4536 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				64E0BA8F229731D5005F4536 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		64E0BA93229731D6005F4536 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				64E0BA94229731D6005F4536 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		6414A74C22A14584006774D6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 62NEBR6MGL;
+				INFOPLIST_FILE = VoyageVoyageTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = be.Cr3AD.VoyageVoyageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VoyageVoyage.app/VoyageVoyage";
+			};
+			name = Debug;
+		};
+		6414A74D22A14584006774D6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 62NEBR6MGL;
+				INFOPLIST_FILE = VoyageVoyageTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = be.Cr3AD.VoyageVoyageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VoyageVoyage.app/VoyageVoyage";
+			};
+			name = Release;
+		};
+		64E0BA97229731D6005F4536 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		64E0BA98229731D6005F4536 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		64E0BA9A229731D6005F4536 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7DB69E9CE1FA1581574B9D39 /* Pods-VoyageVoyage.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 62NEBR6MGL;
+				INFOPLIST_FILE = VoyageVoyage/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = be.Cr3AD.VoyageVoyage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		64E0BA9B229731D6005F4536 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1ECB7451147DCFBF28C63533 /* Pods-VoyageVoyage.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 62NEBR6MGL;
+				INFOPLIST_FILE = VoyageVoyage/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = be.Cr3AD.VoyageVoyage;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6414A74E22A14584006774D6 /* Build configuration list for PBXNativeTarget "VoyageVoyageTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6414A74C22A14584006774D6 /* Debug */,
+				6414A74D22A14584006774D6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		64E0BA82229731D5005F4536 /* Build configuration list for PBXProject "VoyageVoyage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				64E0BA97229731D6005F4536 /* Debug */,
+				64E0BA98229731D6005F4536 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		64E0BA99229731D6005F4536 /* Build configuration list for PBXNativeTarget "VoyageVoyage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				64E0BA9A229731D6005F4536 /* Debug */,
+				64E0BA9B229731D6005F4536 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 64E0BA7F229731D5005F4536 /* Project object */;
+}
