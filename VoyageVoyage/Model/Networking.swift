@@ -12,7 +12,9 @@ import SwiftyJSON
 
 
 class Networking {
-    let myAPI = MyAPI()
+
+    let weatherAPI = valueForAPIKey(keyname:"weatherAPI")
+    let googleAPI = valueForAPIKey(keyname:"googleAPI")
     
     let findLocation = LocationManager()
     let weatherData = WeatherManager()
@@ -38,13 +40,13 @@ class Networking {
     func updateWeatherData() {
         let lat = String(findLocation.latitude)
         let lon = String(findLocation.longitude)
-        networking(url: "\(WEATHER_URL)?APPID=\(myAPI.weatherAPI)&lon=\(lon)&lat=\(lat)", requestType: "weather")
+        networking(url: "\(WEATHER_URL)?APPID=\(weatherAPI)&lon=\(lon)&lat=\(lat)", requestType: "weather")
     }
     
     func updateWeatherForcast() {
         let lat = String(findLocation.latitude)
         let lon = String(findLocation.longitude)
-        networking(url: "\(FORCAST_URL)?APPID=\(myAPI.weatherAPI)&lon=\(lon)&lat=\(lat)&cnt=5", requestType: "forcast")
+        networking(url: "\(FORCAST_URL)?APPID=\(weatherAPI)&lon=\(lon)&lat=\(lat)&cnt=5", requestType: "forcast")
     }
     
     func updateEchangeRateData() {
@@ -52,7 +54,7 @@ class Networking {
     }
     
     func makeATrad(textInput: String, langIn: String, langOut: String) {
-        networking(url: "\(GOOGLE_URL)key=\(myAPI.googleAPI)&q=\(textInput)&source=\(langIn)&target=\(langOut)", requestType: "traduction")
+        networking(url: "\(GOOGLE_URL)key=\(googleAPI)&q=\(textInput)&source=\(langIn)&target=\(langOut)", requestType: "traduction")
         
     }
 
