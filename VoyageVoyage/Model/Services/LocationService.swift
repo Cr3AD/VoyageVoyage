@@ -7,19 +7,18 @@
 //
 
 import Foundation
-import SwiftyJSON
 import CoreLocation
 
 
-class LocationManager : NSObject, CLLocationManagerDelegate {
-    
+class LocationService : NSObject, CLLocationManagerDelegate {
+
     // Instances
     
-    let locationManager = CLLocationManager()
+    let locationService = CLLocationManager()
     
     // Delegate
     
-    var locationDidUpdateDelegate: LocationDidUpdate?
+    var locationDidUpdateDelegate: DidUpdateLocation?
     
     // Proprieties
     
@@ -30,13 +29,13 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
     // MARK : - Location authorisation
     
     func enableBasicLocationServices() {
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        locationService.delegate = self
+        locationService.desiredAccuracy = kCLLocationAccuracyHundredMeters
         
         switch CLLocationManager.authorizationStatus() {
         case .notDetermined:
             // Request when-in-use authorization initially
-            locationManager.requestWhenInUseAuthorization()
+            locationService.requestWhenInUseAuthorization()
             break
             
         case .restricted, .denied:
@@ -56,22 +55,21 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
     // MARK : - start Location services
     
     func startLocationService() {
-        locationManager.startUpdatingLocation()
+        locationService.startUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
        let location = locations[locations.count - 1]
         if location.horizontalAccuracy > 0 {
             
-            locationManager.stopUpdatingLocation()
+            locationService.stopUpdatingLocation()
             
             latitude = location.coordinate.latitude
             longitude = location.coordinate.longitude
             
             print("latitude \(String(location.coordinate.latitude)) longitude \(String(location.coordinate.longitude))")
             print("LocationDidUpdate")
-//            NotificationCenter.default.post(Notification(name: Notification.Name("LocationDidUpdate")))
-            locationDidUpdateDelegate?.updateWeatherData()
+            locationDidUpdateDelegate?.getWeatherDataAtLocation()
         }
     }
     

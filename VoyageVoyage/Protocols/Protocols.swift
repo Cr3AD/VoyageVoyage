@@ -8,23 +8,53 @@
 
 import Foundation
 
-public protocol LocationDidUpdate {
-    func updateWeatherData()
+// Location
+
+public protocol DidUpdateLocation {
+    func getWeatherDataAtLocation()
 }
 
-public protocol WeatherDidUpdate {
-    func updateWeatherDataForcast()
+// Data
+
+protocol WeatherData {
+    func receiveWeatherData(_ data: WeatherJSON)
 }
 
-public protocol WeatherForcastDidUpdate {
-    func updateWeatherDataOnScreen()
+protocol ForcastData {
+    func receiveForcastData(_ data: ForcastJSON)
 }
+
+protocol MoneyData {
+    func receiveMoneyData(_ data: MoneyJSON)
+}
+
+protocol TranslationData {
+    func receiveTranslationData(_ data: TranslationJSON)
+}
+
+
+// Error
 
 public protocol ShowErrorMessage {
     func showAlertNoConnectionError(with title: String, and message: String)
     
 }
 
-public protocol ExchangeRateDidUptade {
-    func updateExchangeRateValue()
+// Segue
+
+public protocol GetMoneyInChoosen {
+    func updateMoneyInChoosen(data: String)
 }
+
+public protocol GetMoneyOutChoosen {
+    func updateMoneyOutChoosen(data: String)
+}
+
+public protocol GetLangInChoosen {
+    func updateLangInChoosen(data: String)
+}
+
+public protocol GetLangOutChoosen {
+    func updateLangOutChoosen(data: String)
+}
+
