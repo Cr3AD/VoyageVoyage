@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "1920x1080-px-landscape-mountains-1334011-wallhere.com.png",
+      "filename" : "moneyConverter.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "1920x1080-px-landscape-mountains-1334011-wallhere.com@2x.png",
+      "filename" : "moneyConverter@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "1920x1080-px-landscape-mountains-1334011-wallhere.com@3x.png",
+      "filename" : "moneyConverter@3x.png",
       "scale" : "3x"
     }
   ],

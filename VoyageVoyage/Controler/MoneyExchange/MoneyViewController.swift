@@ -81,7 +81,9 @@ class MoneyViewController: UIViewController, GetMoneyInChoosen, GetMoneyOutChoos
     }
     
     func convertMoney() {
-        let valueIn = Double(textmoneyIn.text!)
+        guard let valueIn = Double(textmoneyIn.text!) else {
+            return
+        }
         var rateIn:Double {
             if buttonMoneyIn.titleLabel!.text == dataMoney?.base {
                 return 1.0
@@ -96,7 +98,7 @@ class MoneyViewController: UIViewController, GetMoneyInChoosen, GetMoneyOutChoos
                 return Double((dataMoney?.rates[buttonMoneyOut.titleLabel!.text!])!)
             }
         }
-        let result = moneyManager.currencyRequestConverter(valueIn: valueIn!,
+        let result = moneyManager.currencyRequestConverter(valueIn: valueIn,
                                               currencyIn: rateIn,
                                               currencyOut: rateOut)
         textmoneyOut.text = String(format: "%.4f", result)

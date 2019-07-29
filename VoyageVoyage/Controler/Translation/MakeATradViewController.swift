@@ -11,7 +11,7 @@ import UIKit
 class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangInChoosen, GetLangOutChoosen, TranslationData  {
 
     
-    
+    @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var languageInButton: UIButton!
     @IBOutlet weak var languageOutButton: UIButton!
     @IBOutlet weak var inversionButton: UIButton!
@@ -20,13 +20,39 @@ class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangInChoo
     @IBOutlet weak var traductionScrollView: UIScrollView!
     @IBAction func didTapTranslateButton(_ sender: Any) {
         updateTranslationData()
+        
     }
     
     @IBAction func didTapReverseBUtton(_ sender: Any) {
         reverseTraductionButtons()
+        
+    }
+
+    @IBAction func didTapTextField(_ sender: Any) {
+        animateView(way: "up")
+    }
+    @IBAction func didUnTapTextField(_ sender: Any) {
+        animateView(way: "down")
     }
 
     
+    
+    
+    
+    func animateView(way: String) {
+        UIView.animate(withDuration: 0.1, delay: 0.1, options: .curveEaseOut, animations: {
+            let screenHeight = UIScreen.main.bounds.height
+            if way == "up" {
+            self.mainView.center.y -= screenHeight / 3
+            } else {
+                self.mainView.center.y += screenHeight / 3
+            }
+        }, completion: { finished in
+            
+            
+        })
+    }
+
     
     let networkService = NetworkService()
     var dataTranslation: TranslationJSON?
@@ -34,14 +60,16 @@ class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangInChoo
     var langIn: String {
         return (languageInButton.titleLabel?.text)!
     }
-    
+
     var langOut: String {
         return (languageOutButton.titleLabel?.text)!
     }
-    
+
     var textIn: String {
         return (textField.text!)
     }
+
+
 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -72,9 +100,13 @@ class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangInChoo
 
     
     func updateTranslationData() {
+        
+        if textField.text != "" {
+
         let GOOGLE_URL = "https://translation.googleapis.com/language/translate/v2?"
         let googleAPI = valueForAPIKey(named:"googleAPI")
         networkService.networking(url: "\(GOOGLE_URL)key=\(googleAPI)&q=\(textIn)&source=\(langIn)&target=\(langOut)", requestType: "traduction")
+        }
     }
     
     func receiveTranslationData(_ data: TranslationJSON) {
@@ -101,6 +133,7 @@ class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangInChoo
     }
     
     func updateTranslationDataOnScreen() {
+
         let textOut: String = (dataTranslation?.data?.translations![0].translatedText)!
         addTraductionView(langIn: langIn, langOut: langOut, textInput: textIn, textOutput: textOut)
         textField.text?.removeAll()
