@@ -29,11 +29,12 @@ class NetworkService {
     func networking(url: String, requestType: String) {
         
         print("network service started for \(requestType)")
-
+        print(url)
 
         let session = URLSession(configuration: .default)
         let requestUrl = URL(string: url)
         var request = URLRequest(url: requestUrl!)
+        
         request.httpMethod = "GET"
         let task = session.dataTask(with: request) { (data, response, error) in
             if let data = data, error == nil {

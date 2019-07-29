@@ -20,7 +20,15 @@ class MoneyAvailablel {
 
 class MoneyUITableViewController: UITableViewController {
     
-    let poolOfCurrency = ["EUR","GBP","CHF","AUD","USD","JPY","CAD"]
+    let poolOfCurrency = [("EUR", "Euro", "euro"),
+                          ("GBP", "Pounds", "unitedkingdom"),
+                          ("USD", "US Dollard", "usa"),
+                          ("AUD", "Australian Dollard", "australia"),
+                          ("NOK", "Norwagian Krone", "norway"),
+                          ("JPY", "Japanese Yen", "japan"),
+                          ("CAD", "Canadian Dollard", "canada"),
+                          ("CNY", "Yuan", "china")]
+    
     let fullPoolOfCurrency = ["EUR","GBP","NOK","THB","CHF","INR","AUD","DKK","MYR","CZK","PHP","PLN","HRK","RUB","BRL","ISK","TRY","BGN","CNY","HKD","USD","MXN","KRW","SEK","NZD","HUF","ILS","RON","JPY","SGD","ZAR","IDR","CAD"]
     
     var delegateMoneyIn: GetMoneyInChoosen?
@@ -44,13 +52,15 @@ class MoneyUITableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "moneyCell") as! MoneyTableViewCell
-        cell.moneyLabel.text = poolOfCurrency[indexPath.row]
+        cell.moneyLabel.text = poolOfCurrency[indexPath.row].1
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegateMoneyIn?.updateMoneyInChoosen(data: poolOfCurrency[indexPath.row])
-        delegateMoneyOut?.updateMoneyOutChoosen(data: poolOfCurrency[indexPath.row])
+        delegateMoneyIn?.updateMoneyInChoosen(data: poolOfCurrency[indexPath.row].0
+        )
+        delegateMoneyOut?.updateMoneyOutChoosen(data: poolOfCurrency[indexPath.row].0
+        )
         self.dismiss(animated: true, completion: nil)
         
     }

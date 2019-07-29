@@ -20,11 +20,14 @@ class LanguageAvailable {
 
 class LanguageUITableViewController: UITableViewController {
     
-    let poolOfLanguage = [("EN", "English"),
-                          ("FR", "Français"),
-                          ("ES", "Español"),
-                          ("DE", "Deutsch"),
-                          ("IT", "Italiano")]
+    let poolOfLanguage = [("EN", "English", "unitedkingdom"),
+                          ("FR", "Français", "france"),
+                          ("ES", "Español", "spain"),
+                          ("DE", "Deutsch", "germany"),
+                          ("IT", "Italiano", "italy"),
+                          ("zh-CN", "Chinese Simplified", "china"),
+                          ("no", "Norwegian", "norway")
+                            ]
     
     var delegateLangIn: GetLangInChoosen?
     var delegateLangOut: GetLangOutChoosen?
@@ -52,8 +55,10 @@ class LanguageUITableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegateLangIn?.updateLangInChoosen(data: poolOfLanguage[indexPath.row].0)
-        delegateLangOut?.updateLangOutChoosen(data: poolOfLanguage[indexPath.row].0)
+        print(poolOfLanguage[indexPath.row].0)
+        print(poolOfLanguage[indexPath.row].2)
+        delegateLangIn?.updateLangInChoosen(data: poolOfLanguage[indexPath.row].0, image: poolOfLanguage[indexPath.row].2)
+        delegateLangOut?.updateLangOutChoosen(data: poolOfLanguage[indexPath.row].0, image: poolOfLanguage[indexPath.row].2)
         self.dismiss(animated: true, completion: nil)
         
     }

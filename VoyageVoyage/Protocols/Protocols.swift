@@ -44,17 +44,19 @@ public protocol ShowErrorMessage {
 
 public protocol GetMoneyInChoosen {
     func updateMoneyInChoosen(data: String)
+    //func updateMoneyInChooseForConversion(data: String)
 }
 
 public protocol GetMoneyOutChoosen {
     func updateMoneyOutChoosen(data: String)
+    //func updateMoneyOutChooseForConversion(data: String)
 }
 
 public protocol GetLangInChoosen {
-    func updateLangInChoosen(data: String)
+    func updateLangInChoosen(data: String, image: String)
 }
 
 public protocol GetLangOutChoosen {
-    func updateLangOutChoosen(data: String)
+    func updateLangOutChoosen(data: String, image: String)
 }
 

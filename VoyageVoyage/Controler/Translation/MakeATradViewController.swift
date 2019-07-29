@@ -9,6 +9,8 @@
 import UIKit
 
 class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangInChoosen, GetLangOutChoosen, TranslationData  {
+
+    
     
     @IBOutlet weak var languageInButton: UIButton!
     @IBOutlet weak var languageOutButton: UIButton!
@@ -19,7 +21,12 @@ class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangInChoo
     @IBAction func didTapTranslateButton(_ sender: Any) {
         updateTranslationData()
     }
+    
+    @IBAction func didTapReverseBUtton(_ sender: Any) {
+        reverseTraductionButtons()
+    }
 
+    
     
     let networkService = NetworkService()
     var dataTranslation: TranslationJSON?
@@ -27,12 +34,13 @@ class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangInChoo
     var langIn: String {
         return (languageInButton.titleLabel?.text)!
     }
+    
     var langOut: String {
         return (languageOutButton.titleLabel?.text)!
     }
     
     var textIn: String {
-        return textField.text!
+        return (textField.text!)
     }
 
     
@@ -50,12 +58,18 @@ class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangInChoo
     override func viewDidLoad() {
         self.hideKeyboardWhenTappedAround()
         delegatesSetUp()
+        viewSetup()
     }
     
 
     func delegatesSetUp() {
         networkService.translationDataDelegate = self
     }
+    
+    func viewSetup() {
+        translateButton.layer.cornerRadius = 5
+    }
+
     
     func updateTranslationData() {
         let GOOGLE_URL = "https://translation.googleapis.com/language/translate/v2?"
@@ -74,11 +88,15 @@ class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangInChoo
     }
     
 
-    func updateLangInChoosen(data: String) {
+    func updateLangInChoosen(data: String, image: String) {
+        let image = UIImage(named: image)
+        languageInButton.setImage(image, for: .normal)
         languageInButton.setTitle(data, for: .normal)
     }
     
-    func updateLangOutChoosen(data: String) {
+    func updateLangOutChoosen(data: String, image: String) {
+        let image = UIImage(named: image)
+        languageOutButton.setImage(image, for: .normal)
         languageOutButton.setTitle(data, for: .normal)
     }
     
@@ -86,6 +104,18 @@ class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangInChoo
         let textOut: String = (dataTranslation?.data?.translations![0].translatedText)!
         addTraductionView(langIn: langIn, langOut: langOut, textInput: textIn, textOutput: textOut)
         textField.text?.removeAll()
+    }
+    
+    func reverseTraductionButtons() {
+        let temp1 = languageInButton.titleLabel?.text
+        let temp1image = languageInButton.image(for: .normal)
+        let temp2 = languageOutButton.titleLabel?.text
+        let temp2image = languageOutButton.image(for: .normal)
+        
+        languageInButton.setTitle(temp2, for: .normal)
+        languageInButton.setImage(temp2image, for: .normal)
+        languageOutButton.setTitle(temp1, for: .normal)
+        languageOutButton.setImage(temp1image, for: .normal)
     }
 
     func showAlertNoConnectionError(with title: String, and message: String) {
