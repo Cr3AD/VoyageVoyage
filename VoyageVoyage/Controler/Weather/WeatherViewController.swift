@@ -23,7 +23,6 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
     @IBOutlet weak var sunsetDataLabel: UILabel!
     @IBOutlet weak var weatherHumidityDataLabel: UILabel!
     
-//    @IBOutlet weak var forcastScrollView: UIScrollView!
     @IBOutlet weak var secondForcastScrollView: UIScrollView!
     
     
@@ -63,13 +62,13 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
         self.dataWeather = data
         print("Data weather received")
         print(dataWeather as Any)
-        try updateWeatherDataOnScreen()
+        try! updateWeatherDataOnScreen()
     }
     func receiveForcastData(_ data: ForcastJSON) {
         self.dataForcast = data
         print("Data forcast received")
         print(dataForcast as Any)
-        updateWeatherForcastDataOnScreen()
+        try! updateWeatherForcastDataOnScreen()
     }
     
     enum updateWeatherDataOnScreenErrors: Error {
@@ -81,6 +80,12 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
         case noWind
         case noSunriseDate
         case noSunsetDate
+        case noHumidity
+        case noForcastList
+        case noForcastDate
+        case noForcastTemp
+        case noForcastWind
+        case noForcastImage
     }
     
     func updateWeatherDataOnScreen() throws {
@@ -115,6 +120,10 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
             throw updateWeatherDataOnScreenErrors.noSunsetDate
         }
         
+        guard let weatherHumidity: Int = self.dataWeather?.main?.humidity else {
+            throw updateWeatherDataOnScreenErrors.noHumidity
+        }
+        
         let temperatureFinal: String = ("\(Int(temperature - 273.15))°")
         let temperatureMinFinal: String = "\(Int(temperatureMin - 273.15))°"
         let temperatureMaxFinal: String = "\(Int(temperatureMax - 273.15))°"
@@ -123,7 +132,7 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
         let formatedSunriseDate : String = dateFormatter.string(from: sunriseDateFinal)
         let sunsetDateFinal = Date(timeIntervalSince1970: Double(sunsetDate))
         let formatedSunsetDate : String = dateFormatter.string(from: sunsetDateFinal)
-        let weatherHumidity: String = String("\(self.dataWeather?.main?.humidity)")
+        let weatherHumidityFinal : String = String("\(weatherHumidity)%")
         
         if currentDateTime > sunriseDateFinal && currentDateTime < sunsetDateFinal {
             isItDay = true
@@ -145,10 +154,108 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
             self.windDataLabel.text = windFinal
             self.sunsetDataLabel.text = formatedSunsetDate
             self.sunriseDataLabel.text = formatedSunriseDate
-            self.weatherHumidityDataLabel.text = weatherHumidity
+            self.weatherHumidityDataLabel.text = weatherHumidityFinal
             self.weatherIcon.image = UIImage(named: weatherIconName)
             
         }
+    }
+    
+    func updateWeatherForcastDataOnScreen() throws {
+        try! DispatchQueue.main.sync {
+            
+            guard let forcastList = self.dataForcast?.list else {
+                throw updateWeatherDataOnScreenErrors.noForcastList
+            }
+            
+            for i in forcastList {
+                
+                guard let time = i.dt else {
+                    throw updateWeatherDataOnScreenErrors.noForcastDate
+                }
+                
+                guard let forcastImage = i.weather![0].id else {
+                    throw updateWeatherDataOnScreenErrors.noForcastImage
+                }
+                
+                guard let forcastTemp = i.main!.temp else {
+                    throw updateWeatherDataOnScreenErrors.noForcastTemp
+                }
+                
+                guard let forcastWind = i.wind?.speed else {
+                    throw updateWeatherDataOnScreenErrors.noForcastWind
+                }
+                
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat  = "HH:mm"
+                let timeFinal: Date = Date(timeIntervalSince1970: Double(time))
+                let timeFormated : String = dateFormatter.string(from: timeFinal)
+                let forcastImageFinal = updateWeatherIcon(condition: forcastImage, isDay: true)
+                let forcastTempFinal: String = "\(Int(forcastTemp - 273.15))°"
+                let windFinal: String = "\(forcastWind) km/h"
+
+                print("second forcast added")
+                self.addSecondForcastView(forcastImage: forcastImageFinal, tempText: forcastTempFinal, timeText: timeFormated, wind: windFinal)
+                
+            }
+        }
+    }
+    
+    func addSecondForcastView(forcastImage: String, tempText: String, timeText: String, wind: String) {
+        
+        // Forcast View
+        let forcastSize = secondForcastScrollView.bounds
+        let numberOfView = Double(secondForcastScrollView.subviews.count) - 2
+        let forcastHeight: Double = 25
+        let forcastWidth = Double(forcastSize.width)
+        let position = numberOfView * forcastHeight
+        print("position is \(position)")
+        
+        let mainStackView = UIStackView(frame: CGRect(x: 0, y: position , width: forcastWidth, height: forcastHeight))
+        mainStackView.axis = .horizontal
+        mainStackView.alignment = .fill
+        mainStackView.distribution = .fillEqually
+       
+        
+        // Forcast Image
+        
+        let imgView = UIImageView()
+        imgView.frame = CGRect(x: 0, y: 0, width: forcastHeight / 2, height: forcastHeight / 2)
+        imgView.image = UIImage(named: forcastImage)
+        imgView.contentMode = .scaleAspectFit
+        mainStackView.addArrangedSubview(imgView)
+        
+        // Forcast temp label
+        let tempLabel = UILabel()
+        tempLabel.text = tempText
+        tempLabel.frame = CGRect(x: 0, y: 0, width: forcastHeight, height: forcastHeight)
+        tempLabel.textAlignment = .center
+        mainStackView.addArrangedSubview(tempLabel)
+        
+        // Forcast wind Image
+        let windImage = UIImageView()
+        windImage.frame = CGRect(x: 0, y: 0, width: forcastHeight / 3, height: forcastHeight / 3)
+        windImage.image = UIImage(named: "wind")
+        windImage.contentMode = .scaleAspectFit
+        mainStackView.addArrangedSubview(windImage)
+        
+        // Forcast wind label
+        let windLabel = UILabel()
+        windLabel.text = wind
+        windLabel.frame = CGRect(x: 0, y: 0, width: forcastHeight, height: forcastHeight)
+        windLabel.textAlignment = .right
+        mainStackView.addArrangedSubview(windLabel)
+        
+        // Forcast time label
+        let timeLabel = UILabel()
+        timeLabel.text = timeText
+        timeLabel.frame = CGRect(x: 0, y: 0, width: forcastHeight, height: forcastHeight / 3)
+        timeLabel.textAlignment = .center
+        mainStackView.addArrangedSubview(timeLabel)
+        
+        self.secondForcastScrollView.addSubview(mainStackView)
+        self.secondForcastScrollView.alwaysBounceVertical = true
+        
     }
     
     func updateWeatherIcon(condition: Int, isDay: Bool) -> String {
@@ -208,95 +315,6 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
                 return "moon"
             }
         }
-        
-    }
-    
-    func updateWeatherForcastDataOnScreen() {
-        
-        DispatchQueue.main.sync {
-            for i in (self.dataForcast?.list)! {
-                
-                let forcastImage = updateWeatherIcon(condition: i.weather![0].id!, isDay: true)
-                print(forcastImage)
-                
-                let forcastTemp = "\(Int(i.main!.temp! - 273.15))°"
-                print(forcastTemp)
-                
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat  = "HH:mm"
-                
-                //let time = String(Date(timeIntervalSince1970: Double((i.dt!))))
-                //let formatedTime = String(time)
-                
-                print("second forcast added")
-                self.addSecondForcastView(forcastImage: forcastImage, tempText: forcastTemp, timeText: "--:--", wind: "--kmh")
-                
-            }
-        }
-    }
-    
-    func addSecondForcastView(forcastImage: String, tempText: String, timeText: String, wind: String) {
-        
-        // Forcast View
-        let forcastSize = secondForcastScrollView.bounds
-        let numberOfView = Double(secondForcastScrollView.subviews.count) - 2
-        let forcastHeight: Double = 25
-        let forcastWidth = Double(forcastSize.width)
-        let position = numberOfView * forcastHeight
-        print("position is \(position)")
-        
-        let mainStackView = UIStackView(frame: CGRect(x: 0, y: position , width: forcastWidth, height: forcastHeight))
-        mainStackView.axis = .horizontal
-        mainStackView.alignment = .fill
-        mainStackView.distribution = .fillProportionally
-        mainStackView.spacing = 10
-        
-        
-        // Forcast Image
-        
-        let imgView = UIImageView()
-        imgView.frame = CGRect(x: 0, y: 0, width: forcastHeight / 2, height: forcastHeight / 2)
-        imgView.image = UIImage(named: forcastImage)
-        imgView.contentMode = .scaleAspectFit
-        mainStackView.addArrangedSubview(imgView)
-        
-        // Forcast temp label
-        let tempLabel = UILabel()
-        tempLabel.text = tempText
-        tempLabel.frame = CGRect(x: 0, y: 0, width: forcastHeight, height: forcastHeight)
-        tempLabel.textAlignment = .center
-        mainStackView.addArrangedSubview(tempLabel)
-        
-        // Forcast wind Image
-        let windImage = UIImageView()
-        windImage.frame = CGRect(x: 0, y: 0, width: forcastHeight / 2, height: forcastHeight / 2)
-        windImage.image = UIImage(named: "wind")
-        windImage.contentMode = .scaleAspectFit
-        mainStackView.addArrangedSubview(windImage)
-        
-        
-        // Forcast wind label
-        let windLabel = UILabel()
-        windLabel.text = wind
-        windLabel.frame = CGRect(x: 0, y: 0, width: forcastHeight, height: forcastHeight)
-        windLabel.textAlignment = .right
-        mainStackView.addArrangedSubview(windLabel)
-        
-        
-        
-        
-        
-        
-        // Forcast time label
-        let timeLabel = UILabel()
-        timeLabel.text = timeText
-        timeLabel.frame = CGRect(x: 0, y: 0, width: forcastHeight, height: forcastHeight / 3)
-        timeLabel.textAlignment = .center
-        mainStackView.addArrangedSubview(timeLabel)
-        
-        
-        self.secondForcastScrollView.addSubview(mainStackView)
-        self.secondForcastScrollView.alwaysBounceVertical = true
         
     }
     

@@ -81,10 +81,10 @@ class MoneyViewController: UIViewController, GetMoneyInChoosen, GetMoneyOutChoos
     }
     
     func convertMoney() {
-        guard let valueIn = Double(textmoneyIn.text!) else {
+        guard let valueIn: Double = Double(textmoneyIn.text!) else {
             return
         }
-        var rateIn:Double {
+        var rateIn: Double {
             if buttonMoneyIn.titleLabel!.text == dataMoney?.base {
                 return 1.0
             } else {
