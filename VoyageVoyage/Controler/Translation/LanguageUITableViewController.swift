@@ -29,14 +29,12 @@ class LanguageUITableViewController: UITableViewController {
                           ("no", "Norwegian", "norway")
                             ]
     
-    var delegateLangIn: GetLangInChoosen?
-    var delegateLangOut: GetLangOutChoosen?
+    var delegateLangIn: GetLangChoosen?
+    var delegateLangOut: GetLangChoosen?
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
-    
     
     // MARK: - Table view data source
     
@@ -50,13 +48,11 @@ class LanguageUITableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "langCell") as! LanguageTableViewCell
-        cell.languageLabel.text = poolOfLanguage[indexPath.row].1
+        cell.languageLabel?.text = poolOfLanguage[indexPath.row].1
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(poolOfLanguage[indexPath.row].0)
-        print(poolOfLanguage[indexPath.row].2)
         delegateLangIn?.updateLangInChoosen(data: poolOfLanguage[indexPath.row].0, image: poolOfLanguage[indexPath.row].2)
         delegateLangOut?.updateLangOutChoosen(data: poolOfLanguage[indexPath.row].0, image: poolOfLanguage[indexPath.row].2)
         self.dismiss(animated: true, completion: nil)

@@ -10,108 +10,88 @@ import UIKit
 
 extension MakeATradViewController {
     
+    func makeLangChoosenLabel(with lang: String) -> UILabel {
+        
+        let langChoosenLabel = UILabel()
+        langChoosenLabel.text = lang
+        langChoosenLabel.backgroundColor = .black
+        langChoosenLabel.textColor = .white
+        langChoosenLabel.alpha = 1
+        langChoosenLabel.textAlignment = .center
+        
+        return langChoosenLabel
+    }
     
-
+    func makeTextTraductionLabel(with text: String) -> UILabel {
+        
+        let textTradLabel = UILabel()
+        textTradLabel.text = text
+        textTradLabel.backgroundColor = .black
+        textTradLabel.textColor = .white
+        textTradLabel.alpha = 0.75
+        textTradLabel.numberOfLines = 0
+        
+        return textTradLabel
+    }
     
-    func addTraductionView(langIn: String, langOut: String, textInput: String, textOutput: String) {
+    func makeInternalStackView(width: Int) -> UIStackView {
         
-        // Parameters
-        let traductionViewSize = traductionScrollView.bounds
-        let numberOfView = Double(traductionScrollView.subviews.count - 2)
-        let traductionViewWidth = Double(traductionViewSize.width)
-        let position = numberOfView * 110
+        let stackView = UIStackView(frame: CGRect(x: 0, y: 0, width: width, height: .max))
+        stackView.axis = .vertical
+        stackView.spacing = 1
+        stackView.distribution = .fillProportionally
         
-        print("position is \(position)")
+        return stackView
+    }
+    
+    func makeMainStackView(x: Int, y: Int, width: Int, height: Int) -> UIStackView {
         
-
-        var arrayOfInfoViews = [UIView]()
-        var arrayOfTranslatedText = [UIView]()
-
-        //////////////////
-        // main Stack view
-        let mainStackView = UIStackView(frame: CGRect(x: 0, y: position , width: traductionViewWidth, height: 110))
+        let mainStackView = UIStackView(frame: CGRect(x: x, y: y, width: width, height: height))
         mainStackView.axis = .horizontal
         mainStackView.alignment = .fill
-        mainStackView.distribution = .fillProportionally
-        mainStackView.spacing = 10
-//        mainStackView.layer.cornerRadius = 20 // radius
+        mainStackView.spacing = 2
+        mainStackView.distribution = .fill
         
-        // INFO traction label
-        let infoStackView = UIStackView(frame: CGRect(x: 0, y: 0, width: 15, height: traductionViewWidth))
-        infoStackView.axis = .vertical
-        infoStackView.distribution = .fillEqually
-        infoStackView.layer.cornerRadius = 20 // radius?
+        return mainStackView
+    }
+    
+    func makeMainView(x: Int, y: Int, width: Int, height: Int) -> UIView {
         
-        // TEXT + translated label
-        let textStackView = UIStackView(frame: CGRect(x: 0, y: 0, width: traductionViewWidth, height: traductionViewWidth))
-        textStackView.axis = .vertical
-        textStackView.distribution = .fillEqually
-        ///////////////////////////////
+        let mainView = UIView(frame: CGRect(x: x, y: y, width: width, height: height))
+        mainView.layer.masksToBounds = true
+        mainView.layer.cornerRadius = 15
         
-        ////// labels //////
-        
-        //langInLabel
-        let langInLabel = UILabel()
-        langInLabel.text = langIn
-        arrayOfInfoViews.append(langInLabel)
-        langInLabel.font = UIFont.systemFont(ofSize : 14)
-        
-        
+        return mainView
+    }
 
-        // langOutLabel
-        let langOutLabel = UILabel()
-        langOutLabel.text = langOut
-        arrayOfInfoViews.append(langOutLabel)
-        langOutLabel.font = UIFont.systemFont(ofSize : 14)
-        langOutLabel.textAlignment = .center
-        langOutLabel.backgroundColor = .black
-        langOutLabel.font.withSize(15)
-        langOutLabel.textColor = .white
-        langOutLabel.layer.cornerRadius = 10 // radius?
-        langOutLabel.preferredMaxLayoutWidth = 20
+    func makeTraductionView(langIn: String, langOut: String, textInput: String, textOutput: String) {
         
-        ////// text labels //////
+        // Parameters
+        let traductionViewSize = traductionScrollView?.bounds
+        let traductionViewWidth = (traductionViewSize?.width ?? 0)
         
-        // text input
-        let textInputLabel = UILabel()
-        textInputLabel.text = textInput
-        arrayOfTranslatedText.append(textInputLabel)
-        textInputLabel.font = UIFont.systemFont(ofSize : 14)
+        let numberOfView = traductionScrollView?.subviews.count ?? 0
+        let position = (numberOfView - 2) * 110 + 10
         
-        let textOutputLabel = UILabel()
-        textOutputLabel.text = textOutput
-        arrayOfTranslatedText.append(textOutputLabel)
-        textOutputLabel.font = UIFont.systemFont(ofSize : 14)
+        let infoView = makeInternalStackView(width: (traductionViewWidth * 0.2).intValue)
+        infoView.addArrangedSubview(makeLangChoosenLabel(with: langIn))
+        infoView.addArrangedSubview(makeLangChoosenLabel(with: langOut))
         
-        ////// others //////
-        
-//        let lineView = UIView(frame: CGRect(x: 0, y: position, width: traductionViewWidth, height: 1))
-//        lineView.backgroundColor = .black
-//        let lineViewHeightConnstraint = NSLayoutConstraint(item: lineView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 1)
-//        let lineViewWidthConnstraint = NSLayoutConstraint(item: lineView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 1)
-//        lineView.addConstraint(lineViewHeightConnstraint)
-//        lineView.addConstraint(lineViewWidthConnstraint)
+        let textView = makeInternalStackView(width: (traductionViewWidth * 0.8).intValue)
+        textView.addArrangedSubview(makeTextTraductionLabel(with: textInput))
+        textView.addArrangedSubview(makeTextTraductionLabel(with: textOutput))
+        let mainStackView = makeMainStackView(x: 0, y: 0, width: traductionViewWidth.intValue, height: 105)
+        mainStackView.addArrangedSubview(infoView)
+        mainStackView.addArrangedSubview(textView)
 
+        let mainView = makeMainView(x: 0, y: position, width: traductionViewWidth.intValue, height: 110)
+        mainView.addSubview(mainStackView)
         
-//        print("view added")
-//
-        for views in arrayOfInfoViews {
-            print(views)
-            infoStackView.addArrangedSubview(views)
-        }
-        for views in arrayOfTranslatedText {
-            print(views)
-            textStackView.addArrangedSubview(views)
-        }
-
-        
-        mainStackView.addArrangedSubview(infoStackView)
-        mainStackView.addArrangedSubview(textStackView)
-//        mainStackView.addArrangedSubview(lineView)
-        
-        
-        traductionScrollView.addSubview(mainStackView)
-        traductionScrollView.alwaysBounceHorizontal = false
+        traductionScrollView?.addSubview(mainView)
+        traductionScrollView?.alwaysBounceHorizontal = false
     }
     
 }
+
+
+

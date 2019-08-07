@@ -10,10 +10,8 @@ import UIKit
 
 class MoneyTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var moneyLabel: UILabel!
-    
-    
-
+    @IBOutlet weak var moneyLabel: UILabel?
+   
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

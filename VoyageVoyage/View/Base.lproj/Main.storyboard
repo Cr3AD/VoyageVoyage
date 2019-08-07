@@ -284,9 +284,9 @@
                     <tabBarItem key="tabBarItem" title="" image="weather" id="DFs-jN-kA6"/>
                     <connections>
                         <outlet property="cityLabel" destination="IUk-QO-0cU" id="d3J-DL-Ae2"/>
+                        <outlet property="forcastScrollView" destination="ztU-OB-cp9" id="Vi1-cf-X6T"/>
                         <outlet property="maxTempDataLabel" destination="XP3-Zm-6lF" id="1oZ-Vc-iZR"/>
                         <outlet property="minTempDataLabel" destination="HpH-MG-N5n" id="CeG-B7-1km"/>
-                        <outlet property="secondForcastScrollView" destination="ztU-OB-cp9" id="Vi1-cf-X6T"/>
                         <outlet property="sunriseDataLabel" destination="s89-LK-6Ld" id="AJM-WC-jkP"/>
                         <outlet property="sunsetDataLabel" destination="i9p-FS-4tm" id="R0t-ah-7yU"/>
                         <outlet property="tempDataLabel" destination="5Uc-PY-Um7" id="xqY-VZ-mCv"/>
@@ -402,6 +402,7 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="didTapTranslateButton:" destination="GcX-Qo-pJ0" eventType="touchUpInside" id="M10-U1-pE6"/>
+                                                    <action selector="didTapTranslateButton:" destination="GcX-Qo-pJ0" eventType="touchUpOutside" id="zX8-UN-E6h"/>
                                                 </connections>
                                             </button>
                                         </subviews>

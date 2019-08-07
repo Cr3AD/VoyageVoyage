@@ -29,7 +29,7 @@ class MoneyUITableViewController: UITableViewController {
                           ("CAD", "Canadian Dollard", "canada"),
                           ("CNY", "Yuan", "china")]
     
-    let fullPoolOfCurrency = ["EUR","GBP","NOK","THB","CHF","INR","AUD","DKK","MYR","CZK","PHP","PLN","HRK","RUB","BRL","ISK","TRY","BGN","CNY","HKD","USD","MXN","KRW","SEK","NZD","HUF","ILS","RON","JPY","SGD","ZAR","IDR","CAD"]
+//    let fullPoolOfCurrency = ["EUR","GBP","NOK","THB","CHF","INR","AUD","DKK","MYR","CZK","PHP","PLN","HRK","RUB","BRL","ISK","TRY","BGN","CNY","HKD","USD","MXN","KRW","SEK","NZD","HUF","ILS","RON","JPY","SGD","ZAR","IDR","CAD"]
     
     var delegateMoneyIn: GetMoneyInChoosen?
     var delegateMoneyOut: GetMoneyOutChoosen?
@@ -52,7 +52,7 @@ class MoneyUITableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "moneyCell") as! MoneyTableViewCell
-        cell.moneyLabel.text = poolOfCurrency[indexPath.row].1
+        cell.moneyLabel?.text = poolOfCurrency[indexPath.row].1
         return cell
     }
     

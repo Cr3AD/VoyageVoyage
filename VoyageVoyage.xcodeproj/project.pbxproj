@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6401200422EF270400CCB7BF /* DarkSky.json in Resources */ = {isa = PBXBuildFile; fileRef = 6401200322EF270300CCB7BF /* DarkSky.json */; };
-		6401200622EF27BA00CCB7BF /* DarkSkyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6401200522EF27BA00CCB7BF /* DarkSkyJSON.swift */; };
 		6405C4A122ACDA2700D97428 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6405C4A022ACDA2700D97428 /* Extension.swift */; };
 		6410BDA222D36F1F003E102A /* MoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6410BDA122D36F1F003E102A /* MoneyViewController.swift */; };
 		6413F43C229EB756000D0C64 /* MakeATradViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6413F43B229EB756000D0C64 /* MakeATradViewController.swift */; };
@@ -20,7 +18,10 @@
 		6445CA3D22DF5F4100CAD6E6 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6445CA3C22DF5F4100CAD6E6 /* API.swift */; };
 		645856E1229BE311006D526D /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645856E0229BE311006D526D /* Protocols.swift */; };
 		645856E4229BE3B8006D526D /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645856E3229BE3B8006D526D /* LocationService.swift */; };
+		646534A422F182900018C157 /* WeatherViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646534A322F182900018C157 /* WeatherViews.swift */; };
 		649D745422C3A83700A3E526 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649D745322C3A83700A3E526 /* NetworkService.swift */; };
+		64BEB9AE22F9579200CAB9B8 /* Translation.json in Resources */ = {isa = PBXBuildFile; fileRef = 64BEB9AD22F9579200CAB9B8 /* Translation.json */; };
+		64BEB9B022F95C0900CAB9B8 /* URLSessionFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BEB9AF22F95C0900CAB9B8 /* URLSessionFake.swift */; };
 		64C3717E22EF2D0A00039C85 /* TraductionViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C3717D22EF2D0900039C85 /* TraductionViews.swift */; };
 		64DFD8D122E1BDC400667849 /* MoneyUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64DFD8D022E1BDC400667849 /* MoneyUITableViewController.swift */; };
 		64DFD8D322E1C48F00667849 /* MoneyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64DFD8D222E1C48F00667849 /* MoneyTableViewCell.swift */; };
@@ -50,8 +51,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6401200322EF270300CCB7BF /* DarkSky.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = DarkSky.json; sourceTree = "<group>"; };
-		6401200522EF27BA00CCB7BF /* DarkSkyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkSkyJSON.swift; sourceTree = "<group>"; };
 		6405C4A022ACDA2700D97428 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		6410BDA122D36F1F003E102A /* MoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyViewController.swift; sourceTree = "<group>"; };
 		6413F43B229EB756000D0C64 /* MakeATradViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeATradViewController.swift; sourceTree = "<group>"; };
@@ -65,7 +64,10 @@
 		6445CA3C22DF5F4100CAD6E6 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = API.swift; path = VoyageVoyage/API.swift; sourceTree = "<group>"; };
 		645856E0229BE311006D526D /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		645856E3229BE3B8006D526D /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		646534A322F182900018C157 /* WeatherViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViews.swift; sourceTree = "<group>"; };
 		649D745322C3A83700A3E526 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NetworkService.swift; path = ../NetworkService.swift; sourceTree = "<group>"; };
+		64BEB9AD22F9579200CAB9B8 /* Translation.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Translation.json; sourceTree = "<group>"; };
+		64BEB9AF22F95C0900CAB9B8 /* URLSessionFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionFake.swift; sourceTree = "<group>"; };
 		64C3717D22EF2D0900039C85 /* TraductionViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraductionViews.swift; sourceTree = "<group>"; };
 		64DFD8D022E1BDC400667849 /* MoneyUITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyUITableViewController.swift; sourceTree = "<group>"; };
 		64DFD8D222E1C48F00667849 /* MoneyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTableViewCell.swift; sourceTree = "<group>"; };
@@ -115,13 +117,14 @@
 		6414A74622A14584006774D6 /* VoyageVoyageTests */ = {
 			isa = PBXGroup;
 			children = (
-				6414A74722A14584006774D6 /* VoyageVoyageTests.swift */,
 				6414A74922A14584006774D6 /* Info.plist */,
+				6414A74722A14584006774D6 /* VoyageVoyageTests.swift */,
+				6414A75122A14652006774D6 /* FakeResponceData.swift */,
+				64BEB9AF22F95C0900CAB9B8 /* URLSessionFake.swift */,
+				64BEB9AD22F9579200CAB9B8 /* Translation.json */,
 				6414A74F22A14602006774D6 /* Weather.json */,
-				6401200322EF270300CCB7BF /* DarkSky.json */,
 				64E0E6BF22DCCAD900FDA848 /* Forcast.json */,
 				64E0E6BD22DCCA8800FDA848 /* Money.json */,
-				6414A75122A14652006774D6 /* FakeResponceData.swift */,
 			);
 			path = VoyageVoyageTests;
 			sourceTree = "<group>";
@@ -177,7 +180,6 @@
 			isa = PBXGroup;
 			children = (
 				64E0E6B722DCC9DE00FDA848 /* WeatherJSON.swift */,
-				6401200522EF27BA00CCB7BF /* DarkSkyJSON.swift */,
 				64E0E6C122DCCB8500FDA848 /* ForcastJSON.swift */,
 			);
 			path = Weather;
@@ -261,6 +263,7 @@
 			isa = PBXGroup;
 			children = (
 				64E0BA8C229731D5005F4536 /* WeatherViewController.swift */,
+				646534A322F182900018C157 /* WeatherViews.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -354,8 +357,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64BEB9AE22F9579200CAB9B8 /* Translation.json in Resources */,
 				6414A75022A14603006774D6 /* Weather.json in Resources */,
-				6401200422EF270400CCB7BF /* DarkSky.json in Resources */,
 				64E0E6C022DCCAD900FDA848 /* Forcast.json in Resources */,
 				64E0E6BE22DCCA8800FDA848 /* Money.json in Resources */,
 			);
@@ -405,6 +408,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6414A74822A14584006774D6 /* VoyageVoyageTests.swift in Sources */,
+				64BEB9B022F95C0900CAB9B8 /* URLSessionFake.swift in Sources */,
 				6414A75222A14652006774D6 /* FakeResponceData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -417,11 +421,11 @@
 				6405C4A122ACDA2700D97428 /* Extension.swift in Sources */,
 				645856E4229BE3B8006D526D /* LocationService.swift in Sources */,
 				6413F43C229EB756000D0C64 /* MakeATradViewController.swift in Sources */,
+				646534A422F182900018C157 /* WeatherViews.swift in Sources */,
 				64E0BA8B229731D5005F4536 /* AppDelegate.swift in Sources */,
 				64E0E6BA22DCCA3100FDA848 /* MoneyJSON.swift in Sources */,
 				64DFD8DA22E7840000667849 /* LanguageTableViewCell.swift in Sources */,
 				64E0E6C222DCCB8500FDA848 /* ForcastJSON.swift in Sources */,
-				6401200622EF27BA00CCB7BF /* DarkSkyJSON.swift in Sources */,
 				64DFD8D822E783DE00667849 /* LanguageUITableViewController.swift in Sources */,
 				6410BDA222D36F1F003E102A /* MoneyViewController.swift in Sources */,
 				64DFD8D122E1BDC400667849 /* MoneyUITableViewController.swift in Sources */,

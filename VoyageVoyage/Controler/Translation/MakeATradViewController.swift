@@ -8,16 +8,16 @@
 
 import UIKit
 
-class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangInChoosen, GetLangOutChoosen, TranslationData  {
+class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangChoosen, TranslationData  {
 
     
-    @IBOutlet weak var mainView: UIView!
-    @IBOutlet weak var languageInButton: UIButton!
-    @IBOutlet weak var languageOutButton: UIButton!
-    @IBOutlet weak var inversionButton: UIButton!
-    @IBOutlet weak var translateButton: UIButton!
-    @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var traductionScrollView: UIScrollView!
+    @IBOutlet weak var mainView: UIView?
+    @IBOutlet weak var languageInButton: UIButton?
+    @IBOutlet weak var languageOutButton: UIButton?
+    @IBOutlet weak var inversionButton: UIButton?
+    @IBOutlet weak var translateButton: UIButton?
+    @IBOutlet weak var textField: UITextField?
+    @IBOutlet weak var traductionScrollView: UIScrollView?
     @IBAction func didTapTranslateButton(_ sender: Any) {
         updateTranslationData()
         
@@ -35,43 +35,32 @@ class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangInChoo
         animateView(way: "down")
     }
 
-    
-    
-    
-    
     func animateView(way: String) {
-        UIView.animate(withDuration: 0.1, delay: 0.1, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
             let screenHeight = UIScreen.main.bounds.height
             if way == "up" {
-            self.mainView.center.y -= screenHeight / 3
+                self.mainView?.center.y -= screenHeight / 3
             } else {
-                self.mainView.center.y += screenHeight / 3
+                self.mainView?.center.y += screenHeight / 3
             }
-        }, completion: { finished in
-            
-            
         })
     }
 
-    
     let networkService = NetworkService()
     var dataTranslation: TranslationJSON?
     
     var langIn: String {
-        return (languageInButton.titleLabel?.text)!
+        return languageInButton?.titleLabel?.text ?? ""
     }
 
     var langOut: String {
-        return (languageOutButton.titleLabel?.text)!
+        return languageOutButton?.titleLabel?.text ?? ""
     }
 
     var textIn: String {
-        return (textField.text!)
+        return textField?.text ?? ""
     }
 
-
-
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "langueInSegue" {
             let langTableView = segue.destination as! LanguageUITableViewController
@@ -95,17 +84,19 @@ class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangInChoo
     }
     
     func viewSetup() {
-        translateButton.layer.cornerRadius = 5
+        translateButton?.layer.cornerRadius = 5
     }
 
-    
     func updateTranslationData() {
-        
-        if textField.text != "" {
-
-        let GOOGLE_URL = "https://translation.googleapis.com/language/translate/v2?"
-        let googleAPI = valueForAPIKey(named:"googleAPI")
-        networkService.networking(url: "\(GOOGLE_URL)key=\(googleAPI)&q=\(textIn)&source=\(langIn)&target=\(langOut)", requestType: "traduction")
+        if textField?.text != "" {
+            
+            let GOOGLE_URL = "https://translation.googleapis.com/language/translate/v2?"
+            let googleAPI = valueForAPIKey(named:"googleAPI")
+            do {
+                try networkService.networking(url: "\(GOOGLE_URL)key=\(googleAPI)&q=\(textIn.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&source=\(langIn)&target=\(langOut)", requestType: "traduction")
+            } catch let error {
+                print(error)
+            }
         }
     }
     
@@ -115,40 +106,51 @@ class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangInChoo
         print(self.dataTranslation as Any)
         
         DispatchQueue.main.async {
-            self.updateTranslationDataOnScreen()
+            do {
+                try self.updateTranslationDataOnScreen()
+            } catch let error {
+                print(error)
+            }
         }
     }
     
-
     func updateLangInChoosen(data: String, image: String) {
         let image = UIImage(named: image)
-        languageInButton.setImage(image, for: .normal)
-        languageInButton.setTitle(data, for: .normal)
+        languageInButton?.setImage(image, for: .normal)
+        languageInButton?.setTitle(data, for: .normal)
     }
     
     func updateLangOutChoosen(data: String, image: String) {
         let image = UIImage(named: image)
-        languageOutButton.setImage(image, for: .normal)
-        languageOutButton.setTitle(data, for: .normal)
+        languageOutButton?.setImage(image, for: .normal)
+        languageOutButton?.setTitle(data, for: .normal)
     }
     
-    func updateTranslationDataOnScreen() {
-
-        let textOut: String = (dataTranslation?.data?.translations![0].translatedText)!
-        addTraductionView(langIn: langIn, langOut: langOut, textInput: textIn, textOutput: textOut)
-        textField.text?.removeAll()
+    func updateTranslationDataOnScreen() throws {
+        
+        guard let translatedText = dataTranslation?.data?.translations?[0].translatedText else {
+            throw updateTranslationDataOnScreenError.cantReadDataInJSON
+        }
+        
+        let textOut: String = translatedText
+        makeTraductionView(langIn: langIn, langOut: langOut, textInput: textIn, textOutput: textOut)
+        textField?.text?.removeAll()
+    }
+    
+    enum updateTranslationDataOnScreenError: Error {
+        case cantReadDataInJSON
     }
     
     func reverseTraductionButtons() {
-        let temp1 = languageInButton.titleLabel?.text
-        let temp1image = languageInButton.image(for: .normal)
-        let temp2 = languageOutButton.titleLabel?.text
-        let temp2image = languageOutButton.image(for: .normal)
+        let temp1 = languageInButton?.titleLabel?.text
+        let temp1image = languageInButton?.image(for: .normal)
+        let temp2 = languageOutButton?.titleLabel?.text
+        let temp2image = languageOutButton?.image(for: .normal)
         
-        languageInButton.setTitle(temp2, for: .normal)
-        languageInButton.setImage(temp2image, for: .normal)
-        languageOutButton.setTitle(temp1, for: .normal)
-        languageOutButton.setImage(temp1image, for: .normal)
+        languageInButton?.setTitle(temp2, for: .normal)
+        languageInButton?.setImage(temp2image, for: .normal)
+        languageOutButton?.setTitle(temp1, for: .normal)
+        languageOutButton?.setImage(temp1image, for: .normal)
     }
 
     func showAlertNoConnectionError(with title: String, and message: String) {
@@ -157,7 +159,9 @@ class MakeATradViewController: UIViewController, ShowErrorMessage, GetLangInChoo
                                           message: message,
                                           preferredStyle: .alert)
             let reload = UIAlertAction(title: "Retry", style: .default, handler: { (action) -> Void in
+                self.updateTranslationData()
             })
+            
             let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: {(action) -> Void in
             })
             alert.addAction(reload)

@@ -10,20 +10,20 @@ import UIKit
 
 class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessage, WeatherData, ForcastData {
     
-    @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var weatherIcon: UIImageView!
-    @IBOutlet weak var tempDataLabel: UILabel!
-    @IBOutlet weak var weatherDescriptionDataLabel: UILabel!
+    @IBOutlet weak var cityLabel: UILabel?
+    @IBOutlet weak var weatherIcon: UIImageView?
+    @IBOutlet weak var tempDataLabel: UILabel?
+    @IBOutlet weak var weatherDescriptionDataLabel: UILabel?
     
-    @IBOutlet weak var maxTempDataLabel: UILabel!
-    @IBOutlet weak var minTempDataLabel: UILabel!
+    @IBOutlet weak var maxTempDataLabel: UILabel?
+    @IBOutlet weak var minTempDataLabel: UILabel?
     
-    @IBOutlet weak var windDataLabel: UILabel!
-    @IBOutlet weak var sunriseDataLabel: UILabel!
-    @IBOutlet weak var sunsetDataLabel: UILabel!
-    @IBOutlet weak var weatherHumidityDataLabel: UILabel!
+    @IBOutlet weak var windDataLabel: UILabel?
+    @IBOutlet weak var sunriseDataLabel: UILabel?
+    @IBOutlet weak var sunsetDataLabel: UILabel?
+    @IBOutlet weak var weatherHumidityDataLabel: UILabel?
     
-    @IBOutlet weak var secondForcastScrollView: UIScrollView!
+    @IBOutlet weak var forcastScrollView: UIScrollView?
     
     
     let networkService = NetworkService()
@@ -54,21 +54,34 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
         let weatherAPI = valueForAPIKey(named:"weatherAPI")
         let lat = String(locationService.latitude)
         let lon = String(locationService.longitude)
-        networkService.networking(url: "\(WEATHER_URL)?APPID=\(weatherAPI)&lon=\(lon)&lat=\(lat)", requestType: "weather")
-        networkService.networking(url: "\(FORCAST_URL)?APPID=\(weatherAPI)&lon=\(lon)&lat=\(lat)&cnt=5", requestType: "forcast")
+        do {
+        try networkService.networking(url: "\(WEATHER_URL)?APPID=\(weatherAPI)&lon=\(lon)&lat=\(lat)", requestType: "weather")
+        try networkService.networking(url: "\(FORCAST_URL)?APPID=\(weatherAPI)&lon=\(lon)&lat=\(lat)&cnt=5", requestType: "forcast")
+        } catch let error {
+            print(error)
+        }
     }
     
     func receiveWeatherData(_ data: WeatherJSON) {
         self.dataWeather = data
         print("Data weather received")
         print(dataWeather as Any)
-        try! updateWeatherDataOnScreen()
+        do {
+            try updateWeatherDataOnScreen()
+        } catch let error {
+            print(error)
+        }
     }
+    
     func receiveForcastData(_ data: ForcastJSON) {
         self.dataForcast = data
         print("Data forcast received")
         print(dataForcast as Any)
-        try! updateWeatherForcastDataOnScreen()
+        do {
+            try updateWeatherForcastDataOnScreen()
+        } catch let error {
+            print(error)
+        }
     }
     
     enum updateWeatherDataOnScreenErrors: Error {
@@ -81,6 +94,7 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
         case noSunriseDate
         case noSunsetDate
         case noHumidity
+        case noCondition
         case noForcastList
         case noForcastDate
         case noForcastTemp
@@ -124,15 +138,19 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
             throw updateWeatherDataOnScreenErrors.noHumidity
         }
         
-        let temperatureFinal: String = ("\(Int(temperature - 273.15))°")
-        let temperatureMinFinal: String = "\(Int(temperatureMin - 273.15))°"
-        let temperatureMaxFinal: String = "\(Int(temperatureMax - 273.15))°"
-        let windFinal: String = "\(Int(wind)) km/h"
-        let sunriseDateFinal = Date(timeIntervalSince1970: Double(sunriseDate))
-        let formatedSunriseDate : String = dateFormatter.string(from: sunriseDateFinal)
-        let sunsetDateFinal = Date(timeIntervalSince1970: Double(sunsetDate))
-        let formatedSunsetDate : String = dateFormatter.string(from: sunsetDateFinal)
-        let weatherHumidityFinal : String = String("\(weatherHumidity)%")
+        guard let condition: Int = self.dataWeather?.weather?[0].id else {
+            throw updateWeatherDataOnScreenErrors.noCondition
+        }
+        
+        let temperatureFinal = (temperature - 273.15).intValue.string + "°"
+        let temperatureMinFinal = (temperatureMin - 273.15).intValue.string + "°"
+        let temperatureMaxFinal = (temperatureMax - 273.15).intValue.string + "°"
+        let windFinal = (wind).intValue.string +  "kmh"
+        let sunriseDateFinal = Date(timeIntervalSince1970: sunriseDate.doubleValue)
+        let formatedSunriseDate = dateFormatter.string(from: sunriseDateFinal)
+        let sunsetDateFinal = Date(timeIntervalSince1970: sunsetDate.doubleValue)
+        let formatedSunsetDate = dateFormatter.string(from: sunsetDateFinal)
+        let weatherHumidityFinal = weatherHumidity.string + "%"
         
         if currentDateTime > sunriseDateFinal && currentDateTime < sunsetDateFinal {
             isItDay = true
@@ -140,121 +158,86 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
             isItDay = false
         }
         
-        let condition: Int = (self.dataWeather?.weather![0].id)!
         let weatherIconName: String = updateWeatherIcon(condition: condition, isDay: isItDay)
         
-        
         DispatchQueue.main.sync {
-            
-            self.cityLabel.text = city
-            self.weatherDescriptionDataLabel.text = weatherDescription
-            self.tempDataLabel.text = temperatureFinal
-            self.minTempDataLabel.text = temperatureMinFinal
-            self.maxTempDataLabel.text = temperatureMaxFinal
-            self.windDataLabel.text = windFinal
-            self.sunsetDataLabel.text = formatedSunsetDate
-            self.sunriseDataLabel.text = formatedSunriseDate
-            self.weatherHumidityDataLabel.text = weatherHumidityFinal
-            self.weatherIcon.image = UIImage(named: weatherIconName)
-            
+            self.cityLabel?.text = city
+            self.weatherDescriptionDataLabel?.text = weatherDescription
+            self.tempDataLabel?.text = temperatureFinal
+            self.minTempDataLabel?.text = temperatureMinFinal
+            self.maxTempDataLabel?.text = temperatureMaxFinal
+            self.windDataLabel?.text = windFinal
+            self.sunsetDataLabel?.text = formatedSunsetDate
+            self.sunriseDataLabel?.text = formatedSunriseDate
+            self.weatherHumidityDataLabel?.text = weatherHumidityFinal
+            self.weatherIcon?.image = UIImage(named: weatherIconName)
         }
     }
     
     func updateWeatherForcastDataOnScreen() throws {
-        try! DispatchQueue.main.sync {
-            
-            guard let forcastList = self.dataForcast?.list else {
-                throw updateWeatherDataOnScreenErrors.noForcastList
+        do {
+            try DispatchQueue.main.sync {
+                
+                guard let forcastList = self.dataForcast?.list else {
+                    throw updateWeatherDataOnScreenErrors.noForcastList
+                }
+                
+                for i in forcastList {
+                    
+                    guard let time = i.dt else {
+                        throw updateWeatherDataOnScreenErrors.noForcastDate
+                    }
+                    
+                    guard let forcastImage = i.weather?[0].id else {
+                        throw updateWeatherDataOnScreenErrors.noForcastImage
+                    }
+                    
+                    guard let forcastTemp = i.main?.temp else {
+                        throw updateWeatherDataOnScreenErrors.noForcastTemp
+                    }
+                    
+                    guard let forcastWind = i.wind?.speed else {
+                        throw updateWeatherDataOnScreenErrors.noForcastWind
+                    }
+                    
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat  = "HH:mm"
+                    let timeFinal = Date(timeIntervalSince1970: time.doubleValue)
+                    let timeFormated = dateFormatter.string(from: timeFinal)
+                    let forcastImageFinal = updateWeatherIcon(condition: forcastImage, isDay: true)
+                    let forcastTempFinal = (forcastTemp - 273.15).intValue.string + "°"
+                    let windFinal = forcastWind.string + "kmh"
+                    self.addForcastView(forcastImage: forcastImageFinal, tempText: forcastTempFinal, timeText: timeFormated, wind: windFinal)
+                }
             }
-            
-            for i in forcastList {
-                
-                guard let time = i.dt else {
-                    throw updateWeatherDataOnScreenErrors.noForcastDate
-                }
-                
-                guard let forcastImage = i.weather![0].id else {
-                    throw updateWeatherDataOnScreenErrors.noForcastImage
-                }
-                
-                guard let forcastTemp = i.main!.temp else {
-                    throw updateWeatherDataOnScreenErrors.noForcastTemp
-                }
-                
-                guard let forcastWind = i.wind?.speed else {
-                    throw updateWeatherDataOnScreenErrors.noForcastWind
-                }
-                
-                
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat  = "HH:mm"
-                let timeFinal: Date = Date(timeIntervalSince1970: Double(time))
-                let timeFormated : String = dateFormatter.string(from: timeFinal)
-                let forcastImageFinal = updateWeatherIcon(condition: forcastImage, isDay: true)
-                let forcastTempFinal: String = "\(Int(forcastTemp - 273.15))°"
-                let windFinal: String = "\(forcastWind) km/h"
-
-                print("second forcast added")
-                self.addSecondForcastView(forcastImage: forcastImageFinal, tempText: forcastTempFinal, timeText: timeFormated, wind: windFinal)
-                
-            }
+        } catch let error {
+            print(error)
         }
     }
     
-    func addSecondForcastView(forcastImage: String, tempText: String, timeText: String, wind: String) {
+    func addForcastView(forcastImage: String, tempText: String, timeText: String, wind: String) {
         
         // Forcast View
-        let forcastSize = secondForcastScrollView.bounds
-        let numberOfView = Double(secondForcastScrollView.subviews.count) - 2
+        let forcastSize = forcastScrollView?.bounds
+        let numberOfView = Double(forcastScrollView?.subviews.count ?? 0) - 2
         let forcastHeight: Double = 25
-        let forcastWidth = Double(forcastSize.width)
+        let forcastWidth = Double(forcastSize?.width ?? 0)
         let position = numberOfView * forcastHeight
-        print("position is \(position)")
         
         let mainStackView = UIStackView(frame: CGRect(x: 0, y: position , width: forcastWidth, height: forcastHeight))
         mainStackView.axis = .horizontal
         mainStackView.alignment = .fill
         mainStackView.distribution = .fillEqually
        
-        
-        // Forcast Image
-        
-        let imgView = UIImageView()
-        imgView.frame = CGRect(x: 0, y: 0, width: forcastHeight / 2, height: forcastHeight / 2)
-        imgView.image = UIImage(named: forcastImage)
-        imgView.contentMode = .scaleAspectFit
-        mainStackView.addArrangedSubview(imgView)
-        
-        // Forcast temp label
-        let tempLabel = UILabel()
-        tempLabel.text = tempText
-        tempLabel.frame = CGRect(x: 0, y: 0, width: forcastHeight, height: forcastHeight)
-        tempLabel.textAlignment = .center
-        mainStackView.addArrangedSubview(tempLabel)
-        
-        // Forcast wind Image
-        let windImage = UIImageView()
-        windImage.frame = CGRect(x: 0, y: 0, width: forcastHeight / 3, height: forcastHeight / 3)
-        windImage.image = UIImage(named: "wind")
-        windImage.contentMode = .scaleAspectFit
-        mainStackView.addArrangedSubview(windImage)
-        
-        // Forcast wind label
-        let windLabel = UILabel()
-        windLabel.text = wind
-        windLabel.frame = CGRect(x: 0, y: 0, width: forcastHeight, height: forcastHeight)
-        windLabel.textAlignment = .right
-        mainStackView.addArrangedSubview(windLabel)
-        
-        // Forcast time label
-        let timeLabel = UILabel()
-        timeLabel.text = timeText
-        timeLabel.frame = CGRect(x: 0, y: 0, width: forcastHeight, height: forcastHeight / 3)
-        timeLabel.textAlignment = .center
-        mainStackView.addArrangedSubview(timeLabel)
-        
-        self.secondForcastScrollView.addSubview(mainStackView)
-        self.secondForcastScrollView.alwaysBounceVertical = true
+        mainStackView.addArrangedSubview(makeimgView(with: forcastImage))
+        mainStackView.addArrangedSubview(makeLabelView(with: tempText))
+        mainStackView.addArrangedSubview(makeimgView(with: "wind"))
+        mainStackView.addArrangedSubview(makeLabelView(with: wind))
+        mainStackView.addArrangedSubview(makeLabelView(with: timeText))
+
+        self.forcastScrollView?.addSubview(mainStackView)
+        self.forcastScrollView?.alwaysBounceVertical = true
         
     }
     
@@ -324,7 +307,7 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
                                           message: message,
                                           preferredStyle: .alert)
             let reload = UIAlertAction(title: "Retry", style: .default, handler: { (action) -> Void in
-                //
+                self.getWeatherDataAtLocation()
             })
             let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
             
@@ -334,15 +317,3 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

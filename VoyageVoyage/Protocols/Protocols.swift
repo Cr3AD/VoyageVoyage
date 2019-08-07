@@ -52,11 +52,8 @@ public protocol GetMoneyOutChoosen {
     //func updateMoneyOutChooseForConversion(data: String)
 }
 
-public protocol GetLangInChoosen {
+public protocol GetLangChoosen {
     func updateLangInChoosen(data: String, image: String)
-}
-
-public protocol GetLangOutChoosen {
     func updateLangOutChoosen(data: String, image: String)
 }
 

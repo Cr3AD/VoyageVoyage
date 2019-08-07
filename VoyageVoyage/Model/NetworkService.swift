@@ -8,7 +8,26 @@
 
 import Foundation
 
-
+//class totoTest {
+//    /// var toto: Expextion
+//    func testBadResponse() {
+//        let networkService = NetworkService(session: URLSessioFake(/* */))
+//        networkService.translationDataDleegate = self
+//        
+//        // Create expectation and save on object toto
+//        
+//        
+//        networkService.networkgin( /// )
+//        
+//        // wait for expection
+//        
+//        
+//    }
+//    
+//    func masupperfonctionDuDelegate() {
+//        //toto.fulfille()
+//    }
+//}
 
 class NetworkService {
 
@@ -19,75 +38,81 @@ class NetworkService {
     var translationDataDelegate: TranslationData?
     
 
-    enum networkRequestError {
+    enum networkRequestError: Error {
         case noInternet
         case noAnswer
+        case urlIssue
     }
     
-
+    var session: URLSession
     
-    func networking(url: String, requestType: String) {
+    init(session: URLSession = URLSession(configuration: .default)) {
+        self.session = session
+    }
+    
+    func networking(url: String, requestType: String) throws {
         
         print("network service started for \(requestType)")
-        print(url)
 
-        let session = URLSession(configuration: .default)
-        let requestUrl = URL(string: url)
-        var request = URLRequest(url: requestUrl!)
-        
+        guard let requestUrl = URL(string: url) else {
+            throw networkRequestError.urlIssue
+        }
+        var task: URLSessionDataTask
+        var request = URLRequest(url: requestUrl)
         request.httpMethod = "GET"
-        let task = session.dataTask(with: request) { (data, response, error) in
-            if let data = data, error == nil {
-                if let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                    
-                    switch requestType {
-                    case "weather":
-                        do {
-                            let weatherJSON = try JSONDecoder().decode(WeatherJSON.self, from: data)
-                            print("weatherJSON received \(data)")
-                            self.weatherDataDelegate?.receiveWeatherData(weatherJSON)
-                        } catch let jsonErr {
-                            print(jsonErr)
-                        }
-                    case "forcast":
-                        do {
-                            let forcastJSON = try JSONDecoder().decode(ForcastJSON.self, from: data)
-                            print("forcastJSON received \(data)")
-                            self.forcastDataDelegate?.receiveForcastData(forcastJSON)
-                        } catch let jsonErr {
-                            print(jsonErr)
-                        }
-                        
-                    case "traduction":
-                        do {
-                            let translationJSON = try JSONDecoder().decode(TranslationJSON.self, from: data)
-                            print("translationJSON received \(data)")
-                            self.translationDataDelegate?.receiveTranslationData(translationJSON)
-                        } catch let jsonErr {
-                            print(jsonErr)
-                        }
-                        
-                    case "moneyRate":
-                        do {
-                            let moneyJSON = try JSONDecoder().decode(MoneyJSON.self, from: data)
-                            print("moneyRateJSON received \(data)")
-                            self.moneyDataDelegate?.receiveMoneyData(moneyJSON)
-                        } catch let jsonErr {
-                            print(jsonErr)
-                        }
-                    default:
-                        print("error")
-                    }
-                } else {
-                    self.showErrorMessageDelegate?.showAlertNoConnectionError(with: "Error", and: "Data received corrupted")
-                }
-            } else {
+        
+        task = session.dataTask(with: request) { (data, response, error) in
+            
+            guard let data = data, error == nil else {
                 self.showErrorMessageDelegate?.showAlertNoConnectionError(with: "Error", and: "Check your internet connection or retry later")
+                return
+            }
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                self.showErrorMessageDelegate?.showAlertNoConnectionError(with: "Error", and: "Something goes wrong with the data received")
+                return
+            }
+            
+            switch requestType {
+            case "weather":
+                do {
+                    let weatherJSON = try JSONDecoder().decode(WeatherJSON.self, from: data)
+                    print("weatherJSON received \(data)")
+                    self.weatherDataDelegate?.receiveWeatherData(weatherJSON)
+                } catch let jsonErr {
+                    print(jsonErr)
+                }
+            case "forcast":
+                do {
+                    let forcastJSON = try JSONDecoder().decode(ForcastJSON.self, from: data)
+                    print("forcastJSON received \(data)")
+                    self.forcastDataDelegate?.receiveForcastData(forcastJSON)
+                } catch let jsonErr {
+                    print(jsonErr)
+                }
+                
+            case "traduction":
+                do {
+                    let translationJSON = try JSONDecoder().decode(TranslationJSON.self, from: data)
+                    print("translationJSON received \(data)")
+                    self.translationDataDelegate?.receiveTranslationData(translationJSON)
+                } catch let jsonErr {
+                    print(jsonErr)
+                }
+                
+            case "moneyRate":
+                do {
+                    var moneyJSON = try JSONDecoder().decode(MoneyJSON.self, from: data)
+                    moneyJSON.rates["EUR"] = 1.0
+                    print("moneyRateJSON received \(data)")
+                    self.moneyDataDelegate?.receiveMoneyData(moneyJSON)
+                } catch let jsonErr {
+                    print(jsonErr)
+                }
+            default:
+                print("error")
             }
         }
-        
         task.resume()
     }
-    
 }
 

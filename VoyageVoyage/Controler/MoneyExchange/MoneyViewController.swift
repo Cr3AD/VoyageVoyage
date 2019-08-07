@@ -11,15 +11,19 @@ import UIKit
 
 class MoneyViewController: UIViewController, GetMoneyInChoosen, GetMoneyOutChoosen, ShowErrorMessage, MoneyData {
     
-    @IBOutlet weak var textmoneyIn: UITextField!
-    @IBOutlet weak var textmoneyOut: UITextField!
-    @IBOutlet weak var textDataUpdatedTime: UILabel!
-    @IBOutlet weak var buttonMoneyIn: UIButton!
-    @IBOutlet weak var buttonMoneyOut: UIButton!
-    @IBOutlet weak var conversionButton: UIButton!
+    @IBOutlet weak var textmoneyIn: UITextField?
+    @IBOutlet weak var textmoneyOut: UITextField?
+    @IBOutlet weak var textDataUpdatedTime: UILabel?
+    @IBOutlet weak var buttonMoneyIn: UIButton?
+    @IBOutlet weak var buttonMoneyOut: UIButton?
+    @IBOutlet weak var conversionButton: UIButton?
     
     @IBAction func didTapProceedExchange(_ sender: Any) {
-        convertMoney()
+        do {
+        try convertMoney()
+        } catch let error {
+            print(error)
+        }
     }
     
     let networkService = NetworkService()
@@ -47,9 +51,16 @@ class MoneyViewController: UIViewController, GetMoneyInChoosen, GetMoneyOutChoos
         networkService.moneyDataDelegate = self
     }
     
+    // change for fixer http://data.fixer.io/api/latest?access_key=(API)&format=1
     func updateMoneyData() {
-        let MONEY_URL = "http://api.exchangeratesapi.io/latest?base="
-        networkService.networking(url: "\(MONEY_URL)\("EUR")", requestType: "moneyRate")
+        let moneyAPI = valueForAPIKey(named:"moneyAPI")
+        let MONEY_URL = "http://data.fixer.io/api/latest?access_key=\(moneyAPI)&format=1"
+        
+        do {
+            try networkService.networking(url: MONEY_URL, requestType: "moneyRate")
+        } catch let error {
+            print(error)
+        }
     }
     
     func receiveMoneyData(_ data: MoneyJSON) {
@@ -65,45 +76,55 @@ class MoneyViewController: UIViewController, GetMoneyInChoosen, GetMoneyOutChoos
     }
 
     func activateConversionButton() {
-        conversionButton.isEnabled = true
+        conversionButton?.isEnabled = true
     }
 
     func updateTimeDisplay() {
-        textDataUpdatedTime.text = self.dataMoney?.date
+        textDataUpdatedTime?.text = self.dataMoney?.date
     }
  
     func updateMoneyInChoosen(data: String) {
-        buttonMoneyIn.setTitle(data, for: .normal)
+        buttonMoneyIn?.setTitle(data, for: .normal)
     }
     
     func updateMoneyOutChoosen(data: String) {
-        buttonMoneyOut.setTitle(data, for: .normal)
+        buttonMoneyOut?.setTitle(data, for: .normal)
     }
     
-    func convertMoney() {
-        guard let valueIn: Double = Double(textmoneyIn.text!) else {
-            return
+    func convertMoney() throws {
+        guard let textButtonIn = buttonMoneyIn?.titleLabel?.text else {
+            throw convertMoneyError.noTextButtonIn
         }
-        var rateIn: Double {
-            if buttonMoneyIn.titleLabel!.text == dataMoney?.base {
-                return 1.0
-            } else {
-                return Double((dataMoney?.rates[buttonMoneyIn.titleLabel!.text!])!)
-            }
+        guard let textButtonOut = buttonMoneyOut?.titleLabel?.text else {
+            throw convertMoneyError.noTextButtonOut
         }
-        var rateOut:Double {
-            if buttonMoneyOut.titleLabel!.text == dataMoney?.base {
-                return 1.0
-            } else {
-                return Double((dataMoney?.rates[buttonMoneyOut.titleLabel!.text!])!)
-            }
+        guard let textIn = textmoneyIn?.text else {
+            throw convertMoneyError.noTextIn
         }
+        guard let valueIn: Double = Double(textIn) else {
+            throw convertMoneyError.textInNotADouble
+        }
+        guard let rateIn: Double = dataMoney?.rates[textButtonIn] else {
+            throw convertMoneyError.noRateIn
+        }
+        guard let rateOut: Double = dataMoney?.rates[textButtonOut] else {
+            throw convertMoneyError.noRateOut
+        }
+        
         let result = moneyManager.currencyRequestConverter(valueIn: valueIn,
-                                              currencyIn: rateIn,
-                                              currencyOut: rateOut)
-        textmoneyOut.text = String(format: "%.4f", result)
+                                                           currencyIn: rateIn,
+                                                           currencyOut: rateOut)
+        textmoneyOut?.text = String(format: "%.4f", result)
     }
     
+    enum convertMoneyError: Error {
+        case noTextButtonIn
+        case noTextButtonOut
+        case noTextIn
+        case textInNotADouble
+        case noRateIn
+        case noRateOut
+    }
 
     func showAlertNoConnectionError(with title: String, and message: String) {
         DispatchQueue.main.async {
@@ -111,10 +132,9 @@ class MoneyViewController: UIViewController, GetMoneyInChoosen, GetMoneyOutChoos
                                           message: message,
                                           preferredStyle: .alert)
             let reload = UIAlertAction(title: "Retry", style: .default, handler: { (action) -> Void in
-                
+                self.updateMoneyData()
             })
-            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: {(action) -> Void in
-                
+            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: {(action) -> Void in  
             })
             
             alert.addAction(reload)
@@ -122,10 +142,6 @@ class MoneyViewController: UIViewController, GetMoneyInChoosen, GetMoneyOutChoos
             self.present(alert, animated: true)
         }
     }
-    
-    
-    
-
 }
 
 
