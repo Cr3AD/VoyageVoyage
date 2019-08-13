@@ -8,26 +8,7 @@
 
 import Foundation
 
-//class totoTest {
-//    /// var toto: Expextion
-//    func testBadResponse() {
-//        let networkService = NetworkService(session: URLSessioFake(/* */))
-//        networkService.translationDataDleegate = self
-//        
-//        // Create expectation and save on object toto
-//        
-//        
-//        networkService.networkgin( /// )
-//        
-//        // wait for expection
-//        
-//        
-//    }
-//    
-//    func masupperfonctionDuDelegate() {
-//        //toto.fulfille()
-//    }
-//}
+
 
 class NetworkService {
 
@@ -37,6 +18,7 @@ class NetworkService {
     var moneyDataDelegate: MoneyData?
     var translationDataDelegate: TranslationData?
     
+    static var shared = NetworkService()
 
     enum networkRequestError: Error {
         case noInternet
@@ -57,10 +39,10 @@ class NetworkService {
         guard let requestUrl = URL(string: url) else {
             throw networkRequestError.urlIssue
         }
-        var task: URLSessionDataTask
         var request = URLRequest(url: requestUrl)
         request.httpMethod = "GET"
         
+        var task: URLSessionDataTask
         task = session.dataTask(with: request) { (data, response, error) in
             
             guard let data = data, error == nil else {
@@ -115,4 +97,5 @@ class NetworkService {
         task.resume()
     }
 }
+
 

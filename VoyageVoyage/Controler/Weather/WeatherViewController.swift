@@ -64,8 +64,6 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
     
     func receiveWeatherData(_ data: WeatherJSON) {
         self.dataWeather = data
-        print("Data weather received")
-        print(dataWeather as Any)
         do {
             try updateWeatherDataOnScreen()
         } catch let error {
@@ -75,8 +73,6 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
     
     func receiveForcastData(_ data: ForcastJSON) {
         self.dataForcast = data
-        print("Data forcast received")
-        print(dataForcast as Any)
         do {
             try updateWeatherForcastDataOnScreen()
         } catch let error {

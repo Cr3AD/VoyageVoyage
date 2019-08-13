@@ -18,6 +18,8 @@ extension MakeATradViewController {
         langChoosenLabel.textColor = .white
         langChoosenLabel.alpha = 1
         langChoosenLabel.textAlignment = .center
+        langChoosenLabel.frame = CGRect(x: 0, y: 0, width: 100, height: .max)
+        
         
         return langChoosenLabel
     }
@@ -31,12 +33,13 @@ extension MakeATradViewController {
         textTradLabel.alpha = 0.75
         textTradLabel.numberOfLines = 0
         
+
         return textTradLabel
     }
     
-    func makeInternalStackView(width: Int) -> UIStackView {
+    func makeInternalStackView() -> UIStackView {
         
-        let stackView = UIStackView(frame: CGRect(x: 0, y: 0, width: width, height: .max))
+        let stackView = UIStackView(frame: CGRect(x: 0, y: 0, width: .max, height: .max))
         stackView.axis = .vertical
         stackView.spacing = 1
         stackView.distribution = .fillProportionally
@@ -50,7 +53,6 @@ extension MakeATradViewController {
         mainStackView.axis = .horizontal
         mainStackView.alignment = .fill
         mainStackView.spacing = 2
-        mainStackView.distribution = .fill
         
         return mainStackView
     }
@@ -73,16 +75,19 @@ extension MakeATradViewController {
         let numberOfView = traductionScrollView?.subviews.count ?? 0
         let position = (numberOfView - 2) * 110 + 10
         
-        let infoView = makeInternalStackView(width: (traductionViewWidth * 0.2).intValue)
+        let infoView = makeInternalStackView()
         infoView.addArrangedSubview(makeLangChoosenLabel(with: langIn))
         infoView.addArrangedSubview(makeLangChoosenLabel(with: langOut))
         
-        let textView = makeInternalStackView(width: (traductionViewWidth * 0.8).intValue)
+        let textView = makeInternalStackView()
+        
         textView.addArrangedSubview(makeTextTraductionLabel(with: textInput))
         textView.addArrangedSubview(makeTextTraductionLabel(with: textOutput))
-        let mainStackView = makeMainStackView(x: 0, y: 0, width: traductionViewWidth.intValue, height: 105)
+        let mainStackView = makeMainStackView(x: 0, y: 0, width: traductionViewWidth.intValue, height: 110)
         mainStackView.addArrangedSubview(infoView)
         mainStackView.addArrangedSubview(textView)
+        
+      
 
         let mainView = makeMainView(x: 0, y: position, width: traductionViewWidth.intValue, height: 110)
         mainView.addSubview(mainStackView)

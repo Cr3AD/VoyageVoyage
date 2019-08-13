@@ -10,11 +10,14 @@
 		6405C4A122ACDA2700D97428 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6405C4A022ACDA2700D97428 /* Extension.swift */; };
 		6410BDA222D36F1F003E102A /* MoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6410BDA122D36F1F003E102A /* MoneyViewController.swift */; };
 		6413F43C229EB756000D0C64 /* MakeATradViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6413F43B229EB756000D0C64 /* MakeATradViewController.swift */; };
-		6414A74822A14584006774D6 /* VoyageVoyageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6414A74722A14584006774D6 /* VoyageVoyageTests.swift */; };
+		6414A74822A14584006774D6 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6414A74722A14584006774D6 /* WeatherTests.swift */; };
 		6414A75022A14603006774D6 /* Weather.json in Resources */ = {isa = PBXBuildFile; fileRef = 6414A74F22A14602006774D6 /* Weather.json */; };
 		6414A75222A14652006774D6 /* FakeResponceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6414A75122A14652006774D6 /* FakeResponceData.swift */; };
 		6417312922BA6C4E00916753 /* MoneyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6417312822BA6C4E00916753 /* MoneyManager.swift */; };
 		6422C5B222DF5A4800426B11 /* API.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6422C5B122DF5A4800426B11 /* API.plist */; };
+		643DAF3622FF06CE00EFF22D /* WeatherForcastTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643DAF3522FF06CE00EFF22D /* WeatherForcastTests.swift */; };
+		643DAF3822FF06E800EFF22D /* MoneyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643DAF3722FF06E800EFF22D /* MoneyTests.swift */; };
+		643DAF3A22FF070400EFF22D /* TranslationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 643DAF3922FF070400EFF22D /* TranslationTests.swift */; };
 		6445CA3D22DF5F4100CAD6E6 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6445CA3C22DF5F4100CAD6E6 /* API.swift */; };
 		645856E1229BE311006D526D /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645856E0229BE311006D526D /* Protocols.swift */; };
 		645856E4229BE3B8006D526D /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645856E3229BE3B8006D526D /* LocationService.swift */; };
@@ -55,12 +58,15 @@
 		6410BDA122D36F1F003E102A /* MoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyViewController.swift; sourceTree = "<group>"; };
 		6413F43B229EB756000D0C64 /* MakeATradViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeATradViewController.swift; sourceTree = "<group>"; };
 		6414A74522A14584006774D6 /* VoyageVoyageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoyageVoyageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		6414A74722A14584006774D6 /* VoyageVoyageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoyageVoyageTests.swift; sourceTree = "<group>"; };
+		6414A74722A14584006774D6 /* WeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTests.swift; sourceTree = "<group>"; };
 		6414A74922A14584006774D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6414A74F22A14602006774D6 /* Weather.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Weather.json; sourceTree = "<group>"; };
 		6414A75122A14652006774D6 /* FakeResponceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeResponceData.swift; sourceTree = "<group>"; };
 		6417312822BA6C4E00916753 /* MoneyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyManager.swift; sourceTree = "<group>"; };
 		6422C5B122DF5A4800426B11 /* API.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = API.plist; path = VoyageVoyage/GitIgnore/API.plist; sourceTree = "<group>"; };
+		643DAF3522FF06CE00EFF22D /* WeatherForcastTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForcastTests.swift; sourceTree = "<group>"; };
+		643DAF3722FF06E800EFF22D /* MoneyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTests.swift; sourceTree = "<group>"; };
+		643DAF3922FF070400EFF22D /* TranslationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationTests.swift; sourceTree = "<group>"; };
 		6445CA3C22DF5F4100CAD6E6 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = API.swift; path = VoyageVoyage/API.swift; sourceTree = "<group>"; };
 		645856E0229BE311006D526D /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		645856E3229BE3B8006D526D /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -118,15 +124,34 @@
 			isa = PBXGroup;
 			children = (
 				6414A74922A14584006774D6 /* Info.plist */,
-				6414A74722A14584006774D6 /* VoyageVoyageTests.swift */,
-				6414A75122A14652006774D6 /* FakeResponceData.swift */,
-				64BEB9AF22F95C0900CAB9B8 /* URLSessionFake.swift */,
-				64BEB9AD22F9579200CAB9B8 /* Translation.json */,
+				6414A74722A14584006774D6 /* WeatherTests.swift */,
+				643DAF3522FF06CE00EFF22D /* WeatherForcastTests.swift */,
+				643DAF3722FF06E800EFF22D /* MoneyTests.swift */,
+				643DAF3922FF070400EFF22D /* TranslationTests.swift */,
+				643DAF3422FF063B00EFF22D /* FakeService */,
+				643DAF3322FF05FC00EFF22D /* JSONData */,
+			);
+			path = VoyageVoyageTests;
+			sourceTree = "<group>";
+		};
+		643DAF3322FF05FC00EFF22D /* JSONData */ = {
+			isa = PBXGroup;
+			children = (
 				6414A74F22A14602006774D6 /* Weather.json */,
 				64E0E6BF22DCCAD900FDA848 /* Forcast.json */,
 				64E0E6BD22DCCA8800FDA848 /* Money.json */,
+				64BEB9AD22F9579200CAB9B8 /* Translation.json */,
 			);
-			path = VoyageVoyageTests;
+			path = JSONData;
+			sourceTree = "<group>";
+		};
+		643DAF3422FF063B00EFF22D /* FakeService */ = {
+			isa = PBXGroup;
+			children = (
+				6414A75122A14652006774D6 /* FakeResponceData.swift */,
+				64BEB9AF22F95C0900CAB9B8 /* URLSessionFake.swift */,
+			);
+			path = FakeService;
 			sourceTree = "<group>";
 		};
 		645856DD229BE10C006D526D /* Model */ = {
@@ -282,7 +307,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6414A74E22A14584006774D6 /* Build configuration list for PBXNativeTarget "VoyageVoyageTests" */;
 			buildPhases = (
-				7F998CF990F17D7392F8E6C6 /* [CP] Check Pods Manifest.lock */,
 				6414A74122A14584006774D6 /* Sources */,
 				6414A74222A14584006774D6 /* Frameworks */,
 				6414A74322A14584006774D6 /* Resources */,
@@ -377,38 +401,16 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		7F998CF990F17D7392F8E6C6 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-VoyageVoyageTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		6414A74122A14584006774D6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6414A74822A14584006774D6 /* VoyageVoyageTests.swift in Sources */,
+				6414A74822A14584006774D6 /* WeatherTests.swift in Sources */,
+				643DAF3A22FF070400EFF22D /* TranslationTests.swift in Sources */,
+				643DAF3622FF06CE00EFF22D /* WeatherForcastTests.swift in Sources */,
 				64BEB9B022F95C0900CAB9B8 /* URLSessionFake.swift in Sources */,
+				643DAF3822FF06E800EFF22D /* MoneyTests.swift in Sources */,
 				6414A75222A14652006774D6 /* FakeResponceData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
