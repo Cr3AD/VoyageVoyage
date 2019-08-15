@@ -69,7 +69,7 @@ class LocationService : NSObject, CLLocationManagerDelegate {
             
             print("latitude \(String(location.coordinate.latitude)) longitude \(String(location.coordinate.longitude))")
             print("LocationDidUpdate")
-            locationDidUpdateDelegate?.getWeatherDataAtLocation()
+            locationDidUpdateDelegate?.updateWeatherAndForcastDataAtLocation()
         }
     }
     

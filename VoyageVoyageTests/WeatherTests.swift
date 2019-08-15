@@ -11,13 +11,16 @@ import XCTest
 
 
 
-class WeatherTests: XCTestCase, WeatherData {
-    
-    var expectation : XCTestExpectation
-    
-    init(expectation: XCTestExpectation) {
-        self.expectation = expectation
+class WeatherTests: XCTestCase, WeatherData, ShowErrorMessage {
+    func showAlertNoConnectionError(with title: String, and message: String) {
+        XCTFail("Error \(title)")
     }
+    
+    
+    var expectation: XCTestExpectation?
+    var data: WeatherJSON?
+    
+    
     
     // MARK: - Weather tests
     func testGetWeatherShouldPostFaileIfError() {
@@ -26,22 +29,24 @@ class WeatherTests: XCTestCase, WeatherData {
         
         let networkService = NetworkService(session: URLSessionFake(data: nil, response: nil, error: FakeResponceData.error))
         networkService.weatherDataDelegate = self
+        networkService.showErrorMessageDelegate = self
         
        
         expectation = XCTestExpectation(description: "Wait for queue change.")
         
         // When
         
-        try! networkService.networking(url: "wwww.test.com", requestType: "weather")
+        try! networkService.networking(url: "http://api.openweathermap.org/data/2.5/weather", requestType: "weather")
         
-        wait(for: [expectation], timeout: 0.01)
+        wait(for: [expectation!], timeout: 5)
         
         // Then
+        XCTAssertNil(data)
 
     }
     func receiveWeatherData(_ data: WeatherJSON) {
-        
-        expectation.fulfill()
+        self.data = data
+        expectation?.fulfill()
     }
     
 

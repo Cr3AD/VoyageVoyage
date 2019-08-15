@@ -1,7 +1,7 @@
 
 
 // MARK: - MoneyRate
-struct MoneyJSON: Codable {
+struct MoneyDataJSON: Codable {
     let success: Bool
     let timestamp: Int
     let base, date: String

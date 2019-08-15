@@ -10,13 +10,13 @@ import UIKit
 
 
 
-class LanguageAvailable {
-    let language: String
-    
-    init(for language: String) {
-        self.language = language
-    }
-}
+//class LanguageAvailable {
+//    let language: String
+//
+//    init(for language: String) {
+//        self.language = language
+//    }
+//}
 
 class LanguageUITableViewController: UITableViewController {
     

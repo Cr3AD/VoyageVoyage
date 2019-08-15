@@ -10,13 +10,13 @@ import UIKit
 
 
 
-class MoneyAvailablel {
-    let money: String
-    
-    init(for money: String) {
-        self.money = money
-    }
-}
+//class MoneyAvailablel {
+//    let money: String
+//    
+//    init(for money: String) {
+//        self.money = money
+//    }
+//}
 
 class MoneyUITableViewController: UITableViewController {
     
@@ -31,8 +31,8 @@ class MoneyUITableViewController: UITableViewController {
     
 //    let fullPoolOfCurrency = ["EUR","GBP","NOK","THB","CHF","INR","AUD","DKK","MYR","CZK","PHP","PLN","HRK","RUB","BRL","ISK","TRY","BGN","CNY","HKD","USD","MXN","KRW","SEK","NZD","HUF","ILS","RON","JPY","SGD","ZAR","IDR","CAD"]
     
-    var delegateMoneyIn: GetMoneyInChoosen?
-    var delegateMoneyOut: GetMoneyOutChoosen?
+    var delegateMoneyIn: GetMoneyChoosen?
+    var delegateMoneyOut: GetMoneyChoosen?
     
     override func viewDidLoad() {
         super.viewDidLoad()

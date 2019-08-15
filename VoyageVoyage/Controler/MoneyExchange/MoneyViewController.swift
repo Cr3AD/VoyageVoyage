@@ -9,7 +9,9 @@
 import UIKit
 
 
-class MoneyViewController: UIViewController, GetMoneyInChoosen, GetMoneyOutChoosen, ShowErrorMessage, MoneyData {
+class MoneyViewController: UIViewController {
+    
+    // Mark: - IBOutlets
     
     @IBOutlet weak var textmoneyIn: UITextField?
     @IBOutlet weak var textmoneyOut: UITextField?
@@ -18,80 +20,73 @@ class MoneyViewController: UIViewController, GetMoneyInChoosen, GetMoneyOutChoos
     @IBOutlet weak var buttonMoneyOut: UIButton?
     @IBOutlet weak var conversionButton: UIButton?
     
+    // Mark : - IBAction
+    
     @IBAction func didTapProceedExchange(_ sender: Any) {
         do {
-        try convertMoney()
+        try updateConversionOnScreen()
         } catch let error {
             print(error)
         }
     }
     
-    let networkService = NetworkService()
+    // MARK: - Proprieties
+    
     let moneyManager = MoneyManager()
-    var dataMoney: MoneyJSON?
+    var dataMoney: MoneyDataJSON?
+    
+    // MARK: - Segues
+    
+    enum segueType: String {
+        case moneyInSegue = "moneyInSegue"
+        case moneyOutSegue = "moneyOutSegue"
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "moneyInSegue" {
+        
+        if segue.identifier == segueType.moneyInSegue.rawValue {
             let moneyTableView = segue.destination as! MoneyUITableViewController
             moneyTableView.delegateMoneyIn = self
         }
-        if segue.identifier == "moneyOutSegue" {
+        if segue.identifier == segueType.moneyOutSegue.rawValue {
             let moneyTableView = segue.destination as! MoneyUITableViewController
             moneyTableView.delegateMoneyOut = self
         }
     }
     
+    // MARK - ViewDidLoad
+    
     override func viewDidLoad() {
         self.hideKeyboardWhenTappedAround()
         updateMoneyData()
-        delegateSetup()
     }
     
-    func delegateSetup() {
-        networkService.moneyDataDelegate = self
-    }
+    // MARK: - Download Data for Money exchange
     
-    // change for fixer http://data.fixer.io/api/latest?access_key=(API)&format=1
-    func updateMoneyData() {
-        let moneyAPI = valueForAPIKey(named:"moneyAPI")
-        let MONEY_URL = "http://data.fixer.io/api/latest?access_key=\(moneyAPI)&format=1"
-        
-        do {
-            try networkService.networking(url: MONEY_URL, requestType: "moneyRate")
-        } catch let error {
-            print(error)
+    private func updateMoneyData() {
+        MoneyService.shared.getMoney { (data, error) in
+            guard error == nil else {
+                print(error as Any)
+                return
+            }
+            self.dataMoney = data
+            self.updateMoneyInfoOnScreen()
         }
-    }
-    
-    func receiveMoneyData(_ data: MoneyJSON) {
-        self.dataMoney = data
-        print("Data money received")
-        print(self.dataMoney as Any)
         
-        DispatchQueue.main.async {
-            
-            self.updateTimeDisplay()
-            self.activateConversionButton()
-        }
-    }
-
-    func activateConversionButton() {
-        conversionButton?.isEnabled = true
-    }
-
-    func updateTimeDisplay() {
-        textDataUpdatedTime?.text = self.dataMoney?.date
-    }
- 
-    func updateMoneyInChoosen(data: String) {
-        buttonMoneyIn?.setTitle(data, for: .normal)
     }
     
-    func updateMoneyOutChoosen(data: String) {
-        buttonMoneyOut?.setTitle(data, for: .normal)
+    // MARK: - Update Data on the screen
+    
+    enum convertMoneyError: Error {
+        case noTextButtonIn
+        case noTextButtonOut
+        case noTextIn
+        case textInNotADouble
+        case noRateIn
+        case noRateOut
     }
     
-    func convertMoney() throws {
+    private func updateConversionOnScreen() throws {
         guard let textButtonIn = buttonMoneyIn?.titleLabel?.text else {
             throw convertMoneyError.noTextButtonIn
         }
@@ -117,31 +112,42 @@ class MoneyViewController: UIViewController, GetMoneyInChoosen, GetMoneyOutChoos
         textmoneyOut?.text = String(format: "%.4f", result)
     }
     
-    enum convertMoneyError: Error {
-        case noTextButtonIn
-        case noTextButtonOut
-        case noTextIn
-        case textInNotADouble
-        case noRateIn
-        case noRateOut
+    private func updateMoneyInfoOnScreen() {
+        self.updateTimeDisplay()
+        self.activateConversionButton()
     }
+    
+    private func activateConversionButton() {
+        conversionButton?.isEnabled = true
+    }
+    
+    private func updateTimeDisplay() {
+        textDataUpdatedTime?.text = self.dataMoney?.date
+    }  
+}
 
-    func showAlertNoConnectionError(with title: String, and message: String) {
-        DispatchQueue.main.async {
-            let alert = UIAlertController(title: title,
-                                          message: message,
-                                          preferredStyle: .alert)
-            let reload = UIAlertAction(title: "Retry", style: .default, handler: { (action) -> Void in
-                self.updateMoneyData()
-            })
-            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: {(action) -> Void in  
-            })
-            
-            alert.addAction(reload)
-            alert.addAction(cancel)
-            self.present(alert, animated: true)
-        }
+extension MoneyViewController: GetMoneyChoosen {
+    internal func updateMoneyInChoosen(data: String) {
+        buttonMoneyIn?.setTitle(data, for: .normal)
+    }
+    internal func updateMoneyOutChoosen(data: String) {
+        buttonMoneyOut?.setTitle(data, for: .normal)
     }
 }
 
-
+extension MoneyViewController: ShowErrorMessage {
+    func showAlertNoConnectionError(with title: String, and message: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        let reload = UIAlertAction(title: "Retry", style: .default, handler: { (action) -> Void in
+            self.updateMoneyData()
+        })
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: {(action) -> Void in
+        })
+        alert.addAction(reload)
+        alert.addAction(cancel)
+        self.present(alert, animated: true)
+    }
+}

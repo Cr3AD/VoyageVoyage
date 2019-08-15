@@ -8,28 +8,29 @@
 
 import UIKit
 
-class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessage, WeatherData, ForcastData {
+class WeatherViewController: UIViewController, DidUpdateLocation {
+    
+    // Mark: - IBOutlets
     
     @IBOutlet weak var cityLabel: UILabel?
     @IBOutlet weak var weatherIcon: UIImageView?
     @IBOutlet weak var tempDataLabel: UILabel?
     @IBOutlet weak var weatherDescriptionDataLabel: UILabel?
-    
     @IBOutlet weak var maxTempDataLabel: UILabel?
     @IBOutlet weak var minTempDataLabel: UILabel?
-    
     @IBOutlet weak var windDataLabel: UILabel?
     @IBOutlet weak var sunriseDataLabel: UILabel?
     @IBOutlet weak var sunsetDataLabel: UILabel?
     @IBOutlet weak var weatherHumidityDataLabel: UILabel?
-    
     @IBOutlet weak var forcastScrollView: UIScrollView?
     
+    // MARK: - Proprieties
     
-    let networkService = NetworkService()
-    let locationService = LocationService()
-    var dataWeather: WeatherJSON?
-    var dataForcast: ForcastJSON?
+    private let locationService = LocationService()
+    private var dataWeather: WeatherDataJSON?
+    private var dataForcast: ForcastDataJSON?
+    
+    // MARK - ViewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,41 +45,42 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
     
     private func delegateSetUp() {
         locationService.locationDidUpdateDelegate = self
-        networkService.forcastDataDelegate = self
-        networkService.weatherDataDelegate = self
     }
     
-    func getWeatherDataAtLocation() {
-        let WEATHER_URL = "http://api.openweathermap.org/data/2.5/weather"
-        let FORCAST_URL = "http://api.openweathermap.org/data/2.5/forecast"
-        let weatherAPI = valueForAPIKey(named:"weatherAPI")
+    // MARK: - Download Data for Weather and Forcast
+    
+    internal func updateWeatherAndForcastDataAtLocation() {
         let lat = String(locationService.latitude)
         let lon = String(locationService.longitude)
-        do {
-        try networkService.networking(url: "\(WEATHER_URL)?APPID=\(weatherAPI)&lon=\(lon)&lat=\(lat)", requestType: "weather")
-        try networkService.networking(url: "\(FORCAST_URL)?APPID=\(weatherAPI)&lon=\(lon)&lat=\(lat)&cnt=5", requestType: "forcast")
-        } catch let error {
-            print(error)
+        WeatherService.shared.getWeather(lat: lat, lon: lon) { (data, error) in
+            guard error == nil else {
+                print(error as Any)
+                return
+            }
+            self.dataWeather = data
+            do {
+                try self.updateWeatherDataOnScreen()
+                
+            } catch let error {
+                print(error)
+            }
+        }
+        
+        ForcastService.shared.getForcast(lat: lat, lon: lon) { (data, error) in
+            guard error == nil else {
+                print(error as Any)
+                return
+            }
+            self.dataForcast = data
+            do {
+                try self.updateForcastDataOnScreen()
+            } catch let error {
+                print(error)
+            }
         }
     }
-    
-    func receiveWeatherData(_ data: WeatherJSON) {
-        self.dataWeather = data
-        do {
-            try updateWeatherDataOnScreen()
-        } catch let error {
-            print(error)
-        }
-    }
-    
-    func receiveForcastData(_ data: ForcastJSON) {
-        self.dataForcast = data
-        do {
-            try updateWeatherForcastDataOnScreen()
-        } catch let error {
-            print(error)
-        }
-    }
+
+    // MARK: - Update Data on the screen
     
     enum updateWeatherDataOnScreenErrors: Error {
         case noCity
@@ -98,7 +100,7 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
         case noForcastImage
     }
     
-    func updateWeatherDataOnScreen() throws {
+    private func updateWeatherDataOnScreen() throws {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat  = "HH:mm"
@@ -156,63 +158,60 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
         
         let weatherIconName: String = updateWeatherIcon(condition: condition, isDay: isItDay)
         
-        DispatchQueue.main.sync {
-            self.cityLabel?.text = city
-            self.weatherDescriptionDataLabel?.text = weatherDescription
-            self.tempDataLabel?.text = temperatureFinal
-            self.minTempDataLabel?.text = temperatureMinFinal
-            self.maxTempDataLabel?.text = temperatureMaxFinal
-            self.windDataLabel?.text = windFinal
-            self.sunsetDataLabel?.text = formatedSunsetDate
-            self.sunriseDataLabel?.text = formatedSunriseDate
-            self.weatherHumidityDataLabel?.text = weatherHumidityFinal
-            self.weatherIcon?.image = UIImage(named: weatherIconName)
-        }
+        self.cityLabel?.text = city
+        self.weatherDescriptionDataLabel?.text = weatherDescription
+        self.tempDataLabel?.text = temperatureFinal
+        self.minTempDataLabel?.text = temperatureMinFinal
+        self.maxTempDataLabel?.text = temperatureMaxFinal
+        self.windDataLabel?.text = windFinal
+        self.sunsetDataLabel?.text = formatedSunsetDate
+        self.sunriseDataLabel?.text = formatedSunriseDate
+        self.weatherHumidityDataLabel?.text = weatherHumidityFinal
+        self.weatherIcon?.image = UIImage(named: weatherIconName)
+        
     }
     
-    func updateWeatherForcastDataOnScreen() throws {
+    private func updateForcastDataOnScreen() throws {
         do {
-            try DispatchQueue.main.sync {
+            
+            guard let forcastList = self.dataForcast?.list else {
+                throw updateWeatherDataOnScreenErrors.noForcastList
+            }
+            
+            for i in forcastList {
                 
-                guard let forcastList = self.dataForcast?.list else {
-                    throw updateWeatherDataOnScreenErrors.noForcastList
+                guard let time = i.dt else {
+                    throw updateWeatherDataOnScreenErrors.noForcastDate
                 }
                 
-                for i in forcastList {
-                    
-                    guard let time = i.dt else {
-                        throw updateWeatherDataOnScreenErrors.noForcastDate
-                    }
-                    
-                    guard let forcastImage = i.weather?[0].id else {
-                        throw updateWeatherDataOnScreenErrors.noForcastImage
-                    }
-                    
-                    guard let forcastTemp = i.main?.temp else {
-                        throw updateWeatherDataOnScreenErrors.noForcastTemp
-                    }
-                    
-                    guard let forcastWind = i.wind?.speed else {
-                        throw updateWeatherDataOnScreenErrors.noForcastWind
-                    }
-                    
-                    
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat  = "HH:mm"
-                    let timeFinal = Date(timeIntervalSince1970: time.doubleValue)
-                    let timeFormated = dateFormatter.string(from: timeFinal)
-                    let forcastImageFinal = updateWeatherIcon(condition: forcastImage, isDay: true)
-                    let forcastTempFinal = (forcastTemp - 273.15).intValue.string + "°"
-                    let windFinal = forcastWind.string + "kmh"
-                    self.addForcastView(forcastImage: forcastImageFinal, tempText: forcastTempFinal, timeText: timeFormated, wind: windFinal)
+                guard let forcastImage = i.weather?[0].id else {
+                    throw updateWeatherDataOnScreenErrors.noForcastImage
                 }
+                
+                guard let forcastTemp = i.main?.temp else {
+                    throw updateWeatherDataOnScreenErrors.noForcastTemp
+                }
+                
+                guard let forcastWind = i.wind?.speed else {
+                    throw updateWeatherDataOnScreenErrors.noForcastWind
+                }
+                
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat  = "HH:mm"
+                let timeFinal = Date(timeIntervalSince1970: time.doubleValue)
+                let timeFormated = dateFormatter.string(from: timeFinal)
+                let forcastImageFinal = updateWeatherIcon(condition: forcastImage, isDay: true)
+                let forcastTempFinal = (forcastTemp - 273.15).intValue.string + "°"
+                let windFinal = forcastWind.string + "kmh"
+                self.addForcastView(forcastImage: forcastImageFinal, tempText: forcastTempFinal, timeText: timeFormated, wind: windFinal)
             }
         } catch let error {
             print(error)
         }
     }
     
-    func addForcastView(forcastImage: String, tempText: String, timeText: String, wind: String) {
+    private func addForcastView(forcastImage: String, tempText: String, timeText: String, wind: String) {
         
         // Forcast View
         let forcastSize = forcastScrollView?.bounds
@@ -225,19 +224,37 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
         mainStackView.axis = .horizontal
         mainStackView.alignment = .fill
         mainStackView.distribution = .fillEqually
-       
+        
         mainStackView.addArrangedSubview(makeimgView(with: forcastImage))
         mainStackView.addArrangedSubview(makeLabelView(with: tempText))
         mainStackView.addArrangedSubview(makeimgView(with: "wind"))
         mainStackView.addArrangedSubview(makeLabelView(with: wind))
         mainStackView.addArrangedSubview(makeLabelView(with: timeText))
-
+        
         self.forcastScrollView?.addSubview(mainStackView)
         self.forcastScrollView?.alwaysBounceVertical = true
         
     }
     
-    func updateWeatherIcon(condition: Int, isDay: Bool) -> String {
+    private func makeimgView(with image: String) -> UIImageView {
+        
+        let imgView = UIImageView()
+        imgView.image = UIImage(named: image)
+        imgView.contentMode = .scaleAspectFit
+        
+        return imgView
+    }
+    
+    private func makeLabelView(with text: String) -> UILabel {
+        
+        let lblView = UILabel()
+        lblView.text = text
+        lblView.textAlignment = .center
+        
+        return lblView
+    }
+    
+    private func updateWeatherIcon(condition: Int, isDay: Bool) -> String {
         
         switch (condition) {
             
@@ -296,20 +313,24 @@ class WeatherViewController: UIViewController, DidUpdateLocation, ShowErrorMessa
         }
         
     }
-    
+}
+
+extension WeatherViewController: ShowErrorMessage {
     func showAlertNoConnectionError(with title: String, and message: String) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: title,
                                           message: message,
                                           preferredStyle: .alert)
             let reload = UIAlertAction(title: "Retry", style: .default, handler: { (action) -> Void in
-                self.getWeatherDataAtLocation()
+                self.updateWeatherAndForcastDataAtLocation()
             })
-            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
             
+            let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: {(action) -> Void in
+            })
             alert.addAction(reload)
             alert.addAction(cancel)
             self.present(alert, animated: true)
         }
     }
 }
+
