@@ -2,7 +2,7 @@
 import Foundation
 
 // MARK: - WeatherJson
-struct WeatherJSON: Codable {
+struct WeatherDataJSON: Codable {
     let wind: Wind?
     let cod: Int?
     let dt: Int?

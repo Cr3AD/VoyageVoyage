@@ -7,7 +7,7 @@
 import Foundation
 
 // MARK: - forcastForcastJson
-struct ForcastJSON: Codable {
+struct ForcastDataJSON: Codable {
     let list: [forcastList]?
     let cnt: Int?
     let message: Double?
