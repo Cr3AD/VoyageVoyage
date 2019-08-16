@@ -12,13 +12,13 @@ import Foundation
 
 public protocol DidUpdateLocation {
     func updateWeatherAndForcastDataAtLocation()
+    func showUserNoLocationAvailable()
 }
 
 // Error
 
 public protocol ShowErrorMessage {
-    func showAlertNoConnectionError(with title: String, and message: String)
-    
+    func showAlertNoConnectionError(title: String, message: String)
 }
 
 // Segue

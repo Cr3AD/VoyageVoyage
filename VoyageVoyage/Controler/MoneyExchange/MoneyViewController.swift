@@ -32,8 +32,9 @@ class MoneyViewController: UIViewController {
     
     // MARK: - Proprieties
     
-    let moneyManager = MoneyManager()
-    var dataMoney: MoneyDataJSON?
+    private let moneyService = MoneyService.shared
+    private let moneyManager = MoneyManager()
+    private var dataMoney: MoneyDataJSON?
     
     // MARK: - Segues
     
@@ -58,7 +59,12 @@ class MoneyViewController: UIViewController {
     
     override func viewDidLoad() {
         self.hideKeyboardWhenTappedAround()
+        delegateSetup()
         updateMoneyData()
+    }
+    
+    private func delegateSetup() {
+        moneyService.errorMessageDelegate = self
     }
     
     // MARK: - Download Data for Money exchange
@@ -136,7 +142,7 @@ extension MoneyViewController: GetMoneyChoosen {
 }
 
 extension MoneyViewController: ShowErrorMessage {
-    func showAlertNoConnectionError(with title: String, and message: String) {
+    func showAlertNoConnectionError(title: String, message: String) {
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)

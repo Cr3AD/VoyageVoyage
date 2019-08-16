@@ -52,6 +52,7 @@ class TranslationVC: UIViewController  {
         return textField?.text ?? ""
     }
     
+    private let translationService = TranslationService.shared
     private var dataTranslation: TranslationDataJSON?
     
     // MARK: - Animation
@@ -94,7 +95,12 @@ class TranslationVC: UIViewController  {
     
     override func viewDidLoad() {
         self.hideKeyboardWhenTappedAround()
+        delegateSetup()
         viewSetup()
+    }
+    
+    private func delegateSetup() {
+        translationService.errorMessageDelegate = self
     }
     
     // View setup called when viewDidLoad
@@ -120,6 +126,7 @@ class TranslationVC: UIViewController  {
                 let translation = Traduction(langIn: self.langIn, langOut: self.langOut, textIn: self.textIn, textOut: textOut)
                 TranslationService.shared.add(traduction: translation)
                 self.translationTableView?.reloadData()
+                self.textField?.text = ""
             }
         }
     }
@@ -178,7 +185,7 @@ extension TranslationVC: GetLangChoosen {
 }
 
 extension TranslationVC: ShowErrorMessage {
-    func showAlertNoConnectionError(with title: String, and message: String) {
+    func showAlertNoConnectionError(title: String, message: String) {
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)

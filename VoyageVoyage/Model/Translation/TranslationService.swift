@@ -15,7 +15,10 @@ class TranslationService {
     private static let googleURL = "https://translation.googleapis.com/language/translate/v2?"
     private static let googleAPI = valueForAPIKey(named:"googleAPI")
     
+    var errorMessageDelegate: ShowErrorMessage?
+    
     enum Error: Swift.Error {
+        case errorNotNill
         case noData
         case wrongJSONTranslationFormat
         case notOK200
@@ -37,12 +40,15 @@ class TranslationService {
         session.dataTask(with: request) { (data, responce, error) in
             DispatchQueue.main.async {
                 guard error == nil else {
+                    self.showError(errorType: .errorNotNill)
                     return completionHandler(nil, error)
                 }
                 guard (responce as? HTTPURLResponse)?.statusCode == 200 else {
+                    self.showError(errorType: .notOK200)
                     return completionHandler(nil, Error.notOK200)
                 }
                 guard let data = data else {
+                    self.showError(errorType: .noData)
                     return completionHandler(nil, Error.noData)
                 }
                 do {
@@ -50,6 +56,7 @@ class TranslationService {
                     let translation = try JSONDecoder().decode(TranslationDataJSON.self, from: data)
                     completionHandler(translation, nil)
                 } catch {
+                    self.showError(errorType: .wrongJSONTranslationFormat)
                     completionHandler(nil, Error.wrongJSONTranslationFormat)
                 }
             }
@@ -60,6 +67,19 @@ class TranslationService {
     
     func add(traduction: Traduction) {
         traductions.append(traduction)
+    }
+    
+    func showError(errorType: Error) {
+        switch errorType {
+        case .errorNotNill:
+            self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "No data where received, please check you internet connection")
+        case .noData:
+            self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "No data where received from the server")
+        case .wrongJSONTranslationFormat:
+            self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "The data received are corrupted")
+        case .notOK200:
+            self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "Communication issue with the server, please check you internet connection")
+        }
     }
 }
 

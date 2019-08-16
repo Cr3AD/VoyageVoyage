@@ -31,24 +31,32 @@ class LocationService : NSObject, CLLocationManagerDelegate {
     func enableBasicLocationServices() {
         locationService.delegate = self
         locationService.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        
-        switch CLLocationManager.authorizationStatus() {
+        let authorisation = CLLocationManager.authorizationStatus()
+        switch authorisation {
         case .notDetermined:
             // Request when-in-use authorization initially
             locationService.requestWhenInUseAuthorization()
-            break
+            
+            if authorisation == .authorizedAlways || authorisation == .authorizedWhenInUse {
+                startLocationService()
+            } else {
+                locationServiceImpossible()
+            }
+            
             
         case .restricted, .denied:
             // Disable location features
-            print("Location service declined")
-            break
+            locationServiceImpossible()
+            
+            
             
         case .authorizedWhenInUse, .authorizedAlways:
             // Enable location features
             startLocationService()
-            break
+            
         @unknown default:
             print("error in location authorisation")
+            locationServiceImpossible()
         }
     }
 
@@ -56,6 +64,11 @@ class LocationService : NSObject, CLLocationManagerDelegate {
     
     func startLocationService() {
         locationService.startUpdatingLocation()
+    }
+    
+    func locationServiceImpossible() {
+        locationService.stopUpdatingLocation()
+        locationDidUpdateDelegate?.showUserNoLocationAvailable()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WeatherViewController: UIViewController, DidUpdateLocation {
+class WeatherViewController: UIViewController {
     
     // Mark: - IBOutlets
     
@@ -26,7 +26,9 @@ class WeatherViewController: UIViewController, DidUpdateLocation {
     
     // MARK: - Proprieties
     
-    let locationService = LocationService()
+    private let locationService = LocationService()
+    private let weatherService = WeatherService.shared
+    private let forcastService = ForcastService.shared
     private var dataWeather: WeatherDataJSON?
     private var dataForcast: ForcastDataJSON?
     
@@ -35,50 +37,21 @@ class WeatherViewController: UIViewController, DidUpdateLocation {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
-        
-        // configure location
-        locationService.enableBasicLocationServices()
-        
         // Delegate
         delegateSetUp()
+        // configure location
+        locationService.enableBasicLocationServices()
     }
     
     private func delegateSetUp() {
         locationService.locationDidUpdateDelegate = self
+        weatherService.errorMessageDelegate = self
+        forcastService.errorMessageDelegate = self
     }
     
     // MARK: - Download Data for Weather and Forcast
     
-    internal func updateWeatherAndForcastDataAtLocation() {
-        let lat = String(locationService.latitude)
-        let lon = String(locationService.longitude)
-        WeatherService.shared.getWeather(lat: lat, lon: lon) { (data, error) in
-            guard error == nil else {
-                print(error as Any)
-                return
-            }
-            self.dataWeather = data
-            do {
-                try self.updateWeatherDataOnScreen()
-                
-            } catch let error {
-                print(error)
-            }
-        }
-        
-        ForcastService.shared.getForcast(lat: lat, lon: lon) { (data, error) in
-            guard error == nil else {
-                print(error as Any)
-                return
-            }
-            self.dataForcast = data
-            do {
-                try self.updateForcastDataOnScreen()
-            } catch let error {
-                print(error)
-            }
-        }
-    }
+
 
     // MARK: - Update Data on the screen
     
@@ -204,14 +177,14 @@ class WeatherViewController: UIViewController, DidUpdateLocation {
                 let forcastImageFinal = updateWeatherIcon(condition: forcastImage, isDay: true)
                 let forcastTempFinal = (forcastTemp - 273.15).intValue.string + "°"
                 let windFinal = forcastWind.string + "kmh"
-                self.addForcastView(forcastImage: forcastImageFinal, tempText: forcastTempFinal, timeText: timeFormated, wind: windFinal)
+                self.makeForcatView(forcastImage: forcastImageFinal, tempText: forcastTempFinal, timeText: timeFormated, wind: windFinal)
             }
         } catch let error {
             print(error)
         }
     }
     
-    private func addForcastView(forcastImage: String, tempText: String, timeText: String, wind: String) {
+    private func makeForcatView(forcastImage: String, tempText: String, timeText: String, wind: String) {
         
         // Forcast View
         let forcastSize = forcastScrollView?.bounds
@@ -316,7 +289,7 @@ class WeatherViewController: UIViewController, DidUpdateLocation {
 }
 
 extension WeatherViewController: ShowErrorMessage {
-    func showAlertNoConnectionError(with title: String, and message: String) {
+    func showAlertNoConnectionError(title: String, message: String) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: title,
                                           message: message,
@@ -333,4 +306,41 @@ extension WeatherViewController: ShowErrorMessage {
         }
     }
 }
-
+extension WeatherViewController: DidUpdateLocation {
+    internal func updateWeatherAndForcastDataAtLocation() {
+        let lat = String(locationService.latitude)
+        let lon = String(locationService.longitude)
+        WeatherService.shared.getWeather(lat: lat, lon: lon) { (data, error) in
+            guard error == nil else {
+                print(error as Any)
+                return
+            }
+            self.dataWeather = data
+            do {
+                try self.updateWeatherDataOnScreen()
+                
+            } catch let error {
+                print(error)
+            }
+        }
+        
+        ForcastService.shared.getForcast(lat: lat, lon: lon) { (data, error) in
+            guard error == nil else {
+                print(error as Any)
+                return
+            }
+            self.dataForcast = data
+            do {
+                try self.updateForcastDataOnScreen()
+            } catch let error {
+                print(error)
+            }
+        }
+    }
+    
+    internal func showUserNoLocationAvailable() {
+        self.cityLabel!.text = "Error"
+        self.weatherDescriptionDataLabel!.text = "No Location Authorised"
+        self.weatherIcon!.isHidden = true
+    }
+}
