@@ -14,9 +14,9 @@ class TranslationVC: UIViewController  {
 
     @IBOutlet weak var translationTableView: UITableView?
     @IBOutlet weak var mainView: UIView?
-    @IBOutlet weak var languageInButton: UIButton?
-    @IBOutlet weak var languageOutButton: UIButton?
-    @IBOutlet weak var inversionButton: UIButton?
+    @IBOutlet weak var langInButton: UIButton?
+    @IBOutlet weak var langOutButton: UIButton?
+    @IBOutlet weak var reverseButton: UIButton?
     @IBOutlet weak var translateButton: UIButton?
     @IBOutlet weak var textField: UITextField?
     
@@ -40,14 +40,12 @@ class TranslationVC: UIViewController  {
     // MARK: - Proprieties
     
     // user choise for language input
-    private var langIn: String {
-        return languageInButton?.titleLabel?.text ?? ""
-    }
+    var langIn = "FR"
     
     // user choise for language output
-    private var langOut: String {
-        return languageOutButton?.titleLabel?.text ?? ""
-    }
+    var langOut = "EN"
+    
+    
     
     // text to tranlate
     private var textIn: String {
@@ -103,6 +101,8 @@ class TranslationVC: UIViewController  {
 
     private func viewSetup() {
         translateButton?.layer.cornerRadius = 5
+        langInButton?.setImage(UIImage(named: "FR"), for: .normal)
+        langOutButton?.setImage(UIImage(named: "EN"), for: .normal)
     }
 
     // MARK: - Download Data for Translation
@@ -127,15 +127,15 @@ class TranslationVC: UIViewController  {
     // MARK: - Update Data on the screen
     
     private func reverseTraductionButtons() {
-        let temp1 = languageInButton?.titleLabel?.text
-        let temp1image = languageInButton?.image(for: .normal)
-        let temp2 = languageOutButton?.titleLabel?.text
-        let temp2image = languageOutButton?.image(for: .normal)
+        let temp1 = langInButton?.titleLabel?.text
+        let temp1image = langInButton?.image(for: .normal)
+        let temp2 = langOutButton?.titleLabel?.text
+        let temp2image = langOutButton?.image(for: .normal)
         
-        languageInButton?.setTitle(temp2, for: .normal)
-        languageInButton?.setImage(temp2image, for: .normal)
-        languageOutButton?.setTitle(temp1, for: .normal)
-        languageOutButton?.setImage(temp1image, for: .normal)
+        langInButton?.setTitle(temp2, for: .normal)
+        langInButton?.setImage(temp2image, for: .normal)
+        langOutButton?.setTitle(temp1, for: .normal)
+        langOutButton?.setImage(temp1image, for: .normal)
     }
 
     
@@ -151,7 +151,7 @@ extension TranslationVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TranslationCell", for: indexPath) as? TranslationTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "translationCell", for: indexPath) as? TranslationTableViewCell else {
             return UITableViewCell()
         }
         let traduction = TranslationService.shared.traductions[indexPath.row]
@@ -164,16 +164,16 @@ extension TranslationVC: UITableViewDataSource {
 
 extension TranslationVC: GetLangChoosen {
     
-    func updateLangInChoosen(data: String, image: String) {
-        let image = UIImage(named: image)
-        languageInButton?.setImage(image, for: .normal)
-        languageInButton?.setTitle(data, for: .normal)
+    func updateLangInChoosen(imageName: String) {
+        let image = UIImage(named: imageName)
+        langInButton?.setImage(image, for: .normal)
+        langIn = imageName
     }
     
-    func updateLangOutChoosen(data: String, image: String) {
-        let image = UIImage(named: image)
-        languageOutButton?.setImage(image, for: .normal)
-        languageOutButton?.setTitle(data, for: .normal)
+    func updateLangOutChoosen(imageName: String) {
+        let image = UIImage(named: imageName)
+        langOutButton?.setImage(image, for: .normal)
+        langOut = imageName
     }
 }
 

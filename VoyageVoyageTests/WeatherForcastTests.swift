@@ -1,34 +1,87 @@
 //
-//  WeatherForcastTest.swift
+//  VoyageVoyageTests.swift
 //  VoyageVoyageTests
 //
-//  Created by Cr3AD on 10/08/2019.
+//  Created by Cr3AD on 31/05/2019.
 //  Copyright © 2019 Cr3AD. All rights reserved.
 //
 
 import XCTest
+@testable import VoyageVoyage
 
-class WeatherForcastTests: XCTestCase {
 
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
 
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        XCUIApplication().launch()
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+class ForcastTests: XCTestCase {
+    
+    var data: ForcastDataJSON?
+    
+    // MARK: - Weather tests
+    func testGetForcastShouldFailIfError() {
+        // Given
+        let forcastService = ForcastService(session: URLSessionFake(data: nil, response: nil, error: FakeResponceData.error))
+        // When
+        let expectation = XCTestExpectation(description: "wait queue to change")
+        forcastService.getForcast(lat: "0", lon: "0") { (data, error) in
+            // Then
+            XCTAssert(error != nil)
+            XCTAssert(data == nil)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
     }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testGetForcastShouldFailIfNoData() {
+        let forcastService = ForcastService(session: URLSessionFake(data: nil, response: nil, error: nil))
+        let expectation = XCTestExpectation(description: "wait queue to change")
+        forcastService.getForcast(lat: "0", lon: "0") { (data, error) in
+            // Then
+            XCTAssert(error != nil)
+            XCTAssert(data == nil)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
     }
-
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    func testGetForcastShoudFailIfWrongData() {
+        let forcastService = ForcastService(session: URLSessionFake(data: FakeResponceData.forcastIncorrectData, response: FakeResponceData.responseOK, error: nil))
+        let expectation = XCTestExpectation(description: "wait queue to change")
+        forcastService.getForcast(lat: "0", lon: "0") { (data, error) in
+            // Then
+            XCTAssert(error != nil)
+            XCTAssert(data == nil)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
     }
-
+    
+    func testGetForcastShoudFailIfIncorrectResponse() {
+        let forcastService = ForcastService(session: URLSessionFake(data: FakeResponceData.forcastCorrectData, response: FakeResponceData.responseKO, error: nil))
+        let expectation = XCTestExpectation(description: "wait queue to change")
+        forcastService.getForcast(lat: "0", lon: "0") { (data, error) in
+            // Then
+            XCTAssert(error != nil)
+            XCTAssert(data == nil)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func testGetForcastShoudSucceedIfNoErrorAndCorrectData() {
+        let forcastService = ForcastService(session: URLSessionFake(data: FakeResponceData.forcastCorrectData, response: FakeResponceData.responseOK, error: nil))
+        let expectation = XCTestExpectation(description: "wait queue to change")
+        forcastService.getForcast(lat: "0", lon: "0") { (data, error) in
+            // Then
+            XCTAssert(error == nil)
+            XCTAssert(data != nil)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
+    }
 }
+
+
+
+
+
+
+

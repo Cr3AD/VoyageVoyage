@@ -320,7 +320,7 @@
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTG-oP-hnu">
                                                         <rect key="frame" x="0.0" y="0.0" width="131.33333333333334" height="65.666666666666671"/>
-                                                        <state key="normal" title="FR" image="france">
+                                                        <state key="normal" image="FR">
                                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         </state>
                                                         <connections>
@@ -337,7 +337,7 @@
                                                     <button autoresizesSubviews="NO" opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lm8-yb-ddJ">
                                                         <rect key="frame" x="262.66666666666669" y="0.0" width="131.33333333333331" height="65.666666666666671"/>
                                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
-                                                        <state key="normal" title="EN" image="unitedkingdom">
+                                                        <state key="normal" image="EN">
                                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         </state>
                                                         <connections>
@@ -367,7 +367,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="394" height="649.66666666666663"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TranslationCell" rowHeight="140" id="fAX-02-vHa" customClass="TraductionTableViewCell" customModule="VoyageVoyage" customModuleProvider="target">
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="translationCell" rowHeight="140" id="fAX-02-vHa" customClass="TranslationTableViewCell" customModule="VoyageVoyage" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="28" width="394" height="140"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fAX-02-vHa" id="HEC-0p-1th">
@@ -386,7 +386,7 @@
                                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WAS-Df-vcP">
                                                                                             <rect key="frame" x="5" y="5" width="60" height="60"/>
                                                                                             <constraints>
-                                                                                                <constraint firstAttribute="width" secondItem="WAS-Df-vcP" secondAttribute="height" multiplier="1:1" id="OIm-Fu-ZG5"/>
+                                                                                                <constraint firstAttribute="width" secondItem="WAS-Df-vcP" secondAttribute="height" multiplier="1:1" id="K71-HW-kYA"/>
                                                                                             </constraints>
                                                                                         </imageView>
                                                                                     </subviews>
@@ -403,6 +403,9 @@
                                                                                     <subviews>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Blm-Fl-MYl">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="324" height="70"/>
+                                                                                            <constraints>
+                                                                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="70" id="VIU-N9-4rl"/>
+                                                                                            </constraints>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                             <nil key="textColor"/>
                                                                                             <nil key="highlightedColor"/>
@@ -453,6 +456,9 @@
                                                                                     <subviews>
                                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rf6-5l-j9D">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="324" height="70"/>
+                                                                                            <constraints>
+                                                                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="70" id="hGy-UE-AXy"/>
+                                                                                            </constraints>
                                                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                             <nil key="textColor"/>
                                                                                             <nil key="highlightedColor"/>
@@ -488,15 +494,16 @@
                                                             </constraints>
                                                         </tableViewCellContentView>
                                                         <connections>
-                                                            <outlet property="LangInImage" destination="WAS-Df-vcP" id="RtQ-l1-R7c"/>
-                                                            <outlet property="LangOutImage" destination="WCU-y2-aOF" id="b91-wq-Dld"/>
-                                                            <outlet property="OriginalTextLabel" destination="Blm-Fl-MYl" id="QtW-P5-OF8"/>
-                                                            <outlet property="TranlatedTextLabel" destination="Rf6-5l-j9D" id="EiI-yM-xfu"/>
+                                                            <outlet property="LangInImage" destination="WAS-Df-vcP" id="PMR-Db-RPk"/>
+                                                            <outlet property="LangOutImage" destination="WCU-y2-aOF" id="W7x-1y-7AA"/>
+                                                            <outlet property="OriginalTextLabel" destination="Blm-Fl-MYl" id="efp-Kh-6ro"/>
+                                                            <outlet property="TranlatedTextLabel" destination="Rf6-5l-j9D" id="apm-nB-uDR"/>
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>
                                                 <connections>
                                                     <outlet property="dataSource" destination="GcX-Qo-pJ0" id="5aN-CP-sbt"/>
+                                                    <outlet property="delegate" destination="GcX-Qo-pJ0" id="hhr-tA-YsR"/>
                                                 </connections>
                                             </tableView>
                                         </subviews>
@@ -554,10 +561,10 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="translate" id="bCO-Bv-lV1"/>
                     <connections>
-                        <outlet property="inversionButton" destination="bsU-GM-sZI" id="Bbj-nh-d3f"/>
-                        <outlet property="languageInButton" destination="eTG-oP-hnu" id="Kap-gr-Exh"/>
-                        <outlet property="languageOutButton" destination="Lm8-yb-ddJ" id="ZVN-dN-WSI"/>
+                        <outlet property="langInButton" destination="eTG-oP-hnu" id="Kap-gr-Exh"/>
+                        <outlet property="langOutButton" destination="Lm8-yb-ddJ" id="ZVN-dN-WSI"/>
                         <outlet property="mainView" destination="02g-hp-Myq" id="rfy-Lm-1Hg"/>
+                        <outlet property="reverseButton" destination="bsU-GM-sZI" id="Bbj-nh-d3f"/>
                         <outlet property="textField" destination="H7A-Vl-s78" id="NzZ-Tz-BEt"/>
                         <outlet property="translateButton" destination="teJ-DN-Ib2" id="01N-Ij-l4d"/>
                         <outlet property="translationTableView" destination="4xQ-gm-hHv" id="b77-Gn-r9e"/>
@@ -820,23 +827,23 @@
         </scene>
     </scenes>
     <resources>
+        <image name="EN" width="46" height="40"/>
+        <image name="FR" width="46" height="40"/>
         <image name="cloudday" width="98" height="85"/>
         <image name="conversion" width="82" height="96"/>
         <image name="dawn" width="94" height="85"/>
         <image name="downarrow" width="49" height="49"/>
-        <image name="france" width="46" height="40"/>
         <image name="humidity" width="18" height="22"/>
         <image name="moneyConverter" width="44" height="44"/>
         <image name="sunset" width="94" height="80"/>
         <image name="transfer" width="52" height="34"/>
         <image name="translate" width="43" height="30"/>
-        <image name="unitedkingdom" width="46" height="40"/>
         <image name="uparrow" width="49" height="49"/>
         <image name="weather" width="44" height="44"/>
         <image name="wind" width="96" height="61"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="K0z-vM-hJS"/>
+        <segue reference="IUy-Ik-RAp"/>
         <segue reference="yoi-eG-WbD"/>
     </inferredMetricsTieBreakers>
 </document>

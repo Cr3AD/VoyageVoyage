@@ -1,34 +1,88 @@
 //
-//  TranslationTests.swift
+//  VoyageVoyageTests.swift
 //  VoyageVoyageTests
 //
-//  Created by Cr3AD on 10/08/2019.
+//  Created by Cr3AD on 31/05/2019.
 //  Copyright © 2019 Cr3AD. All rights reserved.
 //
 
 import XCTest
+@testable import VoyageVoyage
+
+
 
 class TranslationTests: XCTestCase {
-
-    override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-
-        // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        XCUIApplication().launch()
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+    
+    var data: TranslationDataJSON?
+    
+    // MARK: - Weather tests
+    func testGetTranslationShouldFailIfError() {
+        // Given
+        let translationService = TranslationService(session: URLSessionFake(data: nil, response: nil, error: FakeResponceData.error))
+        // When
+        let expectation = XCTestExpectation(description: "wait queue to change")
+        translationService.getTraduction(textToTranslate: "Salut", langIn: "FR", langOut: "EN") { (data, error) in
+            // Then
+            XCTAssert(error != nil)
+            XCTAssert(data == nil)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1)
     }
-
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testGetTranslationShouldFailIfNoData() {
+        let translationService = TranslationService(session: URLSessionFake(data: nil, response: nil, error: nil))
+        let expectation = XCTestExpectation(description: "wait queue to change")
+        translationService.getTraduction(textToTranslate: "Salut", langIn: "FR", langOut: "EN") { (data, error) in
+            // Then
+            XCTAssert(error != nil)
+            XCTAssert(data == nil)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
     }
-
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    func testGetTranslationShoudFailIfWrongData() {
+        let translationService = TranslationService(session: URLSessionFake(data: FakeResponceData.translationIncorrectData, response: FakeResponceData.responseOK, error: nil))
+        let expectation = XCTestExpectation(description: "wait queue to change")
+        translationService.getTraduction(textToTranslate: "Salut", langIn: "FR", langOut: "EN") { (data, error) in
+            // Then
+            XCTAssert(error != nil)
+            XCTAssert(data == nil)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
     }
-
+    
+    func testGetTranslationShoudFailIfIncorrectResponse() {
+        let translationService = TranslationService(session: URLSessionFake(data: FakeResponceData.translationCorrectData, response: FakeResponceData.responseKO, error: nil))
+        let expectation = XCTestExpectation(description: "wait queue to change")
+        translationService.getTraduction(textToTranslate: "Salut", langIn: "FR", langOut: "EN") { (data, error) in
+            // Then
+            XCTAssert(error != nil)
+            XCTAssert(data == nil)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func testGetTranslationShoudSucceedIfNoErrorAndCorrectData() {
+        let translationService = TranslationService(session: URLSessionFake(data: FakeResponceData.translationCorrectData, response: FakeResponceData.responseOK, error: nil))
+        let expectation = XCTestExpectation(description: "wait queue to change")
+        translationService.getTraduction(textToTranslate: "Salut", langIn: "FR", langOut: "EN") { (data, error) in
+            // Then
+            XCTAssert(error == nil)
+            XCTAssert(data != nil)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
+    }
 }
+
+
+
+
+
+
+

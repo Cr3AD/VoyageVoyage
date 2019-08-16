@@ -26,7 +26,7 @@ class WeatherViewController: UIViewController, DidUpdateLocation {
     
     // MARK: - Proprieties
     
-    private let locationService = LocationService()
+    let locationService = LocationService()
     private var dataWeather: WeatherDataJSON?
     private var dataForcast: ForcastDataJSON?
     

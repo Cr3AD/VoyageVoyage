@@ -9,10 +9,11 @@
 import Foundation
 
 class TranslationService {
-    static let shared = TranslationService()
+    static var shared = TranslationService()
+    private init() {}
     
-    private let googleURL = "https://translation.googleapis.com/language/translate/v2?"
-    private let googleAPI = valueForAPIKey(named:"googleAPI")
+    private static let googleURL = "https://translation.googleapis.com/language/translate/v2?"
+    private static let googleAPI = valueForAPIKey(named:"googleAPI")
     
     enum Error: Swift.Error {
         case noData
@@ -20,15 +21,18 @@ class TranslationService {
         case notOK200
     }
     
-    var session: URLSession
-    private init(_ session: URLSession = URLSession(configuration: .default)) {
+    private var task: URLSessionDataTask?
+    private var session = URLSession(configuration: .default)
+    init(session: URLSession) {
         self.session = session
     }
     
     func getTraduction(textToTranslate: String, langIn: String, langOut: String, completionHandler: @escaping (TranslationDataJSON?, Swift.Error?) ->()) {
         print("getTraduction started")
-        let url = "\(googleURL)key=\(googleAPI)&q=\(textToTranslate)&source=\(langIn)&target=\(langOut)"
+        let url = "\(TranslationService.googleURL)key=\(TranslationService.googleAPI)&q=\(textToTranslate)&source=\(langIn)&target=\(langOut)"
+        print(url)
         var request = URLRequest(url: URL(string: url)!)
+        task?.cancel()
         request.httpMethod = "POST"
         session.dataTask(with: request) { (data, responce, error) in
             DispatchQueue.main.async {

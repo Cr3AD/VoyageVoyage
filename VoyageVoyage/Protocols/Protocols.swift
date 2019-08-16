@@ -29,6 +29,6 @@ public protocol GetMoneyChoosen {
 }
 
 public protocol GetLangChoosen {
-    func updateLangInChoosen(data: String, image: String)
-    func updateLangOutChoosen(data: String, image: String)
+    func updateLangInChoosen(imageName: String)
+    func updateLangOutChoosen(imageName: String)
 }

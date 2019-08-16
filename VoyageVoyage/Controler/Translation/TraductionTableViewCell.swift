@@ -12,6 +12,7 @@ class TranslationTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        makeDesign()
     }
     
     @IBOutlet weak var LangInImage: UIImageView!
@@ -24,6 +25,10 @@ class TranslationTableViewCell: UITableViewCell {
         LangOutImage.image = UIImage(named: langOut)
         TranlatedTextLabel.text = tranlatedText
         OriginalTextLabel.text = originalText
+    }
+    
+    func makeDesign() {
+        
     }
     
 }

@@ -11,65 +11,70 @@ import XCTest
 
 
 
-class WeatherTests: XCTestCase, WeatherData, ShowErrorMessage {
-    func showAlertNoConnectionError(with title: String, and message: String) {
-        XCTFail("Error \(title)")
-    }
+class WeatherTests: XCTestCase {
     
-    
-    var expectation: XCTestExpectation?
-    var data: WeatherJSON?
-    
-    
+    var data: WeatherDataJSON?
     
     // MARK: - Weather tests
-    func testGetWeatherShouldPostFaileIfError() {
-        
+    func testGetWeatherShouldFailIfError() {
         // Given
-        
-        let networkService = NetworkService(session: URLSessionFake(data: nil, response: nil, error: FakeResponceData.error))
-        networkService.weatherDataDelegate = self
-        networkService.showErrorMessageDelegate = self
-        
-       
-        expectation = XCTestExpectation(description: "Wait for queue change.")
-        
+        let weatherService = WeatherService(session: URLSessionFake(data: nil, response: nil, error: FakeResponceData.error))
         // When
-        
-        try! networkService.networking(url: "http://api.openweathermap.org/data/2.5/weather", requestType: "weather")
-        
-        wait(for: [expectation!], timeout: 5)
-        
-        // Then
-        XCTAssertNil(data)
-
-    }
-    func receiveWeatherData(_ data: WeatherJSON) {
-        self.data = data
-        expectation?.fulfill()
+        let expectation = XCTestExpectation(description: "wait queue to change")
+        weatherService.getWeather(lat: "0", lon: "0") { (data, error) in
+            // Then
+            XCTAssert(error != nil)
+            XCTAssert(data == nil)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
     }
     
-
+    func testGetWeatherShouldFailIfNoData() {
+        let weatherService = WeatherService(session: URLSessionFake(data: nil, response: nil, error: nil))
+        let expectation = XCTestExpectation(description: "wait queue to change")
+        weatherService.getWeather(lat: "0", lon: "0") { (data, error) in
+            // Then
+            XCTAssert(error != nil)
+            XCTAssert(data == nil)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func testGetWeatherShouldFailIfWrongData() {
+        let weatherService = WeatherService(session: URLSessionFake(data: FakeResponceData.weatherIncorrectData, response: FakeResponceData.responseOK, error: nil))
+        let expectation = XCTestExpectation(description: "wait queue to change")
+        weatherService.getWeather(lat: "0", lon: "0") { (data, error) in
+            // Then
+            XCTAssert(error != nil)
+            XCTAssert(data == nil)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func testGetWeatherShouldFailIfIncorrectResponse() {
+        let weatherService = WeatherService(session: URLSessionFake(data: FakeResponceData.weatherCorrectData, response: FakeResponceData.responseKO, error: nil))
+        let expectation = XCTestExpectation(description: "wait queue to change")
+        weatherService.getWeather(lat: "0", lon: "0") { (data, error) in
+            // Then
+            XCTAssert(error != nil)
+            XCTAssert(data == nil)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func testGetWeatherShouldSucceedIfNoErrorAndCorrectData() {
+        let weatherService = WeatherService(session: URLSessionFake(data: FakeResponceData.weatherCorrectData, response: FakeResponceData.responseOK, error: nil))
+        let expectation = XCTestExpectation(description: "wait queue to change")
+        weatherService.getWeather(lat: "0", lon: "0") { (data, error) in
+            // Then
+            XCTAssert(error == nil)
+            XCTAssert(data != nil)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 1)
+    }
 }
-
-
-//class totoTest {
-//    /// var toto: Expextion
-//    func testBadResponse() {
-//        let networkService = NetworkService(session: URLSessioFake(/* */))
-//        networkService.translationDataDleegate = self
-//
-//        // Create expectation and save on object toto
-//
-//
-//        networkService.networkgin( /// )
-//
-//        // wait for expection
-//
-//
-//    }
-//
-//    func masupperfonctionDuDelegate() {
-//        //toto.fulfille()
-//    }
-//}
