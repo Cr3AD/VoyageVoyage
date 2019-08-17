@@ -37,18 +37,9 @@ class LocationService : NSObject, CLLocationManagerDelegate {
             // Request when-in-use authorization initially
             locationService.requestWhenInUseAuthorization()
             
-            if authorisation == .authorizedAlways || authorisation == .authorizedWhenInUse {
-                startLocationService()
-            } else {
-                locationServiceImpossible()
-            }
-            
-            
         case .restricted, .denied:
             // Disable location features
             locationServiceImpossible()
-            
-            
             
         case .authorizedWhenInUse, .authorizedAlways:
             // Enable location features
@@ -88,5 +79,9 @@ class LocationService : NSObject, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        enableBasicLocationServices()
     }
 }

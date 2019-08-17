@@ -18,7 +18,7 @@ class TranslationTests: XCTestCase {
     // MARK: - Weather tests
     func testGetTranslationShouldFailIfError() {
         // Given
-        let translationService = TranslationService(session: URLSessionFake(data: nil, response: nil, error: FakeResponceData.error))
+        let translationService = TranslationService(session: URLSessionFake(data: FakeResponceData.translationCorrectData, response: FakeResponceData.responseOK, error: FakeResponceData.error))
         // When
         let expectation = XCTestExpectation(description: "wait queue to change")
         translationService.getTraduction(textToTranslate: "Salut", langIn: "FR", langOut: "EN") { (data, error) in

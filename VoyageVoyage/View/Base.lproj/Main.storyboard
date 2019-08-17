@@ -59,7 +59,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="197" height="197"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloudday" translatesAutoresizingMaskIntoConstraints="NO" id="nud-7n-3V4">
-                                                                        <rect key="frame" x="40" y="40" width="117.00000000000003" height="117"/>
+                                                                        <rect key="frame" x="40" y="40" width="117" height="117"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" secondItem="nud-7n-3V4" secondAttribute="height" multiplier="1:1" id="eqN-TD-shz"/>
                                                                         </constraints>
@@ -115,7 +115,7 @@
                                                                                 <rect key="frame" x="0.0" y="75.333333333333314" width="197" height="32.666666666666657"/>
                                                                                 <subviews>
                                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="uparrow" translatesAutoresizingMaskIntoConstraints="NO" id="Wq7-iK-HfC">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="96.000000000000014" height="32.666666666666679"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="32.666666666666664"/>
                                                                                     </imageView>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--°" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XP3-Zm-6lF">
                                                                                         <rect key="frame" x="101" y="0.0" width="96" height="32.666666666666664"/>
@@ -132,7 +132,7 @@
                                                                                 <rect key="frame" x="0.0" y="113" width="197" height="33"/>
                                                                                 <subviews>
                                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downarrow" translatesAutoresizingMaskIntoConstraints="NO" id="c3Q-c7-ry6">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="96.000000000000014" height="33.000000000000014"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="33"/>
                                                                                     </imageView>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--°" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HpH-MG-N5n">
                                                                                         <rect key="frame" x="101" y="0.0" width="96" height="33"/>

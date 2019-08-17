@@ -41,17 +41,17 @@ class WeatherService {
         request.httpMethod = "GET"
         session.dataTask(with: request) { (data, responce, error) in
             DispatchQueue.main.async {
-                guard error == nil else {
-                    self.showError(errorType: .errorNotNill)
-                    return completionHandler(nil, error)
+                guard let data = data else {
+                    self.showError(errorType: .noData)
+                    return completionHandler(nil, Error.noData)
                 }
                 guard (responce as? HTTPURLResponse)?.statusCode == 200 else {
                     self.showError(errorType: .notOK200)
                     return completionHandler(nil, Error.notOK200)
                 }
-                guard let data = data else {
-                    self.showError(errorType: .noData)
-                    return completionHandler(nil, Error.noData)
+                guard error == nil else {
+                    self.showError(errorType: .errorNotNill)
+                    return completionHandler(nil, error)
                 }
                 do {
                     let weather = try JSONDecoder().decode(WeatherDataJSON.self, from: data)

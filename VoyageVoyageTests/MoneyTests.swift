@@ -18,7 +18,7 @@ class MoneyTests: XCTestCase {
     // MARK: - Weather tests
     func testGetMoneyShouldFailIfError() {
         // Given
-        let moneyService = MoneyService(session: URLSessionFake(data: nil, response: nil, error: FakeResponceData.error))
+        let moneyService = MoneyService(session: URLSessionFake(data: FakeResponceData.moneyCorrectData, response: FakeResponceData.responseOK, error: FakeResponceData.error))
         // When
         let expectation = XCTestExpectation(description: "wait queue to change")
         moneyService.getMoney { (data, error) in

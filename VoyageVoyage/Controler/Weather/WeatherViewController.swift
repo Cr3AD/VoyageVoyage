@@ -35,12 +35,14 @@ class WeatherViewController: UIViewController {
     // MARK - ViewDidLoad
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         // Delegate
         delegateSetUp()
         // configure location
         locationService.enableBasicLocationServices()
+        
     }
     
     private func delegateSetUp() {

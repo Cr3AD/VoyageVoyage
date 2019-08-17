@@ -18,7 +18,7 @@ class ForcastTests: XCTestCase {
     // MARK: - Weather tests
     func testGetForcastShouldFailIfError() {
         // Given
-        let forcastService = ForcastService(session: URLSessionFake(data: nil, response: nil, error: FakeResponceData.error))
+        let forcastService = ForcastService(session: URLSessionFake(data: FakeResponceData.forcastCorrectData, response: FakeResponceData.responseOK, error: FakeResponceData.error))
         // When
         let expectation = XCTestExpectation(description: "wait queue to change")
         forcastService.getForcast(lat: "0", lon: "0") { (data, error) in
