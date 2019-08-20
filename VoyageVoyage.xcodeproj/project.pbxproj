@@ -74,6 +74,7 @@
 		643DAF3522FF06CE00EFF22D /* WeatherForcastTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForcastTests.swift; sourceTree = "<group>"; };
 		643DAF3722FF06E800EFF22D /* MoneyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTests.swift; sourceTree = "<group>"; };
 		643DAF3922FF070400EFF22D /* TranslationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationTests.swift; sourceTree = "<group>"; };
+		644230E12309F22500E12299 /* VoyageVoyage.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VoyageVoyage.entitlements; sourceTree = "<group>"; };
 		6445CA3C22DF5F4100CAD6E6 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = API.swift; path = VoyageVoyage/API.swift; sourceTree = "<group>"; };
 		645856E0229BE311006D526D /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		645856E3229BE3B8006D526D /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -248,6 +249,7 @@
 		64E0BA89229731D5005F4536 /* VoyageVoyage */ = {
 			isa = PBXGroup;
 			children = (
+				644230E12309F22500E12299 /* VoyageVoyage.entitlements */,
 				6405C4A222ACDA2C00D97428 /* Extensions */,
 				645856E2229BE318006D526D /* Protocols */,
 				645856DE229BE117006D526D /* View */,
@@ -369,6 +371,11 @@
 					};
 					64E0BA86229731D5005F4536 = {
 						CreatedOnToolsVersion = 10.2.1;
+						SystemCapabilities = {
+							com.apple.NetworkExtensions.iOS = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};

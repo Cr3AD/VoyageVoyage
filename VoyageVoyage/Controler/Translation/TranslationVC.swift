@@ -27,7 +27,7 @@ class TranslationVC: UIViewController  {
     }
     
     @IBAction func didTapReverseBUtton(_ sender: Any) {
-        reverseTraductionButtons()
+        reverseTraductionButtons(langIn: langIn, langOut: langOut)
     }
     
     @IBAction func didTapTextField(_ sender: Any) {
@@ -107,8 +107,8 @@ class TranslationVC: UIViewController  {
 
     private func viewSetup() {
         translateButton?.layer.cornerRadius = 5
-        langInButton?.setImage(UIImage(named: "FR"), for: .normal)
-        langOutButton?.setImage(UIImage(named: "EN"), for: .normal)
+        langInButton?.setImage(UIImage(named: langIn), for: .normal)
+        langOutButton?.setImage(UIImage(named: langOut), for: .normal)
     }
 
     // MARK: - Download Data for Translation
@@ -133,19 +133,10 @@ class TranslationVC: UIViewController  {
     
     // MARK: - Update Data on the screen
     
-    private func reverseTraductionButtons() {
-        let temp1 = langInButton?.titleLabel?.text
-        let temp1image = langInButton?.image(for: .normal)
-        let temp2 = langOutButton?.titleLabel?.text
-        let temp2image = langOutButton?.image(for: .normal)
-        
-        langInButton?.setTitle(temp2, for: .normal)
-        langInButton?.setImage(temp2image, for: .normal)
-        langOutButton?.setTitle(temp1, for: .normal)
-        langOutButton?.setImage(temp1image, for: .normal)
-    }
-
-    
+    private func reverseTraductionButtons(langIn: String, langOut: String) {
+        updateLangInChoosen(imageName: langOut)
+        updateLangOutChoosen(imageName: langIn)
+    } 
 }
 
 extension TranslationVC: UITableViewDataSource {
@@ -172,12 +163,14 @@ extension TranslationVC: UITableViewDataSource {
 extension TranslationVC: GetLangChoosen {
     
     func updateLangInChoosen(imageName: String) {
+        langIn = imageName
         let image = UIImage(named: imageName)
         langInButton?.setImage(image, for: .normal)
         langIn = imageName
     }
     
     func updateLangOutChoosen(imageName: String) {
+        langOut = imageName
         let image = UIImage(named: imageName)
         langOutButton?.setImage(image, for: .normal)
         langOut = imageName

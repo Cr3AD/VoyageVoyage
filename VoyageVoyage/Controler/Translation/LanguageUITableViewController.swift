@@ -23,11 +23,13 @@ class LanguageUITableViewController: UITableViewController {
     let poolOfLanguage = [("EN", "English"),
                           ("FR", "Français"),
                           ("ES", "Español"),
+                          ("NL", "Neederlands"),
+                          ("JA", "Japonees"),
                           ("DE", "Deutsch"),
                           ("IT", "Italiano"),
                           ("zh-CN", "Chinese Simplified"),
                           ("NO", "Norwegian")
-                            ]
+                        ]
     
     var delegateLangIn: GetLangChoosen?
     var delegateLangOut: GetLangChoosen?
