@@ -40,16 +40,26 @@ class WeatherViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
         // Delegate
         delegateSetUp()
+//
         // configure location
         locationService.enableBasicLocationServices()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(wakeupApp), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
     }
+    @objc func wakeupApp() {
+        self.forcastScrollView?.subviews.forEach({ $0.removeFromSuperview() })
+        locationService.enableBasicLocationServices()
+    }
+    
     
     private func delegateSetUp() {
         locationService.locationDidUpdateDelegate = self
         weatherService.errorMessageDelegate = self
         forcastService.errorMessageDelegate = self
     }
+    
+
     
     // MARK: - Download Data for Weather and Forcast
     
@@ -147,6 +157,10 @@ class WeatherViewController: UIViewController {
     }
     
     private func updateForcastDataOnScreen() throws {
+        for view in self.forcastScrollView!.subviews {
+            view.removeFromSuperview()
+            print("removed \(view)")
+        }
         do {
             
             guard let forcastList = self.dataForcast?.list else {
@@ -180,17 +194,20 @@ class WeatherViewController: UIViewController {
                 let forcastTempFinal = (forcastTemp - 273.15).intValue.string + "°"
                 let windFinal = forcastWind.string + "kmh"
                 self.makeForcatView(forcastImage: forcastImageFinal, tempText: forcastTempFinal, timeText: timeFormated, wind: windFinal)
+                
             }
+            
         } catch let error {
             print(error)
         }
+        
     }
     
     private func makeForcatView(forcastImage: String, tempText: String, timeText: String, wind: String) {
         
         // Forcast View
         let forcastSize = forcastScrollView?.bounds
-        let numberOfView = Double(forcastScrollView?.subviews.count ?? 0) - 2
+        let numberOfView = Double(forcastScrollView?.subviews.count ?? 0)
         let forcastHeight: Double = 25
         let forcastWidth = Double(forcastSize?.width ?? 0)
         let position = numberOfView * forcastHeight
@@ -206,7 +223,8 @@ class WeatherViewController: UIViewController {
         mainStackView.addArrangedSubview(makeLabelView(with: wind))
         mainStackView.addArrangedSubview(makeLabelView(with: timeText))
         
-        self.forcastScrollView?.addSubview(mainStackView)
+       self.forcastScrollView?.addSubview(mainStackView)
+        print("view added \(mainStackView)")
         self.forcastScrollView?.alwaysBounceVertical = true
         
     }

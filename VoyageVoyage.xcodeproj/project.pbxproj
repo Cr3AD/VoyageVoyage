@@ -33,6 +33,7 @@
 		648AC49F2306F8F700408F8E /* ErrorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648AC49E2306F8F700408F8E /* ErrorService.swift */; };
 		64BEB9AE22F9579200CAB9B8 /* Translation.json in Resources */ = {isa = PBXBuildFile; fileRef = 64BEB9AD22F9579200CAB9B8 /* Translation.json */; };
 		64BEB9B022F95C0900CAB9B8 /* URLSessionFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BEB9AF22F95C0900CAB9B8 /* URLSessionFake.swift */; };
+		64D1CC9A230C2926005C1AF3 /* CitySearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D1CC99230C2926005C1AF3 /* CitySearch.swift */; };
 		64DFD8D122E1BDC400667849 /* MoneyUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64DFD8D022E1BDC400667849 /* MoneyUITableViewController.swift */; };
 		64DFD8D322E1C48F00667849 /* MoneyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64DFD8D222E1C48F00667849 /* MoneyTableViewCell.swift */; };
 		64DFD8D822E783DE00667849 /* LanguageUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64DFD8D722E783DE00667849 /* LanguageUITableViewController.swift */; };
@@ -88,6 +89,7 @@
 		648AC49E2306F8F700408F8E /* ErrorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorService.swift; sourceTree = "<group>"; };
 		64BEB9AD22F9579200CAB9B8 /* Translation.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Translation.json; sourceTree = "<group>"; };
 		64BEB9AF22F95C0900CAB9B8 /* URLSessionFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionFake.swift; sourceTree = "<group>"; };
+		64D1CC99230C2926005C1AF3 /* CitySearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearch.swift; sourceTree = "<group>"; };
 		64DFD8D022E1BDC400667849 /* MoneyUITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyUITableViewController.swift; sourceTree = "<group>"; };
 		64DFD8D222E1C48F00667849 /* MoneyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTableViewCell.swift; sourceTree = "<group>"; };
 		64DFD8D722E783DE00667849 /* LanguageUITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageUITableViewController.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 			isa = PBXGroup;
 			children = (
 				64E0BA8C229731D5005F4536 /* WeatherViewController.swift */,
+				64D1CC99230C2926005C1AF3 /* CitySearch.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -461,6 +464,7 @@
 				648351F0230345AB005BC151 /* TraductionTableViewCell.swift in Sources */,
 				6417312922BA6C4E00916753 /* MoneyManager.swift in Sources */,
 				648AC49F2306F8F700408F8E /* ErrorService.swift in Sources */,
+				64D1CC9A230C2926005C1AF3 /* CitySearch.swift in Sources */,
 				647880BC230537390026E6A8 /* ForcastDataJSON.swift in Sources */,
 				6445CA3D22DF5F4100CAD6E6 /* API.swift in Sources */,
 				64DFD8D322E1C48F00667849 /* MoneyTableViewCell.swift in Sources */,
