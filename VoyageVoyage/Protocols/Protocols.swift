@@ -10,6 +10,7 @@ import Foundation
 
 // Location
 
+// Called when the location is find to start updating the datas
 public protocol DidUpdateLocation {
     func updateWeatherAndForcastDataAtLocation()
     func showUserNoLocationAvailable()
@@ -17,6 +18,7 @@ public protocol DidUpdateLocation {
 
 // Error
 
+// Show error message when called
 public protocol ShowErrorMessage {
     func showAlertNoConnectionError(title: String, message: String)
 }

@@ -58,7 +58,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="197" height="197"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloudday" translatesAutoresizingMaskIntoConstraints="NO" id="nud-7n-3V4">
-                                                                        <rect key="frame" x="40" y="40" width="117.00000000000003" height="117"/>
+                                                                        <rect key="frame" x="40" y="40" width="117" height="117"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" secondItem="nud-7n-3V4" secondAttribute="height" multiplier="1:1" id="eqN-TD-shz"/>
                                                                         </constraints>
@@ -112,7 +112,7 @@
                                                                                 <rect key="frame" x="0.0" y="75.333333333333314" width="197" height="32.666666666666657"/>
                                                                                 <subviews>
                                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="uparrow" translatesAutoresizingMaskIntoConstraints="NO" id="Wq7-iK-HfC">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="96.000000000000014" height="32.666666666666679"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="32.666666666666664"/>
                                                                                     </imageView>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--°" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XP3-Zm-6lF">
                                                                                         <rect key="frame" x="101" y="0.0" width="96" height="32.666666666666664"/>
@@ -129,7 +129,7 @@
                                                                                 <rect key="frame" x="0.0" y="113" width="197" height="33"/>
                                                                                 <subviews>
                                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downarrow" translatesAutoresizingMaskIntoConstraints="NO" id="c3Q-c7-ry6">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="96.000000000000014" height="33.000000000000014"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="33"/>
                                                                                     </imageView>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--°" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HpH-MG-N5n">
                                                                                         <rect key="frame" x="101" y="0.0" width="96" height="33"/>
@@ -278,7 +278,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="weather" id="DFs-jN-kA6"/>
+                    <tabBarItem key="tabBarItem" title="" image="weatherIcon" id="DFs-jN-kA6"/>
                     <connections>
                         <outlet property="cityLabel" destination="IUk-QO-0cU" id="d3J-DL-Ae2"/>
                         <outlet property="forcastScrollView" destination="ztU-OB-cp9" id="Vi1-cf-X6T"/>
@@ -571,7 +571,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="XTe-kX-gTc"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="translate" id="bCO-Bv-lV1">
+                    <tabBarItem key="tabBarItem" title="" image="translateIcon" id="bCO-Bv-lV1">
                         <color key="badgeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <connections>
@@ -764,7 +764,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="EmY-wD-Ybx"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="moneyConverter" id="QRB-4G-TCW">
+                    <tabBarItem key="tabBarItem" title="" image="moneyIcon" id="QRB-4G-TCW">
                         <color key="badgeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <connections>
@@ -850,12 +850,12 @@
         <image name="dawn" width="94" height="85"/>
         <image name="downarrow" width="49" height="49"/>
         <image name="humidity" width="18" height="22"/>
-        <image name="moneyConverter" width="44" height="44"/>
+        <image name="moneyIcon" width="32" height="32"/>
         <image name="sunset" width="94" height="80"/>
         <image name="transfer" width="52" height="34"/>
-        <image name="translate" width="43" height="30"/>
+        <image name="translateIcon" width="32" height="32"/>
         <image name="uparrow" width="49" height="49"/>
-        <image name="weather" width="44" height="44"/>
+        <image name="weatherIcon" width="32" height="32"/>
         <image name="wind" width="96" height="61"/>
     </resources>
     <inferredMetricsTieBreakers>

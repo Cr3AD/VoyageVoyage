@@ -8,6 +8,8 @@
 
 import UIKit
 
+// Extention used in the project to hide the keyboard when tapped out of it
+
 extension UIViewController {
     public func hideKeyboardWhenTappedAround() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
@@ -19,6 +21,8 @@ extension UIViewController {
         view.endEditing(true)
     }  
 }
+
+// Type Extensions
 
 extension Double {
     var intValue: Int {

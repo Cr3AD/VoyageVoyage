@@ -37,36 +37,33 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
         self.hideKeyboardWhenTappedAround()
         // Delegate
         delegateSetUp()
-//
         // configure location
         locationService.enableBasicLocationServices()
-        
+        // Notify when the app wake up from background to update the location
         NotificationCenter.default.addObserver(self, selector: #selector(wakeupApp), name: UIApplication.didBecomeActiveNotification, object: nil)
-        
     }
+    
+    // Object called from the notification wakeupApp from the viewDidLoad
     @objc func wakeupApp() {
         self.forcastScrollView?.subviews.forEach({ $0.removeFromSuperview() })
         locationService.enableBasicLocationServices()
     }
     
-    
+    // Delegate setup
     private func delegateSetUp() {
         locationService.locationDidUpdateDelegate = self
         weatherService.errorMessageDelegate = self
         forcastService.errorMessageDelegate = self
     }
     
-
     
-    // MARK: - Download Data for Weather and Forcast
-    
-
-
     // MARK: - Update Data on the screen
     
+    // Error enumeration
     enum updateWeatherDataOnScreenErrors: Error {
         case noCity
         case noWeatherDescription
@@ -85,6 +82,7 @@ class WeatherViewController: UIViewController {
         case noForcastImage
     }
     
+    // Update weather data on screen. Called from protocol DidUpdateLocation
     private func updateWeatherDataOnScreen() throws {
         
         let dateFormatter = DateFormatter()
@@ -141,7 +139,7 @@ class WeatherViewController: UIViewController {
             isItDay = false
         }
         
-        let weatherIconName: String = updateWeatherIcon(condition: condition, isDay: isItDay)
+        let weatherIconName: String = updateWeatherIcon(condition: condition, isDay: isItDay, type: "Weather")
         
         self.cityLabel?.text = city
         self.weatherDescriptionDataLabel?.text = weatherDescription
@@ -156,6 +154,7 @@ class WeatherViewController: UIViewController {
         
     }
     
+    // Update weather forecast data on screen. Called from protocol DidUpdateLocation
     private func updateForcastDataOnScreen() throws {
         for view in self.forcastScrollView!.subviews {
             view.removeFromSuperview()
@@ -190,7 +189,7 @@ class WeatherViewController: UIViewController {
                 dateFormatter.dateFormat  = "HH:mm"
                 let timeFinal = Date(timeIntervalSince1970: time.doubleValue)
                 let timeFormated = dateFormatter.string(from: timeFinal)
-                let forcastImageFinal = updateWeatherIcon(condition: forcastImage, isDay: true)
+                let forcastImageFinal = updateWeatherIcon(condition: forcastImage, isDay: true, type: "Forcast")
                 let forcastTempFinal = (forcastTemp - 273.15).intValue.string + "°"
                 let windFinal = forcastWind.string + "kmh"
                 self.makeForcatView(forcastImage: forcastImageFinal, tempText: forcastTempFinal, timeText: timeFormated, wind: windFinal)
@@ -203,12 +202,13 @@ class WeatherViewController: UIViewController {
         
     }
     
+    // Make forcastView
     private func makeForcatView(forcastImage: String, tempText: String, timeText: String, wind: String) {
         
         // Forcast View
         let forcastSize = forcastScrollView?.bounds
         let numberOfView = Double(forcastScrollView?.subviews.count ?? 0)
-        let forcastHeight: Double = 25
+        let forcastHeight: Double = 35
         let forcastWidth = Double(forcastSize?.width ?? 0)
         let position = numberOfView * forcastHeight
         
@@ -217,18 +217,19 @@ class WeatherViewController: UIViewController {
         mainStackView.alignment = .fill
         mainStackView.distribution = .fillEqually
         
+        mainStackView.addArrangedSubview(makeLabelView(with: timeText))
         mainStackView.addArrangedSubview(makeimgView(with: forcastImage))
         mainStackView.addArrangedSubview(makeLabelView(with: tempText))
-        mainStackView.addArrangedSubview(makeimgView(with: "wind"))
+//        mainStackView.addArrangedSubview(makeimgView(with: "wind"))
         mainStackView.addArrangedSubview(makeLabelView(with: wind))
-        mainStackView.addArrangedSubview(makeLabelView(with: timeText))
         
-       self.forcastScrollView?.addSubview(mainStackView)
-        print("view added \(mainStackView)")
+        
+        self.forcastScrollView?.addSubview(mainStackView)
         self.forcastScrollView?.alwaysBounceVertical = true
         
     }
     
+    // Make imageView for forcastView
     private func makeimgView(with image: String) -> UIImageView {
         
         let imgView = UIImageView()
@@ -238,6 +239,7 @@ class WeatherViewController: UIViewController {
         return imgView
     }
     
+    // Make labelView for forcastView
     private func makeLabelView(with text: String) -> UILabel {
         
         let lblView = UILabel()
@@ -247,61 +249,77 @@ class WeatherViewController: UIViewController {
         return lblView
     }
     
-    private func updateWeatherIcon(condition: Int, isDay: Bool) -> String {
+    // Weather icon selection
+    private func updateWeatherIcon(condition: Int, isDay: Bool, type: String) -> String {
         
         switch (condition) {
             
-        case 200...300 :
-            return "thunderstorm"
-        case 301...600 :
+        case 200, 201, 230 :
             if isDay == true {
-                return "rainday"
+                return "thunderDay\(type)"
             } else {
-                return "rainnight"
+                return "thunderNight\(type)"
+            }
+        case 202...229, 231...299:
+            return "thunder\(type)"
+        
+            
+        case 300, 301, 310, 311 :
+            if isDay == true {
+                return "drizzleDay\(type)"
+            } else {
+                return "drizzleNight\(type)"
+            }
+        case 302...309, 312...399:
+            return "drizzle\(type)"
+            
+        case 500, 501, 505...599 :
+            if isDay == true {
+                return "rainDay\(type)"
+            } else {
+                return "rainNight\(type)"
             }
             
-        case 501...600 :
-            return "rainnight"
+        case 502...504, 522, 531:
+            return "rain\(type)"
             
-        case 601...700 :
+        case 600, 601, 603...612, 614...620, 623...699 :
             if isDay == true {
-                return "snowday"
+                return "snowDay\(type)"
             } else {
-                return "snownight"
+                return "snowNight\(type)"
             }
+        case 602, 613, 621, 622:
+            return "snow\(type)"
             
-        case 701...771 :
-            if isDay == true {
-                return "fogday"
-            } else {
-                return "fognight"
-            }
+        case 700...799 :
+            return "fog\(type)"
             
-        case 781...799 :
-            return "wind"
+//        case 781...799 :
+//            return "wind"
             
         case 800 :
             if isDay == true {
-                return "sunny"
+                return "clearDay\(type)"
             } else {
-                return "moon"
+                return "clearNight\(type)"
             }
             
         case 801...802 :
             if isDay == true {
-                return "cloudday"
+                return "cloudDay\(type)"
             } else {
-                return "cloudnight"
+                return "cloudNight\(type)"
             }
             
         case 803...804 :
-            return "cloudnight"
+            return "cloud\(type)"
             
         default :
             if isDay == true {
-                return "sunny"
+                return "clearDay\(type)"
             } else {
-                return "moon"
+                return "clearNight\(type)"
             }
         }
         

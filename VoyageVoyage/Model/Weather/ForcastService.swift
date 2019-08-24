@@ -33,7 +33,7 @@ class ForcastService {
     
     func getForcast(lat: String, lon: String, completionHandler: @escaping (ForcastDataJSON?, Swift.Error?) ->()) {
         print("getForcast started")
-        let url = "\(ForcastService.openweatherURL)?APPID=\(ForcastService.openweatherAPI)&lon=\(lon)&lat=\(lat)&cnt=5"
+        let url = "\(ForcastService.openweatherURL)?APPID=\(ForcastService.openweatherAPI)&lon=\(lon)&lat=\(lat)&cnt=7"
         var request = URLRequest(url: URL(string: url)!)
         task?.cancel()
         request.httpMethod = "GET"
