@@ -80,6 +80,7 @@ class WeatherViewController: UIViewController {
         case noForcastTemp
         case noForcastWind
         case noForcastImage
+        case noForcastRain
     }
     
     // Update weather data on screen. Called from protocol DidUpdateLocation
@@ -158,7 +159,6 @@ class WeatherViewController: UIViewController {
     private func updateForcastDataOnScreen() throws {
         for view in self.forcastScrollView!.subviews {
             view.removeFromSuperview()
-            print("removed \(view)")
         }
         do {
             
@@ -185,6 +185,8 @@ class WeatherViewController: UIViewController {
                 }
                 
                 
+                
+                
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat  = "HH:mm"
                 let timeFinal = Date(timeIntervalSince1970: time.doubleValue)
@@ -192,6 +194,7 @@ class WeatherViewController: UIViewController {
                 let forcastImageFinal = updateWeatherIcon(condition: forcastImage, isDay: true, type: "Forcast")
                 let forcastTempFinal = (forcastTemp - 273.15).intValue.string + "°"
                 let windFinal = forcastWind.string + "kmh"
+                
                 self.makeForcatView(forcastImage: forcastImageFinal, tempText: forcastTempFinal, timeText: timeFormated, wind: windFinal)
                 
             }
@@ -220,7 +223,6 @@ class WeatherViewController: UIViewController {
         mainStackView.addArrangedSubview(makeLabelView(with: timeText))
         mainStackView.addArrangedSubview(makeimgView(with: forcastImage))
         mainStackView.addArrangedSubview(makeLabelView(with: tempText))
-//        mainStackView.addArrangedSubview(makeimgView(with: "wind"))
         mainStackView.addArrangedSubview(makeLabelView(with: wind))
         
         

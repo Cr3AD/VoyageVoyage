@@ -1,143 +1,121 @@
 // This file was generated from JSON Schema using quicktype, do not modify it directly.
 // To parse the JSON, add this file to your project and do:
 //
-//   let forcastForcastJson = try? newJSONDecoder().decode(forcastForcastJson.self, from: jsonData)
-
+//   let forcastDataJSON = try? newJSONDecoder().decode(ForcastDataJSON.self, from: jsonData)
 
 import Foundation
 
-// MARK: - forcastForcastJson
+// MARK: - ForcastDataJSON
 struct ForcastDataJSON: Codable {
-    let list: [forcastList]?
-    let cnt: Int?
-    let message: Double?
-    let city: forcastCity?
     let cod: String?
-    
-    enum CodingKeys: String, CodingKey {
-        case list
-        case cnt
-        case message
-        case city
-        case cod
-    }
+    let message: Double?
+    let cnt: Int?
+    let list: [ForcastList]?
+    let city: ForcastCity?
 }
 
-// MARK: - forcastCity
-struct forcastCity: Codable {
-    let population: Int?
-    let country: String?
+// MARK: - ForcastCity
+struct ForcastCity: Codable {
+    let id: Int?
     let name: String?
-    let timezone: Int?
-    let id: Int?
-    let coord: forcastCoord?
-    
-    enum CodingKeys: String, CodingKey {
-        case population
-        case country
-        case name
-        case timezone
-        case id
-        case coord
-    }
+    let coord: ForcastCoord?
+    let population, timezone, sunrise, sunset: Int?
 }
 
-// MARK: - forcastCoord
-struct forcastCoord: Codable {
-    let lat: Double?
-    let lon: Double?
-    
-    enum CodingKeys: String, CodingKey {
-        case lat
-        case lon
-    }
+// MARK: - ForcastCoord
+struct ForcastCoord: Codable {
 }
 
-// MARK: - forcastList
-struct forcastList: Codable {
-    let main: forcastMain?
-    let wind: forcastWind?
+// MARK: - ForcastList
+struct ForcastList: Codable {
     let dt: Int?
-    let clouds: forcastClouds?
+    let main: ForcastMainClass?
+    let weather: [ForcastWeather]?
+    let clouds: ForcastClouds?
+    let wind: ForcastWind?
+    let rain: ForcastRain?
+    let sys: ForcastSys?
     let dtTxt: String?
-    let weather: [forcastWeather]?
-    let sys: forcastSys?
     
     enum CodingKeys: String, CodingKey {
-        case main
-        case wind
-        case dt
-        case clouds
-        case dtTxt
-        case weather
-        case sys
+        case dt, main, weather, clouds, wind, rain, sys
+        case dtTxt = "dt_txt"
     }
 }
 
-// MARK: - forcastClouds
-struct forcastClouds: Codable {
+// MARK: - ForcastClouds
+struct ForcastClouds: Codable {
     let all: Int?
-    
-    enum CodingKeys: String, CodingKey {
-        case all
-    }
 }
 
-// MARK: - forcastMain
-struct forcastMain: Codable {
-    let grndLevel: Double?
-    let pressure: Double?
-    let tempKf: Double?
-    let tempMax: Double?
+// MARK: - ForcastMainClass
+struct ForcastMainClass: Codable {
+    let temp, tempMin, tempMax, pressure: Double?
+    let seaLevel, grndLevel: Double?
     let humidity: Int?
-    let temp: Double?
-    let tempMin: Double?
-    let seaLevel: Double?
+    let tempKf: Double?
     
     enum CodingKeys: String, CodingKey {
-        case grndLevel
-        case pressure
-        case tempKf
-        case tempMax
-        case humidity
         case temp
-        case tempMin
-        case seaLevel
+        case tempMin = "temp_min"
+        case tempMax = "temp_max"
+        case pressure
+        case seaLevel = "sea_level"
+        case grndLevel = "grnd_level"
+        case humidity
+        case tempKf = "temp_kf"
     }
 }
 
-// MARK: - forcastSys
-struct forcastSys: Codable {
-    let pod: String?
+// MARK: - ForcastRain
+struct ForcastRain: Codable {
+    let the3H: Double?
     
     enum CodingKeys: String, CodingKey {
-        case pod
+        case the3H = "3h"
     }
 }
 
-// MARK: - forcastWeather
-struct forcastWeather: Codable {
+// MARK: - ForcastSys
+struct ForcastSys: Codable {
+    let pod: ForcastPod?
+}
+
+enum ForcastPod: String, Codable {
+    case d = "d"
+    case n = "n"
+}
+
+// MARK: - ForcastWeather
+struct ForcastWeather: Codable {
     let id: Int?
+    let main: ForcastMainEnum?
+    let weatherDescription: ForcastDescription?
     let icon: String?
-    let weatherDescription: String?
-    let main: String?
     
     enum CodingKeys: String, CodingKey {
-        case id
+        case id, main
+        case weatherDescription = "description"
         case icon
-        case weatherDescription
-        case main
     }
 }
 
-// MARK: - forcastWind
-struct forcastWind: Codable {
-    let speed: Double?
-    let deg: Double?
-    
-    enum CodingKeys: String, CodingKey {
-        case speed
-        case deg
-    }
+enum ForcastMainEnum: String, Codable {
+    case clear = "Clear"
+    case clouds = "Clouds"
+    case rain = "Rain"
 }
 
+enum ForcastDescription: String, Codable {
+    case brokenClouds = "broken clouds"
+    case clearSky = "clear sky"
+    case fewClouds = "few clouds"
+    case lightRain = "light rain"
+    case overcastClouds = "overcast clouds"
+    case scatteredClouds = "scattered clouds"
+}
+
+// MARK: - ForcastWind
+struct ForcastWind: Codable {
+    let speed, deg: Double?
+}
