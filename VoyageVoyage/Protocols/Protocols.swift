@@ -34,3 +34,7 @@ public protocol GetLangChoosen {
     func updateLangInChoosen(imageName: String)
     func updateLangOutChoosen(imageName: String)
 }
+
+public protocol GetANewCity {
+    func updateWeatherWithNewCity(lat: Double, lon: Double)
+}

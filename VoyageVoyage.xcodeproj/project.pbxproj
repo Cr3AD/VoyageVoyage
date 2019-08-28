@@ -46,6 +46,10 @@
 		64E0E6BA22DCCA3100FDA848 /* MoneyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E0E6B922DCCA3100FDA848 /* MoneyJSON.swift */; };
 		64E0E6BE22DCCA8800FDA848 /* Money.json in Resources */ = {isa = PBXBuildFile; fileRef = 64E0E6BD22DCCA8800FDA848 /* Money.json */; };
 		64E0E6C022DCCAD900FDA848 /* Forcast.json in Resources */ = {isa = PBXBuildFile; fileRef = 64E0E6BF22DCCAD900FDA848 /* Forcast.json */; };
+		64F7936B23152ED600320456 /* CitySearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F7936A23152ED600320456 /* CitySearchService.swift */; };
+		64F7936E2315312700320456 /* AutocompletionDataJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F7936D2315312700320456 /* AutocompletionDataJSON.swift */; };
+		64F793702315319E00320456 /* PlaceDetailDataJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F7936F2315319E00320456 /* PlaceDetailDataJSON.swift */; };
+		64F793722315630300320456 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F793712315630300320456 /* CityTableViewCell.swift */; };
 		64F8739B22E78516001D85A3 /* TranslationDataJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F8739A22E78516001D85A3 /* TranslationDataJSON.swift */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +108,10 @@
 		64E0E6B922DCCA3100FDA848 /* MoneyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyJSON.swift; sourceTree = "<group>"; };
 		64E0E6BD22DCCA8800FDA848 /* Money.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Money.json; sourceTree = "<group>"; };
 		64E0E6BF22DCCAD900FDA848 /* Forcast.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Forcast.json; sourceTree = "<group>"; };
+		64F7936A23152ED600320456 /* CitySearchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchService.swift; sourceTree = "<group>"; };
+		64F7936D2315312700320456 /* AutocompletionDataJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompletionDataJSON.swift; sourceTree = "<group>"; };
+		64F7936F2315319E00320456 /* PlaceDetailDataJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailDataJSON.swift; sourceTree = "<group>"; };
+		64F793712315630300320456 /* CityTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
 		64F8739A22E78516001D85A3 /* TranslationDataJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationDataJSON.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				64DFD8D422E7837600667849 /* Services */,
+				64F7936C23152EDA00320456 /* CitySe */,
 				647880B8230537390026E6A8 /* Weather */,
 				64F8739922E7845B001D85A3 /* MoneyExchange */,
 				64F8739C22E78695001D85A3 /* Translation */,
@@ -264,6 +273,16 @@
 			path = VoyageVoyage;
 			sourceTree = "<group>";
 		};
+		64F7936C23152EDA00320456 /* CitySe */ = {
+			isa = PBXGroup;
+			children = (
+				64F7936A23152ED600320456 /* CitySearchService.swift */,
+				64F7936D2315312700320456 /* AutocompletionDataJSON.swift */,
+				64F7936F2315319E00320456 /* PlaceDetailDataJSON.swift */,
+			);
+			path = CitySe;
+			sourceTree = "<group>";
+		};
 		64F8739922E7845B001D85A3 /* MoneyExchange */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +328,7 @@
 			children = (
 				64E0BA8C229731D5005F4536 /* WeatherViewController.swift */,
 				64D1CC99230C2926005C1AF3 /* CitySearch.swift */,
+				64F793712315630300320456 /* CityTableViewCell.swift */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -446,11 +466,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64F7936B23152ED600320456 /* CitySearchService.swift in Sources */,
 				64E0BA8D229731D5005F4536 /* WeatherViewController.swift in Sources */,
 				6405C4A122ACDA2700D97428 /* Extension.swift in Sources */,
 				645856E4229BE3B8006D526D /* LocationService.swift in Sources */,
 				6413F43C229EB756000D0C64 /* TranslationVC.swift in Sources */,
 				647880BE230537390026E6A8 /* WeatherDataJSON.swift in Sources */,
+				64F7936E2315312700320456 /* AutocompletionDataJSON.swift in Sources */,
 				647880C4230548F70026E6A8 /* MoneyService.swift in Sources */,
 				647880BD230537390026E6A8 /* WeatherService.swift in Sources */,
 				64E0BA8B229731D5005F4536 /* AppDelegate.swift in Sources */,
@@ -460,11 +482,13 @@
 				6410BDA222D36F1F003E102A /* MoneyViewController.swift in Sources */,
 				647880C2230540020026E6A8 /* ForcastService.swift in Sources */,
 				64DFD8D122E1BDC400667849 /* MoneyUITableViewController.swift in Sources */,
+				64F793702315319E00320456 /* PlaceDetailDataJSON.swift in Sources */,
 				645856E1229BE311006D526D /* Protocols.swift in Sources */,
 				648351F0230345AB005BC151 /* TraductionTableViewCell.swift in Sources */,
 				6417312922BA6C4E00916753 /* MoneyManager.swift in Sources */,
 				648AC49F2306F8F700408F8E /* ErrorService.swift in Sources */,
 				64D1CC9A230C2926005C1AF3 /* CitySearch.swift in Sources */,
+				64F793722315630300320456 /* CityTableViewCell.swift in Sources */,
 				647880BC230537390026E6A8 /* ForcastDataJSON.swift in Sources */,
 				6445CA3D22DF5F4100CAD6E6 /* API.swift in Sources */,
 				64DFD8D322E1C48F00667849 /* MoneyTableViewCell.swift in Sources */,

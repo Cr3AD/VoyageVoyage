@@ -23,7 +23,7 @@ class TranslationVC: UIViewController  {
     // Mark : - IBAction
     
     @IBAction func didTapTranslateButton(_ sender: Any) {
-        updateTranslationData()
+        getTranslationData()
     }
     
     @IBAction func didTapReverseBUtton(_ sender: Any) {
@@ -79,13 +79,18 @@ class TranslationVC: UIViewController  {
 
     // MARK: - Segues
     
+    enum segueType: String {
+        case langueInSegue = "langueInSegue"
+        case langueOutSegue = "langueOutSegue"
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "langueInSegue" {
+        if segue.identifier == segueType.langueInSegue.rawValue {
             let langTableView = segue.destination as! LanguageUITableViewController
             langTableView.delegateLangIn = self
         }
-        if segue.identifier == "langueOutSegue" {
+        if segue.identifier == segueType.langueOutSegue.rawValue {
             let langTableView = segue.destination as! LanguageUITableViewController
             langTableView.delegateLangOut = self
         }
@@ -113,7 +118,7 @@ class TranslationVC: UIViewController  {
 
     // MARK: - Download Data for Translation
     
-    internal func updateTranslationData() {
+    internal func getTranslationData() {
         let textToTranslate = textIn.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         if textToTranslate != "" {
             TranslationService.shared.getTraduction(textToTranslate: textToTranslate, langIn: langIn, langOut: langOut) { (data, error) in
@@ -126,7 +131,7 @@ class TranslationVC: UIViewController  {
                 let translation = Traduction(langIn: self.langIn, langOut: self.langOut, textIn: self.textIn, textOut: textOut)
                 TranslationService.shared.add(traduction: translation)
                 self.translationTableView?.reloadData()
-                self.textField?.text = ""
+                self.textField?.text?.removeAll()
             }
         }
     }
@@ -183,7 +188,7 @@ extension TranslationVC: ShowErrorMessage {
                                       message: message,
                                       preferredStyle: .alert)
         let reload = UIAlertAction(title: "Retry", style: .default, handler: { (action) -> Void in
-            self.updateTranslationData()
+            self.getTranslationData()
         })
         
         let cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: {(action) -> Void in

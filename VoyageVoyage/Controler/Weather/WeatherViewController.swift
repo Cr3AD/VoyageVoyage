@@ -11,6 +11,7 @@ import UIKit
 class WeatherViewController: UIViewController {
     
     // Mark: - IBOutlets
+    // Connect the code and the UI
     
     @IBOutlet weak var cityLabel: UILabel?
     @IBOutlet weak var weatherIcon: UIImageView?
@@ -346,6 +347,17 @@ extension WeatherViewController: ShowErrorMessage {
         }
     }
 }
+
+extension WeatherViewController: GetANewCity {
+    func updateWeatherWithNewCity(lat: Double, lon: Double) {
+        locationService.latitude = lat
+        locationService.longitude = lon
+        locationService.locationDidUpdateDelegate?.updateWeatherAndForcastDataAtLocation()
+        }
+}
+    
+    
+
 extension WeatherViewController: DidUpdateLocation {
     internal func updateWeatherAndForcastDataAtLocation() {
         let lat = String(locationService.latitude)

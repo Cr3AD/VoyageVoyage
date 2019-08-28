@@ -12,7 +12,6 @@ class TranslationTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        makeDesign()
     }
     
     @IBOutlet weak var LangInLabel: UILabel!
@@ -30,12 +29,6 @@ class TranslationTableViewCell: UITableViewCell {
         TranlatedTextLabel.text = tranlatedText
         OriginalTextLabel.text = originalText
     }
-    
-    func makeDesign() {
-        /*LangInBackgroundView.layer.cornerRadius = 15
-        LangOutBackgroundView.layer.cornerRadius = 15
-        LangInBackgroundLabel.layer.cornerRadius = 45
-        LangOutBackgroundLabel.layer.cornerRadius = 45*/
-    }
+
 }
 

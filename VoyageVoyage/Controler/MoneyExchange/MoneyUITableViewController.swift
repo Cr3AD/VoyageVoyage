@@ -10,14 +10,6 @@ import UIKit
 
 
 
-//class MoneyAvailablel {
-//    let money: String
-//    
-//    init(for money: String) {
-//        self.money = money
-//    }
-//}
-
 class MoneyUITableViewController: UITableViewController {
     
     let poolOfCurrency = [("EUR", "Euro", "euro"),
