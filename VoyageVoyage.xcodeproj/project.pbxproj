@@ -181,7 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				64DFD8D422E7837600667849 /* Services */,
-				64F7936C23152EDA00320456 /* CitySe */,
+				64F7936C23152EDA00320456 /* CityService */,
 				647880B8230537390026E6A8 /* Weather */,
 				64F8739922E7845B001D85A3 /* MoneyExchange */,
 				64F8739C22E78695001D85A3 /* Translation */,
@@ -273,14 +273,14 @@
 			path = VoyageVoyage;
 			sourceTree = "<group>";
 		};
-		64F7936C23152EDA00320456 /* CitySe */ = {
+		64F7936C23152EDA00320456 /* CityService */ = {
 			isa = PBXGroup;
 			children = (
 				64F7936A23152ED600320456 /* CitySearchService.swift */,
 				64F7936D2315312700320456 /* AutocompletionDataJSON.swift */,
 				64F7936F2315319E00320456 /* PlaceDetailDataJSON.swift */,
 			);
-			path = CitySe;
+			path = CityService;
 			sourceTree = "<group>";
 		};
 		64F8739922E7845B001D85A3 /* MoneyExchange */ = {

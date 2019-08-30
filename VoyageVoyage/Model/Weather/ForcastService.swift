@@ -21,7 +21,7 @@ class ForcastService {
     enum Error: Swift.Error {
         case errorNotNill
         case noData
-        case wrongJSONTranslationFormat
+        case wrongJSONForcastFormat
         case notOK200
     }
     
@@ -56,8 +56,8 @@ class ForcastService {
                     let forcast = try JSONDecoder().decode(ForcastDataJSON.self, from: data)
                     completionHandler(forcast, nil)
                 } catch {
-                    self.showError(errorType: .wrongJSONTranslationFormat)
-                    completionHandler(nil, Error.wrongJSONTranslationFormat)
+                    self.showError(errorType: .wrongJSONForcastFormat)
+                    completionHandler(nil, Error.wrongJSONForcastFormat)
                 }
             }
         } .resume()
@@ -69,7 +69,7 @@ class ForcastService {
             self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "No data where received, please check you internet connection")
         case .noData:
             self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "No data where received from the server")
-        case .wrongJSONTranslationFormat:
+        case .wrongJSONForcastFormat:
             self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "The data received are corrupted")
         case .notOK200:
             self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "Communication issue with the server, please check you internet connection")

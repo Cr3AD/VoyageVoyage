@@ -54,9 +54,5 @@ class MoneyUITableViewController: UITableViewController {
         delegateMoneyOut?.updateMoneyOutChoosen(data: poolOfCurrency[indexPath.row].0
         )
         self.dismiss(animated: true, completion: nil)
-        
     }
-    
-    
-    
 }

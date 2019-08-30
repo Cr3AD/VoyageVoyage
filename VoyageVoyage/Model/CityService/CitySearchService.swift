@@ -23,7 +23,8 @@ class CitySearchService {
     enum Error: Swift.Error {
         case errorNotNill
         case noData
-        case wrongJSONReceived
+        case wrongJSONCitySearchFormat
+        case wrongJSONGetPlaceFormat
         case notOK200
     }
     
@@ -33,7 +34,7 @@ class CitySearchService {
         self.session = session
     }
     
-    func addCitiesSuggestions(city: String, id: String) {
+    func createArrayOfSuggestions(city: String, id: String) {
         arrayOfAutoCompletionCities.append((city, id))
     }
     
@@ -61,8 +62,8 @@ class CitySearchService {
                     let autoCompletion = try JSONDecoder().decode(AutoCompletionDataJSON.self, from: data)
                         completionHandler(autoCompletion, nil)
                 } catch {
-                    self.showError(errorType: .wrongJSONReceived)
-                    completionHandler(nil, Error.wrongJSONReceived)
+                    self.showError(errorType: .wrongJSONCitySearchFormat)
+                    completionHandler(nil, Error.wrongJSONCitySearchFormat)
                 }
             }
         } .resume()
@@ -70,7 +71,7 @@ class CitySearchService {
     
     func getPlaceDetail(text: String, completionHandler: @escaping (PlaceDetailDataJSON?, Swift.Error?) ->()) {
         print("getPlaceDetail started")
-        let url = "\(CitySearchService.googlePlaceURL)placeid=\(text)&key=(\(CitySearchService.googleAPI)"
+        let url = "\(CitySearchService.googlePlaceURL)placeid=\(text)&key=\(CitySearchService.googleAPI)"
         var request = URLRequest(url: URL(string: url)!)
         task?.cancel()
         request.httpMethod = "GET"
@@ -92,8 +93,8 @@ class CitySearchService {
                     let placeDetail = try JSONDecoder().decode(PlaceDetailDataJSON.self, from: data)
                     completionHandler(placeDetail, nil)
                 } catch {
-                    self.showError(errorType: .wrongJSONReceived)
-                    completionHandler(nil, Error.wrongJSONReceived)
+                    self.showError(errorType: .wrongJSONGetPlaceFormat)
+                    completionHandler(nil, Error.wrongJSONGetPlaceFormat)
                 }
             }
         } .resume()
@@ -105,7 +106,7 @@ class CitySearchService {
             self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "No data where received, please check you internet connection")
         case .noData:
             self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "No data where received from the server")
-        case .wrongJSONReceived:
+        case .wrongJSONCitySearchFormat, .wrongJSONGetPlaceFormat:
             self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "The data received are corrupted")
         case .notOK200:
             self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "Communication issue with the server, please check you internet connection")

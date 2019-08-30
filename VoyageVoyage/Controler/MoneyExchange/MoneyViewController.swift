@@ -67,21 +67,9 @@ class MoneyViewController: UIViewController {
         moneyService.errorMessageDelegate = self
     }
     
-    // MARK: - Download Data for Money exchange
+    //MARK: - Download Data for Money exchange
     
-//    func showError(errorType: Error) {
-//        switch errorType {
-//        case .errorNotNill:
-//            self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "No data where received, please check you internet connection")
-//        case .noData:
-//            self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "No data where received from the server")
-//        case .wrongJSONTranslationFormat:
-//            self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "The data received are corrupted")
-//        case .notOK200:
-//            self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "Communication issue with the server, please check you internet connection")
-//        }
-//    }
-    
+
     private func updateMoneyData() {
         MoneyService.shared.getMoney { (data, error) in
             guard error == nil else {

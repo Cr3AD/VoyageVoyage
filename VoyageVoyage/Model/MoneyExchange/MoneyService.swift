@@ -20,7 +20,7 @@ class MoneyService {
     enum Error: Swift.Error {
         case errorNotNill
         case noData
-        case wrongJSONTranslationFormat
+        case wrongJSONMoneyFormat
         case notOK200
     }
     
@@ -55,8 +55,8 @@ class MoneyService {
                     let money = try JSONDecoder().decode(MoneyDataJSON.self, from: data)
                     completionHandler(money, nil)
                 } catch {
-                    self.showError(errorType: .wrongJSONTranslationFormat)
-                    completionHandler(nil, Error.wrongJSONTranslationFormat)
+                    self.showError(errorType: .wrongJSONMoneyFormat)
+                    completionHandler(nil, Error.wrongJSONMoneyFormat)
                 }
             }
         } .resume()
@@ -68,7 +68,7 @@ class MoneyService {
             self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "No data where received, please check you internet connection")
         case .noData:
             self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "No data where received from the server")
-        case .wrongJSONTranslationFormat:
+        case .wrongJSONMoneyFormat:
             self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "The data received are corrupted")
         case .notOK200:
             self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "Communication issue with the server, please check you internet connection")

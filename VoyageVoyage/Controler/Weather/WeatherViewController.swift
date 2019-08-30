@@ -27,45 +27,44 @@ class WeatherViewController: UIViewController {
     
     // MARK: - Proprieties
     
-    private let locationService = LocationService()
+    private let locationService = LocationService.shared
     private let weatherService = WeatherService.shared
     private let forcastService = ForcastService.shared
     private var dataWeather: WeatherDataJSON?
     private var dataForcast: ForcastDataJSON?
+    private var citySearch = CitySearch()
     
     // MARK - ViewDidLoad
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
         self.hideKeyboardWhenTappedAround()
-        // Delegate
+        // Delegate setup
         delegateSetUp()
-        // configure location
-        locationService.enableBasicLocationServices()
         // Notify when the app wake up from background to update the location
         NotificationCenter.default.addObserver(self, selector: #selector(wakeupApp), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     // Object called from the notification wakeupApp from the viewDidLoad
     @objc func wakeupApp() {
-        self.forcastScrollView?.subviews.forEach({ $0.removeFromSuperview() })
         locationService.enableBasicLocationServices()
     }
     
     // Delegate setup
     private func delegateSetUp() {
+        // used to call updateWeatherAndForcastDataAtLocation
         locationService.locationDidUpdateDelegate = self
+        
+        // error messages
         weatherService.errorMessageDelegate = self
         forcastService.errorMessageDelegate = self
     }
-    
     
     // MARK: - Update Data on the screen
     
     // Error enumeration
     enum updateWeatherDataOnScreenErrors: Error {
+        // errors for weather
         case noCity
         case noWeatherDescription
         case noTemperature
@@ -76,6 +75,8 @@ class WeatherViewController: UIViewController {
         case noSunsetDate
         case noHumidity
         case noCondition
+        
+        // errors for forcast
         case noForcastList
         case noForcastDate
         case noForcastTemp
@@ -87,11 +88,16 @@ class WeatherViewController: UIViewController {
     // Update weather data on screen. Called from protocol DidUpdateLocation
     private func updateWeatherDataOnScreen() throws {
         
+        // format the date
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat  = "HH:mm"
         let currentDateTime = Date()
-        var isItDay : Bool
         
+        // used to check if it is night to change the weather icon
+        var isItDay : Bool
+       
+        
+        // guard to check the data in dataWeather
         guard let city: String = self.dataWeather?.name else {
             throw updateWeatherDataOnScreenErrors.noCity
         }
@@ -125,6 +131,7 @@ class WeatherViewController: UIViewController {
             throw updateWeatherDataOnScreenErrors.noCondition
         }
         
+        // format the data in dataWeather to display on the screen
         let temperatureFinal = (temperature - 273.15).intValue.string + "°"
         let temperatureMinFinal = (temperatureMin - 273.15).intValue.string + "°"
         let temperatureMaxFinal = (temperatureMax - 273.15).intValue.string + "°"
@@ -141,8 +148,10 @@ class WeatherViewController: UIViewController {
             isItDay = false
         }
         
+        // update the weather icon
         let weatherIconName: String = updateWeatherIcon(condition: condition, isDay: isItDay, type: "Weather")
         
+        // put the weather data on the screen
         self.cityLabel?.text = city
         self.weatherDescriptionDataLabel?.text = weatherDescription
         self.tempDataLabel?.text = temperatureFinal
@@ -158,36 +167,30 @@ class WeatherViewController: UIViewController {
     
     // Update weather forecast data on screen. Called from protocol DidUpdateLocation
     private func updateForcastDataOnScreen() throws {
-        for view in self.forcastScrollView!.subviews {
-            view.removeFromSuperview()
-        }
+        // remove the view in the forcastScrollView if the data are refreshed
+        self.forcastScrollView?.subviews.forEach({ $0.removeFromSuperview() })
+        
         do {
-            
+            // check the data in dataForcast
             guard let forcastList = self.dataForcast?.list else {
                 throw updateWeatherDataOnScreenErrors.noForcastList
             }
             
             for i in forcastList {
-                
                 guard let time = i.dt else {
                     throw updateWeatherDataOnScreenErrors.noForcastDate
                 }
-                
                 guard let forcastImage = i.weather?[0].id else {
                     throw updateWeatherDataOnScreenErrors.noForcastImage
                 }
-                
                 guard let forcastTemp = i.main?.temp else {
                     throw updateWeatherDataOnScreenErrors.noForcastTemp
                 }
-                
                 guard let forcastWind = i.wind?.speed else {
                     throw updateWeatherDataOnScreenErrors.noForcastWind
                 }
                 
-                
-                
-                
+                // format the data from forcastData to be displayed
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat  = "HH:mm"
                 let timeFinal = Date(timeIntervalSince1970: time.doubleValue)
@@ -196,14 +199,12 @@ class WeatherViewController: UIViewController {
                 let forcastTempFinal = (forcastTemp - 273.15).intValue.string + "°"
                 let windFinal = forcastWind.string + "kmh"
                 
+                // make the forcat view
                 self.makeForcatView(forcastImage: forcastImageFinal, tempText: forcastTempFinal, timeText: timeFormated, wind: windFinal)
-                
             }
-            
         } catch let error {
             print(error)
         }
-        
     }
     
     // Make forcastView
@@ -216,17 +217,19 @@ class WeatherViewController: UIViewController {
         let forcastWidth = Double(forcastSize?.width ?? 0)
         let position = numberOfView * forcastHeight
         
+        // create a view to contain the subviews
         let mainStackView = UIStackView(frame: CGRect(x: 0, y: position , width: forcastWidth, height: forcastHeight))
         mainStackView.axis = .horizontal
         mainStackView.alignment = .fill
         mainStackView.distribution = .fillEqually
         
+        // add subViews to the mainStack view
         mainStackView.addArrangedSubview(makeLabelView(with: timeText))
         mainStackView.addArrangedSubview(makeimgView(with: forcastImage))
         mainStackView.addArrangedSubview(makeLabelView(with: tempText))
         mainStackView.addArrangedSubview(makeLabelView(with: wind))
         
-        
+        // add the main stack view to the forcast scroll view
         self.forcastScrollView?.addSubview(mainStackView)
         self.forcastScrollView?.alwaysBounceVertical = true
         
@@ -252,78 +255,46 @@ class WeatherViewController: UIViewController {
         return lblView
     }
     
+    
     // Weather icon selection
     private func updateWeatherIcon(condition: Int, isDay: Bool, type: String) -> String {
+        var completion: String {
+            if isDay == true {
+                return "Day\(type)"
+            } else {
+                return "Night\(type)"
+            }
+        }
         
         switch (condition) {
             
         case 200, 201, 230 :
-            if isDay == true {
-                return "thunderDay\(type)"
-            } else {
-                return "thunderNight\(type)"
-            }
+            return "thunder\(completion)"
         case 202...229, 231...299:
             return "thunder\(type)"
-        
-            
         case 300, 301, 310, 311 :
-            if isDay == true {
-                return "drizzleDay\(type)"
-            } else {
-                return "drizzleNight\(type)"
-            }
+            return "drizzle\(completion)"
+            
         case 302...309, 312...399:
             return "drizzle\(type)"
-            
         case 500, 501, 505...599 :
-            if isDay == true {
-                return "rainDay\(type)"
-            } else {
-                return "rainNight\(type)"
-            }
-            
+            return "rain\(completion)"
         case 502...504, 522, 531:
             return "rain\(type)"
-            
         case 600, 601, 603...612, 614...620, 623...699 :
-            if isDay == true {
-                return "snowDay\(type)"
-            } else {
-                return "snowNight\(type)"
-            }
+            return "snow\(completion)"
         case 602, 613, 621, 622:
             return "snow\(type)"
-            
         case 700...799 :
             return "fog\(type)"
-            
-//        case 781...799 :
-//            return "wind"
-            
         case 800 :
-            if isDay == true {
-                return "clearDay\(type)"
-            } else {
-                return "clearNight\(type)"
-            }
-            
+            return "clear\(completion)"
         case 801...802 :
-            if isDay == true {
-                return "cloudDay\(type)"
-            } else {
-                return "cloudNight\(type)"
-            }
-            
+            return "cloud\(completion)"
         case 803...804 :
             return "cloud\(type)"
-            
         default :
-            if isDay == true {
-                return "clearDay\(type)"
-            } else {
-                return "clearNight\(type)"
-            }
+            return "clear\(completion)"
         }
         
     }
@@ -348,20 +319,12 @@ extension WeatherViewController: ShowErrorMessage {
     }
 }
 
-extension WeatherViewController: GetANewCity {
-    func updateWeatherWithNewCity(lat: Double, lon: Double) {
-        locationService.latitude = lat
-        locationService.longitude = lon
-        locationService.locationDidUpdateDelegate?.updateWeatherAndForcastDataAtLocation()
-        }
-}
-    
-    
-
 extension WeatherViewController: DidUpdateLocation {
     internal func updateWeatherAndForcastDataAtLocation() {
         let lat = String(locationService.latitude)
         let lon = String(locationService.longitude)
+        print("let's update weather data for \(lat) and \(lon)")
+        
         WeatherService.shared.getWeather(lat: lat, lon: lon) { (data, error) in
             guard error == nil else {
                 print(error as Any)

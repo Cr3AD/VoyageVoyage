@@ -12,6 +12,8 @@ import CoreLocation
 
 class LocationService : NSObject, CLLocationManagerDelegate {
 
+    static let shared = LocationService()
+    
     // Instances
     
     let locationService = CLLocationManager()
@@ -22,9 +24,13 @@ class LocationService : NSObject, CLLocationManagerDelegate {
     
     // Proprieties
     
-    var latitude = 0.0
-    var longitude = 0.0
+    private(set) var latitude = 0.0
+    private(set) var longitude = 0.0
     
+    func changeLocation(lat: Double, lon: Double) {
+        latitude = lat
+        longitude = lon
+    }
     
     // MARK : - Location authorisation
     
@@ -67,14 +73,21 @@ class LocationService : NSObject, CLLocationManagerDelegate {
         if location.horizontalAccuracy > 0 {
             
             locationService.stopUpdatingLocation()
-            
-            latitude = location.coordinate.latitude
-            longitude = location.coordinate.longitude
-            
-            print("latitude \(String(location.coordinate.latitude)) longitude \(String(location.coordinate.longitude))")
-            print("LocationDidUpdate")
-            locationDidUpdateDelegate?.updateWeatherAndForcastDataAtLocation()
+            setLocation(at: location)
+            sendData()
         }
+    }
+    
+    func setLocation(at location: CLLocation) {
+        latitude = location.coordinate.latitude
+        longitude = location.coordinate.longitude
+    }
+    
+    func sendData() {
+        print("send data")
+        print(longitude)
+        print(latitude)
+        locationDidUpdateDelegate?.updateWeatherAndForcastDataAtLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

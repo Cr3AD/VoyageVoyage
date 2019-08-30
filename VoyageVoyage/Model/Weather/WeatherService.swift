@@ -22,7 +22,7 @@ class WeatherService {
     enum Error: Swift.Error {
         case errorNotNill
         case noData
-        case wrongJSONTranslationFormat
+        case wrongJSONWeatherFormat
         case notOK200
     }
     
@@ -54,11 +54,12 @@ class WeatherService {
                     return completionHandler(nil, error)
                 }
                 do {
+                    print("data received \(data)")
                     let weather = try JSONDecoder().decode(WeatherDataJSON.self, from: data)
                     completionHandler(weather, nil)
                 } catch {
-                    self.showError(errorType: .wrongJSONTranslationFormat)
-                    completionHandler(nil, Error.wrongJSONTranslationFormat)
+                    self.showError(errorType: .wrongJSONWeatherFormat)
+                    completionHandler(nil, Error.wrongJSONWeatherFormat)
                 }
             }
         } .resume()
@@ -70,7 +71,7 @@ class WeatherService {
             self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "No data where received, please check you internet connection")
         case .noData:
             self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "No data where received from the server")
-        case .wrongJSONTranslationFormat:
+        case .wrongJSONWeatherFormat:
             self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "The data received are corrupted")
         case .notOK200:
             self.errorMessageDelegate?.showAlertNoConnectionError(title: "Error", message: "Communication issue with the server, please check you internet connection")
