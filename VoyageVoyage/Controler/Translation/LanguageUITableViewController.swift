@@ -11,6 +11,9 @@ import UIKit
 
 class LanguageUITableViewController: UITableViewController {
     
+    // Array of supported language for translation.
+    // Add language here to have more in the app
+    // The second part of tupe is used to get the image
     let poolOfLanguage = [("EN", "English"),
                           ("FR", "Français"),
                           ("ES", "Español"),
@@ -21,6 +24,8 @@ class LanguageUITableViewController: UITableViewController {
                           ("zh-CN", "Chinese Simplified"),
                           ("NO", "Norwegian")
                         ]
+    
+    // delegates
     
     var delegateLangIn: GetLangChoosen?
     var delegateLangOut: GetLangChoosen?

@@ -10,8 +10,12 @@ import Foundation
 
 
 class MoneyManager {
-func currencyRequestConverter(valueIn: Double, currencyIn: Double, currencyOut: Double) -> Double {
+    
+    // calculate the output
+    
+    func currencyRequestConverter(valueIn: Double, currencyIn: Double, currencyOut: Double) -> Double {
         let result = valueIn / currencyIn * currencyOut
         return result
     }
 }
+

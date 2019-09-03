@@ -1,42 +1,43 @@
 {
     "coord": {
-        "lon": -130,
-        "lat": 55
+        "lon": -122.03,
+        "lat": 37.33
     },
     "weather": [
         {
-            "id": 804,
-            "main": "Clouds",
-            "description": "overcast clouds",
-            "icon": "04d"
+            "id": 800,
+            "main": "Clear",
+            "description": "clear sky",
+            "icon": "01d"
         }
     ],
     "base": "stations",
     "main": {
-        "temp": 284.061,
-        "pressure": 1015.84,
-        "humidity": 74,
-        "temp_min": 284.061,
-        "temp_max": 284.061,
-        "sea_level": 1015.84,
-        "grnd_level": 974.07
+        "temp": 297.13,
+        "pressure": 1018,
+        "humidity": 64,
+        "temp_min": 295.15,
+        "temp_max": 299.26
     },
+    "visibility": 16093,
     "wind": {
-        "speed": 1.48,
-        "deg": 52.401
+        "speed": 5.1,
+        "deg": 340
     },
     "clouds": {
-        "all": 99
+        "all": 5
     },
-    "dt": 1567182204,
+    "dt": 1567191203,
     "sys": {
-        "message": 0.0067,
-        "country": "CA",
-        "sunrise": 1567172562,
-        "sunset": 1567222742
+        "type": 1,
+        "id": 5903,
+        "message": 0.0146,
+        "country": "US",
+        "sunrise": 1567172223,
+        "sunset": 1567219257
     },
     "timezone": -25200,
-    "id": 6073742,
-    "name": "Mill Bay",
+    "id": 5341145,
+    "name": "Cupertino",
     "cod": 200
 }

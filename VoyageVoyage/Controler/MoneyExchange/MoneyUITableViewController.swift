@@ -11,7 +11,8 @@ import UIKit
 
 
 class MoneyUITableViewController: UITableViewController {
-    
+   
+    // array of money used to be displayed on the tableview. Add new money here
     let poolOfCurrency = [("EUR", "Euro", "euro"),
                           ("GBP", "Pounds", "unitedkingdom"),
                           ("USD", "US Dollard", "usa"),
@@ -21,11 +22,17 @@ class MoneyUITableViewController: UITableViewController {
                           ("CAD", "Canadian Dollard", "canada"),
                           ("CNY", "Yuan", "china")]
     
-//    let fullPoolOfCurrency = ["EUR","GBP","NOK","THB","CHF","INR","AUD","DKK","MYR","CZK","PHP","PLN","HRK","RUB","BRL","ISK","TRY","BGN","CNY","HKD","USD","MXN","KRW","SEK","NZD","HUF","ILS","RON","JPY","SGD","ZAR","IDR","CAD"]
+    // Info: money managed by the API
+    //  ["EUR","GBP","NOK","THB","CHF","INR","AUD","DKK","MYR","CZK","PHP","PLN","HRK","RUB","BRL","ISK","TRY","BGN","CNY","HKD","USD","MXN","KRW","SEK","NZD","HUF","ILS","RON","JPY","SGD","ZAR","IDR","CAD"]
+    
+    
+    // Mark: - Delegates
     
     var delegateMoneyIn: GetMoneyChoosen?
     var delegateMoneyOut: GetMoneyChoosen?
     
+    
+    // Mark: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
     }

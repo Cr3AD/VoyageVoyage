@@ -10,15 +10,31 @@ import Foundation
 
 class CitySearchService {
     
+    // MARK: - singleton patern
+    
     static let shared = CitySearchService()
     private init() {}
+    
+    // MARK: - proprieties
     
     private static let googleAutocompletionURL = "https://maps.googleapis.com/maps/api/place/autocomplete/json?"
     private static let googlePlaceURL = "https://maps.googleapis.com/maps/api/place/details/json?"
     private static let googleAPI = valueForAPIKey(named:"googleAPI")
     
+    private(set) var arrayOfAutoCompletionCities: [(city: String, id: String)] = []
+    
+    private var task: URLSessionDataTask?
+    private var session = URLSession(configuration: .default)
+    
+    init(session: URLSession) {
+        self.session = session
+    }
+    
+    // MARK: - delegate
+    
     var errorMessageDelegate: ShowErrorMessage?
-    var arrayOfAutoCompletionCities: [(city: String, id: String)] = []
+    
+    // MARK: - Errors
     
     enum Error: Swift.Error {
         case errorNotNill
@@ -28,16 +44,18 @@ class CitySearchService {
         case notOK200
     }
     
-    private var task: URLSessionDataTask?
-    private var session = URLSession(configuration: .default)
-    init(session: URLSession) {
-        self.session = session
-    }
+    // MARK: - Methodes
     
+    // Add the suggetion to the array arrayOfAutoCompletionCities with the city name and it's id
     func createArrayOfSuggestions(city: String, id: String) {
         arrayOfAutoCompletionCities.append((city, id))
     }
     
+    func eraseArrayOfSeuggestions() {
+        arrayOfAutoCompletionCities.removeAll()
+    }
+    
+    // get the suggestion from the user entry with url session
     func getAutoCompletion(text: String, completionHandler: @escaping (AutoCompletionDataJSON?, Swift.Error?) ->()) {
         print("getAutoCompletion started")
         let url = "\(CitySearchService.googleAutocompletionURL)input=\(text)&key=\(CitySearchService.googleAPI)"
@@ -69,6 +87,7 @@ class CitySearchService {
         } .resume()
     }
     
+    // get the places details from the cities ID with url session
     func getPlaceDetail(text: String, completionHandler: @escaping (PlaceDetailDataJSON?, Swift.Error?) ->()) {
         print("getPlaceDetail started")
         let url = "\(CitySearchService.googlePlaceURL)placeid=\(text)&key=\(CitySearchService.googleAPI)"
@@ -99,6 +118,8 @@ class CitySearchService {
             }
         } .resume()
     }
+    
+    // Errors messages
     
     func showError(errorType: Error) {
         switch errorType {

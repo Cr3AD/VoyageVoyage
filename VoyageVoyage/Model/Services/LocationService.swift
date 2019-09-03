@@ -34,6 +34,7 @@ class LocationService : NSObject, CLLocationManagerDelegate {
     
     // MARK : - Location authorisation
     
+    // check the location service authorisation
     func enableBasicLocationServices() {
         locationService.delegate = self
         locationService.desiredAccuracy = kCLLocationAccuracyHundredMeters
@@ -59,15 +60,18 @@ class LocationService : NSObject, CLLocationManagerDelegate {
 
     // MARK : - start Location services
     
+    // start the location service
     func startLocationService() {
         locationService.startUpdatingLocation()
     }
     
+    // location service impossible
     func locationServiceImpossible() {
         locationService.stopUpdatingLocation()
         locationDidUpdateDelegate?.showUserNoLocationAvailable()
     }
     
+    // location service did update location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
        let location = locations[locations.count - 1]
         if location.horizontalAccuracy > 0 {
@@ -78,11 +82,13 @@ class LocationService : NSObject, CLLocationManagerDelegate {
         }
     }
     
+    // set the private set variables used for longitude and latitude
     func setLocation(at location: CLLocation) {
         latitude = location.coordinate.latitude
         longitude = location.coordinate.longitude
     }
     
+    // start to get the weather data at the location
     func sendData() {
         print("send data")
         print(longitude)
@@ -94,6 +100,7 @@ class LocationService : NSObject, CLLocationManagerDelegate {
         print(error)
     }
     
+    // start the methode enableBasicLocationService to check the location service authorisation
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         enableBasicLocationServices()
     }

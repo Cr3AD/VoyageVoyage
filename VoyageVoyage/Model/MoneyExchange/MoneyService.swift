@@ -9,13 +9,28 @@
 import Foundation
 
 class MoneyService {
+    
+    // MARK: - singleton patern
+    
     static var shared = MoneyService()
     private init() {}
+    
+    // MARK: - proprieties
     
     private let fixerURL = "http://data.fixer.io/api/latest?"
     private let fixerAPI = valueForAPIKey(named:"moneyAPI")
     
+    private var task: URLSessionDataTask?
+    private var session = URLSession(configuration: .default)
+    init(session: URLSession) {
+        self.session = session
+    }
+    
+    // MARK: - delegate
+    
     var errorMessageDelegate: ShowErrorMessage?
+    
+    // MARK: - Errors
     
     enum Error: Swift.Error {
         case errorNotNill
@@ -24,12 +39,9 @@ class MoneyService {
         case notOK200
     }
     
-    private var task: URLSessionDataTask?
-    private var session = URLSession(configuration: .default)
-    init(session: URLSession) {
-        self.session = session
-    }
+    // MARK: - Methodes
     
+    // get the money value
     func getMoney(completionHandler: @escaping (MoneyDataJSON?, Swift.Error?) ->()) {
         print("getMoney started")
         let url = "\(fixerURL)access_key=\(fixerAPI)&format=1"
@@ -61,6 +73,8 @@ class MoneyService {
             }
         } .resume()
     }
+    
+    // Errors messages
     
     func showError(errorType: Error) {
         switch errorType {

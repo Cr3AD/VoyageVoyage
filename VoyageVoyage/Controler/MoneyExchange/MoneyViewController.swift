@@ -30,11 +30,22 @@ class MoneyViewController: UIViewController {
         }
     }
     
-    // MARK: - Proprieties
+    // MARK: - Connection with other files
     
     private let moneyService = MoneyService.shared
     private let moneyManager = MoneyManager()
     private var dataMoney: MoneyDataJSON?
+    
+    // Mark: - Errors
+    
+    enum convertMoneyError: Error {
+        case noTextButtonIn
+        case noTextButtonOut
+        case noTextIn
+        case textInNotADouble
+        case noRateIn
+        case noRateOut
+    }
     
     // MARK: - Segues
     
@@ -68,12 +79,10 @@ class MoneyViewController: UIViewController {
     }
     
     //MARK: - Download Data for Money exchange
-    
-
+    // Update the date on the screen with a callback
     private func updateMoneyData() {
         MoneyService.shared.getMoney { (data, error) in
             guard error == nil else {
-//                self.showError(error)
                 print(error as Any)
                 return
             }
@@ -84,15 +93,6 @@ class MoneyViewController: UIViewController {
     }
     
     // MARK: - Update Data on the screen
-    
-    enum convertMoneyError: Error {
-        case noTextButtonIn
-        case noTextButtonOut
-        case noTextIn
-        case textInNotADouble
-        case noRateIn
-        case noRateOut
-    }
     
     private func updateConversionOnScreen() throws {
         guard let textButtonIn = buttonMoneyIn?.titleLabel?.text else {
@@ -120,20 +120,24 @@ class MoneyViewController: UIViewController {
         textmoneyOut?.text = String(format: "%.4f", result)
     }
     
+    // Update the data on the screen
     private func updateMoneyInfoOnScreen() {
         self.updateTimeDisplay()
         self.activateConversionButton()
     }
     
+    // activate the conversion button
     private func activateConversionButton() {
         conversionButton?.isEnabled = true
     }
     
+    // update the time lable (time where the data have been generated)
     private func updateTimeDisplay() {
         textDataUpdatedTime?.text = self.dataMoney?.date
     }  
 }
 
+// extension for delegate getMoneyChoosen
 extension MoneyViewController: GetMoneyChoosen {
     internal func updateMoneyInChoosen(data: String) {
         buttonMoneyIn?.setTitle(data, for: .normal)
@@ -143,6 +147,7 @@ extension MoneyViewController: GetMoneyChoosen {
     }
 }
 
+// extension for delegate show error message
 extension MoneyViewController: ShowErrorMessage {
     func showAlertNoConnectionError(title: String, message: String) {
         let alert = UIAlertController(title: title,

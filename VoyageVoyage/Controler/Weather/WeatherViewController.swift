@@ -30,7 +30,7 @@ class WeatherViewController: UIViewController {
     private let locationService = LocationService.shared
     private let weatherService = WeatherService.shared
     private let forcastService = ForcastService.shared
-    private var dataWeather: WeatherDataJSON?
+    private var dataWeather: WeatherDataJson?
     private var dataForcast: ForcastDataJSON?
     private var citySearch = CitySearch()
     
@@ -300,6 +300,7 @@ class WeatherViewController: UIViewController {
     }
 }
 
+// extension to add a error message capacity to the view controller
 extension WeatherViewController: ShowErrorMessage {
     func showAlertNoConnectionError(title: String, message: String) {
         DispatchQueue.main.async {
@@ -318,6 +319,11 @@ extension WeatherViewController: ShowErrorMessage {
         }
     }
 }
+
+// extention to conform the view controller to the protocol DidUpdateLocation
+// The two internal func are getWeather and showNoLocationAvailable
+// the first is used to get the weather and forcast data and put it on the screen with a closure
+// The second is used to show no location available if user have disabled or declined the location service
 
 extension WeatherViewController: DidUpdateLocation {
     internal func updateWeatherAndForcastDataAtLocation() {

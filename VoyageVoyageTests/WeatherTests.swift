@@ -13,7 +13,7 @@ import XCTest
 
 class WeatherTests: XCTestCase {
     
-    var data: WeatherDataJSON?
+    var data: WeatherDataJson?
     
     // MARK: - Weather tests
     func testGetWeatherShouldFailIfError() {

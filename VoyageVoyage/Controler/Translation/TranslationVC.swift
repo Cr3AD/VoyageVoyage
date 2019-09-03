@@ -128,7 +128,8 @@ class TranslationVC: UIViewController  {
                 }
                 self.dataTranslation = data
                 let textOut: String = self.dataTranslation?.data?.translations?[0].translatedText ?? ""
-                let translation = Traduction(langIn: self.langIn, langOut: self.langOut, textIn: self.textIn, textOut: textOut)
+                let translation = Translation(langIn: self.langIn, langOut: self.langOut, textIn: self.textIn, textOut: textOut)
+                
                 TranslationService.shared.add(traduction: translation)
                 self.translationTableView?.reloadData()
                 self.textField?.text?.removeAll()
@@ -144,20 +145,22 @@ class TranslationVC: UIViewController  {
     } 
 }
 
+// MARK: - Extensions
+// Extension tableview datasource
 extension TranslationVC: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return TranslationService.shared.traductions.count
+        return TranslationService.shared.translations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "translationCell", for: indexPath) as? TranslationTableViewCell else {
             return UITableViewCell()
         }
-        let traduction = TranslationService.shared.traductions[indexPath.row]
+        let traduction = TranslationService.shared.translations[indexPath.row]
         
         cell.configure(langIn: traduction.langIn, langOut: traduction.langOut, tranlatedText: traduction.textOut, originalText: traduction.textIn)
         
@@ -165,6 +168,7 @@ extension TranslationVC: UITableViewDataSource {
     }
 }
 
+// Protocol getLangChoosen
 extension TranslationVC: GetLangChoosen {
     
     func updateLangInChoosen(imageName: String) {
@@ -182,6 +186,7 @@ extension TranslationVC: GetLangChoosen {
     }
 }
 
+// Protocol show error message
 extension TranslationVC: ShowErrorMessage {
     func showAlertNoConnectionError(title: String, message: String) {
         let alert = UIAlertController(title: title,

@@ -14,6 +14,7 @@ class TranslationTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
     
+    // IBOutlet for the tableviewcell
     @IBOutlet weak var LangInLabel: UILabel!
     @IBOutlet weak var LangOuLabel: UILabel!
     @IBOutlet weak var OriginalTextLabel: UILabel!
@@ -23,6 +24,7 @@ class TranslationTableViewCell: UITableViewCell {
     @IBOutlet weak var LangInBackgroundLabel: UIView!
     @IBOutlet weak var LangOutBackgroundLabel: UIView!
     
+    // configuration of the cell
     func configure(langIn: String, langOut: String, tranlatedText: String, originalText: String) {
         LangInLabel.text = langIn
         LangOuLabel.text = langOut

@@ -22,7 +22,8 @@ class CitySearch: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction func didTapSearchButton() {
-        getAutoCompletionData(suggestion: citySearchTextField.text!) // .addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let text = citySearchTextField.text?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        getAutoCompletionData(suggestion: text)
     }
     
     @IBAction func didTapLocationButton(_ sender: Any) {
@@ -30,25 +31,32 @@ class CitySearch: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {   //delegate method
+        citySearchTextField.resignFirstResponder()
+        return true
+    }
+    
+    // Mark: - connections to other files
+    
     private let locationService = LocationService.shared
     private let citySearchService = CitySearchService.shared
     private var dataAutoCompletion: AutoCompletionDataJSON?
     private var dataPlaceDetail: PlaceDetailDataJSON?
     private var weatherDelegate: DidUpdateLocation?
 
+    // Mark: - Delegates
+    
     var delegateDidUpdateLocation: DidUpdateLocation?
+    
+    // Mark: - ViewDidLoad
     
     override func viewDidLoad() {
         self.hideKeyboardWhenTappedAround()
-        delegateSetUp()
         citySearchTextField.becomeFirstResponder()
         searchButton.layer.cornerRadius = 5
     }
     
-    func delegateSetUp() {
-        
-    }
-
+    // Mark: - Errors
     
     enum errors: Error {
         case noCitySuggested
@@ -59,6 +67,7 @@ class CitySearch: UIViewController {
     // MARK: - Methodes
     
     // get auto completion suggestions from google API base on citySearchTextField.text
+    // Take a string in parametre: the citySeachTextField.text
     private func getAutoCompletionData(suggestion: String) {
         let suggestion = suggestion
         citySearchService.getAutoCompletion(text: suggestion) { (data, error) in
@@ -73,12 +82,12 @@ class CitySearch: UIViewController {
     }
     
     
-    // put the data received in an array to use it in the tableView
+    // put the suggested places received in an array to use it in the tableView
     private func createArrayOfSuggestions() {
         guard let prediction = dataAutoCompletion?.predictions else {
             return
         }
-        citySearchService.arrayOfAutoCompletionCities.removeAll()
+        citySearchService.eraseArrayOfSeuggestions()
         for i in prediction {
             guard let city = i.predictionDescription else {
                 return
@@ -90,6 +99,7 @@ class CitySearch: UIViewController {
         }
     }
     
+    // get the details of the place
     private func getPlaceDetail(id: String) {
         print("getPlaceDetail for \(id)")
         citySearchService.getPlaceDetail(text: id) { (data, error) in
@@ -106,6 +116,7 @@ class CitySearch: UIViewController {
         }
     }
     
+    // get the location of the place, send it in the location service
     private func updateLocation() throws {
         print("update new Location")
 
@@ -124,6 +135,7 @@ class CitySearch: UIViewController {
     
 }
 
+// Table view data source
 extension CitySearch: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -142,6 +154,7 @@ extension CitySearch: UITableViewDataSource {
     }
 }
 
+// Table view delegate 
 extension CitySearch: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         let cityRequestedID = citySearchService.arrayOfAutoCompletionCities[indexPath.row].id

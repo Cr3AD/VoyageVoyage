@@ -9,13 +9,30 @@
 import Foundation
 
 class TranslationService {
+    
+    // MARK: - singleton patern
+    
     static var shared = TranslationService()
     private init() {}
+    
+    // MARK: - proprieties
     
     private static let googleURL = "https://translation.googleapis.com/language/translate/v2?"
     private static let googleAPI = valueForAPIKey(named:"googleAPI")
     
+    private(set) var translations: [Traduction] = []
+    
+    private var task: URLSessionDataTask?
+    private var session = URLSession(configuration: .default)
+    init(session: URLSession) {
+        self.session = session
+    }
+    
+    // MARK: - delegate
+    
     var errorMessageDelegate: ShowErrorMessage?
+    
+    // MARK: - Errors
     
     enum Error: Swift.Error {
         case errorNotNill
@@ -24,16 +41,17 @@ class TranslationService {
         case notOK200
     }
     
-    private var task: URLSessionDataTask?
-    private var session = URLSession(configuration: .default)
-    init(session: URLSession) {
-        self.session = session
+    // MARK: - Methodes
+    
+    // add the translations to the translation array
+    
+    func add(translation: Traduction) {
+        translations.append(translation)
     }
     
     func getTraduction(textToTranslate: String, langIn: String, langOut: String, completionHandler: @escaping (TranslationDataJSON?, Swift.Error?) ->()) {
         print("getTraduction started")
         let url = "\(TranslationService.googleURL)key=\(TranslationService.googleAPI)&q=\(textToTranslate)&source=\(langIn)&target=\(langOut)"
-        print(url)
         var request = URLRequest(url: URL(string: url)!)
         task?.cancel()
         request.httpMethod = "POST"
@@ -63,11 +81,6 @@ class TranslationService {
         } .resume()
     }
     
-    private(set) var traductions: [Traduction] = []
-    
-    func add(traduction: Traduction) {
-        traductions.append(traduction)
-    }
     
     func showError(errorType: Error) {
         switch errorType {

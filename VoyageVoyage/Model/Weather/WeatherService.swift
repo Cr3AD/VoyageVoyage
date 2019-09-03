@@ -10,14 +10,27 @@ import Foundation
 
 class WeatherService {
     
+    // MARK: - singleton patern
+    
     static var shared = WeatherService()
     private init() {}
+    
+    // MARK: - proprieties
     
     private static let openweatherURL = "http://api.openweathermap.org/data/2.5/weather"
     private static let openweatherAPI = valueForAPIKey(named:"weatherAPI")
     
+    private var task: URLSessionDataTask?
+    private var session = URLSession(configuration: .default)
+    init(session: URLSession) {
+        self.session = session
+    }
+    
+    // MARK: - delegate
+    
     var errorMessageDelegate: ShowErrorMessage?
 
+    // MARK: - Errors
     
     enum Error: Swift.Error {
         case errorNotNill
@@ -26,13 +39,10 @@ class WeatherService {
         case notOK200
     }
     
-    private var task: URLSessionDataTask?
-    private var session = URLSession(configuration: .default)
-    init(session: URLSession) {
-        self.session = session
-    }
-  
-    func getWeather(lat: String, lon: String, completionHandler: @escaping (WeatherDataJSON?, Swift.Error?) ->()) {
+    // MARK: - Methodes
+    
+    // get the weather data from lat and lon with url session
+    func getWeather(lat: String, lon: String, completionHandler: @escaping (WeatherDataJson?, Swift.Error?) ->()) {
         print("getWeather started")
         
         let url = "\(WeatherService.openweatherURL)?APPID=\(WeatherService.openweatherAPI)&lon=\(lon)&lat=\(lat)"
@@ -41,6 +51,7 @@ class WeatherService {
         request.httpMethod = "GET"
         session.dataTask(with: request) { (data, responce, error) in
             DispatchQueue.main.async {
+                
                 guard let data = data else {
                     self.showError(errorType: .noData)
                     return completionHandler(nil, Error.noData)
@@ -55,7 +66,8 @@ class WeatherService {
                 }
                 do {
                     print("data received \(data)")
-                    let weather = try JSONDecoder().decode(WeatherDataJSON.self, from: data)
+                    let weather = try JSONDecoder().decode(WeatherDataJson.self, from: data)
+                    
                     completionHandler(weather, nil)
                 } catch {
                     self.showError(errorType: .wrongJSONWeatherFormat)
@@ -65,6 +77,7 @@ class WeatherService {
         } .resume()
     }
     
+    // Errors messages
     func showError(errorType: Error) {
         switch errorType {
         case .errorNotNill:

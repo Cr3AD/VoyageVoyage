@@ -10,13 +10,27 @@ import Foundation
 
 class ForcastService {
     
+    // MARK: - singleton patern
+    
     static var shared = ForcastService()
     private init() {}
+    
+    // MARK: - proprieties
     
     private static let openweatherURL = "http://api.openweathermap.org/data/2.5/forecast"
     private static let openweatherAPI = valueForAPIKey(named:"weatherAPI")
     
+    private var task: URLSessionDataTask?
+    private var session = URLSession(configuration: .default)
+    init(session: URLSession) {
+        self.session = session
+    }
+    
+    // MARK: - delegate
+    
     var errorMessageDelegate: ShowErrorMessage?
+    
+    // MARK: - Errors
     
     enum Error: Swift.Error {
         case errorNotNill
@@ -25,12 +39,9 @@ class ForcastService {
         case notOK200
     }
     
-    private var task: URLSessionDataTask?
-    private var session = URLSession(configuration: .default)
-    init(session: URLSession) {
-        self.session = session
-    }
+    // MARK: - Methodes
     
+    // get the forecast data from lat and lon with url session
     func getForcast(lat: String, lon: String, completionHandler: @escaping (ForcastDataJSON?, Swift.Error?) ->()) {
         print("getForcast started")
         let url = "\(ForcastService.openweatherURL)?APPID=\(ForcastService.openweatherAPI)&lon=\(lon)&lat=\(lat)&cnt=7"
@@ -62,6 +73,8 @@ class ForcastService {
             }
         } .resume()
     }
+    
+    // Errors messages
     
     func showError(errorType: Error) {
         switch errorType {

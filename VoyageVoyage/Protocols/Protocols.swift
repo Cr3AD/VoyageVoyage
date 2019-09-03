@@ -23,6 +23,7 @@ public protocol ShowErrorMessage {
     func showAlertNoConnectionError(title: String, message: String)
 }
 
+
 // Segue
 
 public protocol GetMoneyChoosen {
